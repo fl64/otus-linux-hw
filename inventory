@@ -1,0 +1,7 @@
+[otus-lab]
+	net-r0 ansible_ssh_host=10.0.0.10
+	net-r1 ansible_ssh_host=10.0.0.20 
+	be1 ansible_ssh_host=10.0.0.30
+	be2 ansible_ssh_host=10.0.0.40
+[otus-lab:vars]
+	ansible_ssh_user=vagrant
