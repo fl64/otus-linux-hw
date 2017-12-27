@@ -1,0 +1,12 @@
+- hosts: all
+  user: vagrant
+
+  tasks:
+    - name: Disable NetworkManager and firewalld
+      systemd: 
+        name: {{ item }}
+        state: stopped
+        enabled: no
+        with_items:
+        - nginx
+        - postgresql
