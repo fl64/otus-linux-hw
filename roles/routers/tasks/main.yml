@@ -1,0 +1,39 @@
+
+- name: Disable NetworkManager and firewalld
+  become: true
+  systemd: name={{ item }} state=stopped enabled=no
+  with_items:
+    - NetworkManager
+    - firewalld
+
+
+- name: enable ip_forward
+  become: true
+  sysctl: 
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: enable 
+  become: true
+  modprobe:
+    name: dummy
+    state: present
+    params: 'numdummies=1'
+
+- name: host
+  debug: msg="{{ item[0] }} == {{ item[1] }}" 
+  with_items:
+  - "{{ ifs }}"
+
+- name: Pushes vlans
+  become: true
+  template: src=templates/vlan.j2 dest=/etc/sysconfig/network-scripts/ifcfg-{{ item[0] }} mode=0644 owner=root group=root
+  with_items:
+  - "{{ ifs }}"
+  notify:
+  - restart network
+
+

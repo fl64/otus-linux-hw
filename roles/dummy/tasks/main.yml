@@ -1,0 +1,6 @@
+- name: enable dummy
+  become: true
+  modprobe:
+    name: dummy
+    state: present
+    params: 'numdummies=1'

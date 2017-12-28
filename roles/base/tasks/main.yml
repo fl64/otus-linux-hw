@@ -6,37 +6,16 @@
     - NetworkManager
     - firewalld
 
-
-- name: enable ip_forward
-  become: true
-  sysctl: 
-    name: net.ipv4.ip_forward
-    value: 1
-    sysctl_set: yes
-    state: present
-    reload: yes
-
-  when: ipforward|lower == "yes"
-
-- name: enable 
-  become: true
-  modprobe:
-    name: dummy
-    state: present
-    params: 'numdummies=1'
-
-  when: dummy|lower == "yes"
-
 - name: host
   debug: msg="{{ item[0] }} == {{ item[1] }}" 
   with_items:
-  - "{{ vlans }}"
+  - "{{ ifs }}"
 
 - name: Pushes vlans
   become: true
-  template: src=templates/vlan.j2 dest=/etc/sysconfig/network-scripts/ifcfg-{{ item[0] }} mode=0644 owner=root group=root
+  template: src=templates/ifcfg.j2 dest=/etc/sysconfig/network-scripts/ifcfg-{{ item[0] }} mode=0644 owner=root group=root
   with_items:
-  - "{{ vlans }}"
+  - "{{ ifs }}"
   notify:
   - restart network
 

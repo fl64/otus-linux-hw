@@ -3,3 +3,10 @@
 
   roles: 
     - base
+
+- hosts: dummy
+  roles:
+    - dummy
+- hosts: routers
+  roles:
+    - routers
