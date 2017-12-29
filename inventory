@@ -1,20 +1,22 @@
 [otus-lab]
-r0  ansible_host=10.0.0.10 ifs='[("eth2.2", "10.2.2.1")]' 
-r1  ansible_host=10.0.0.20 ifs='[("eth2.2", "10.2.2.254"),("eth3.4", "10.4.4.254")]' 
-be1 ansible_host=10.0.0.30 ifs='[("eth2.4", "10.4.4.10")]' 
-be2 ansible_host=10.0.0.40 ifs='[("eth2.4", "10.4.4.20")]' 
+r0  ansible_host=10.0.0.10 
+r1  ansible_host=10.0.0.20 
+be1 ansible_host=10.0.0.30 
+be2 ansible_host=10.0.0.40 
 
 [otus-lab:vars]
 ansible_ssh_user=vagrant
 
+[killvagrantroute]
+r1
+be0
+be2
+
+
 [routers]
 r0
 r1 
-[routers:vars]
-	
 
 [dummy]
 be1
 be2
-[dummy:vars]
-dummy=yes dummyip=10.99.99.1 

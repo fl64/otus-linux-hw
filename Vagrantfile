@@ -25,9 +25,9 @@ Vagrant.configure("2") do |config|
     r1.vm.network :"private_network", ip: "10.0.0.20", :name => 'vboxnet0', :adapter => 2
     r1.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan2", :adapter => 3
     r1.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan4", :adapter => 4
-    r1.vm.provision "shell", 
-        run: "always",
-        inline: "ip route delete default"
+#    r1.vm.provision "shell", 
+#        run: "always",
+#        inline: "ip route delete default"
     r1.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
     r1.vm.provider :virtualbox do |vb|
       vb.name = "r1"
@@ -38,9 +38,9 @@ Vagrant.configure("2") do |config|
     be1.vm.hostname = 'be1'
     be1.vm.network :"private_network", ip: "10.0.0.30", :name => 'vboxnet0', :adapter => 2
     be1.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan4", :adapter => 3
-    be1.vm.provision "shell", 
-        run: "always",
-        inline: "ip route delete default"
+#   be1.vm.provision "shell", 
+#        run: "always",
+#        inline: "ip route delete default"
     be1.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
 
     be1.vm.provider :virtualbox do |vb|
@@ -52,9 +52,9 @@ Vagrant.configure("2") do |config|
     be2.vm.hostname = 'be2'
     be2.vm.network :"private_network", ip: "10.0.0.40", :name => 'vboxnet0', :adapter => 2
     be2.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan4", :adapter => 3
-    be2.vm.provision "shell", 
-        run: "always",
-        inline: "ip route delete default"
+#    be2.vm.provision "shell", 
+#        run: "always",
+#        inline: "ip route delete default"
     be2.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
     be2.vm.provider :virtualbox do |vb|
       vb.name = "be2"

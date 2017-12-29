@@ -1,0 +1,8 @@
+DEVICE={{ item.device }}
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR={{ item.ip }}
+PREFIX={{ item.prefix }}
+{% if item.vlan  is defined %}
+VLAN=yes
+{% endif %}
