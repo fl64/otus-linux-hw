@@ -1,0 +1,29 @@
+---
+- name: Check if EPEL exists
+  stat: path={{ epel_repofile_path }}
+  register: epel_result
+ 
+- name: Install EPEL 
+  become: true
+  yum:
+    name: "{{ epel_repo_url }}"
+    state: present
+  register: result
+  when: not epel_result.stat.exists
+ 
+- name: Import EPEL GPG
+  become: true
+  rpm_key:
+    key: "{{ epel_repo_gpg_key_url }}"
+    state: present
+  when: not epel_result.stat.exists
+
+- name: Install Bird, Quagga, ...
+  become: true
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - bird
+  - quagga
+  - tcpdump

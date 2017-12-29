@@ -1,0 +1,7 @@
+- name: install iptables-services
+  become: true
+  yum:
+    name: iptables-services
+    state: present
+
+

@@ -1,3 +1,9 @@
+- hosts: all
+  gather_facts: yes
+  roles:
+    - common
+
+
 - hosts: dummy
   roles:
     - dummy
@@ -13,49 +19,65 @@
       ip: 10.2.2.1
       prefix: 24
       vlan: 2
+      area: 0
   roles:
   - role: networking
 
 
 - hosts: r1
+  vars:
+  - interfaces:
+    - device: eth2.2
+      ip: 10.2.2.254
+      prefix: 24
+      net: 10.2.2.0
+      vlan: 2
+      area: 0
+    - device: eth3.4
+      ip: 10.4.4.254
+      prefix: 24
+      net: 10.4.4.0
+      vlan: 4
+      area: 1   
   roles:
   - role: networking
-    interfaces:
-      - device: eth2.2
-        ip: 10.2.2.254
-        prefix: 24
-        net: 10.2.2.0
-        vlan: 2
 
-      - device: eth3.4
-        ip: 10.4.4.254
-        prefix: 24
-        net: 10.4.4.0
-        vlan: 4
 
 - hosts: be1
+  vars:
+  - interfaces:
+    - device: eth2.4
+      ip: 10.4.4.10
+      prefix: 24
+      net: 10.4.4.0
+      vlan: 4
+      area: 1
+    - device: dummy0
+      ip: 10.99.99.1
+      prefix: 24
+      net: 10.99.99.0
+      dummy: yes
+      area: 1
   roles:
   - role: networking
-    interfaces:
-      - device: eth2.4
-        ip: 10.4.4.10
-        prefix: 24
-        vlan: 4
-      - device: dummy0
-        ip: 10.99.99.1
-        prefix: 24
-        dummy: yes
+
 
 - hosts: be2
-  roles:
-  - role: networking
-    interfaces:
+  vars:
+  - interfaces:
       - device: eth2.4
         ip: 10.4.4.20
         prefix: 24
+        net: 10.4.4.0
         vlan: 4
+        area: 1
       - device: dummy0
         ip: 10.99.99.1
         prefix: 24
+        net: 10.99.99.0
         dummy: yes
+        area: 1 
+  roles:
+  - role: networking
+
 
