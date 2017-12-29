@@ -1,0 +1,26 @@
+
+- name: Disable Zero Configuration Network
+  become: true
+  lineinfile: dest=/etc/sysconfig/network
+              regexp=''
+              insertafter=EOF
+              line='NOZEROCONF=yes'
+  notify:
+  - restart network
+
+- name: Disable NetworkManager and firewalld
+  become: true
+  systemd: name={{ item }} state=stopped enabled=no
+  with_items:
+    - NetworkManager
+    - firewalld
+
+- name: Create vlan and dummy interfaces
+  become: true
+  template: src=templates/ifcfg.j2 dest=/etc/sysconfig/network-scripts/ifcfg-{{ item.device }} mode=0644 owner=root group=root
+  with_items:
+  - "{{ interfaces }}"
+  notify:
+  - restart network
+
+
