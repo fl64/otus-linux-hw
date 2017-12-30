@@ -1,8 +1,13 @@
-DEVICE={{ item.device }}
-BOOTPROTO=none
-ONBOOT=yes
-IPADDR={{ item.ip }}
-PREFIX={{ item.prefix }}
-{% if item.vlan  is defined %}
-VLAN=yes
-{% endif %}
+
+{% set areas = [] %}
+{% for item in interfaces if item.area not in areas%}
+
+
+    {% set x = areas.extend([item.area]) %}
+{% endfor %}
+{% for area in areas | unique %}
+	{{ area }}
+	{% for item in interfaces if item.area == area %}
+		{{ item.ip }} {{ item.device }}
+	{% endfor %}	
+{% endfor %}
