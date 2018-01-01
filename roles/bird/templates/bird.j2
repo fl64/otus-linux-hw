@@ -58,12 +58,12 @@ protocol ospf MyOSPF {
 	{% for area in areas | unique %}area {{ area }} {
 		networks {
 			{% for item in interfaces if item.area == area %}{{ item.net }}/{{ item.prefix }};
-			{% endfor %}};
+		{% endfor %}};
 
 		{% for item in interfaces if item.area == area %}interface "{{ item.device}}" {
-			{% if item.bfd is defined and item.bfd == True %}bfd yes;
-			{% endif %}
-		{% endfor %}};
+			{% if item.bfd is defined and item.bfd == True %}bfd yes;{% endif %}
+		};
+		{% endfor %}
 	};
 	{% endfor %}
 
