@@ -6,6 +6,7 @@
               line='DEFROUTE=no'
   notify:
   - restart network
+  when: (edge is not defined) and (edge != True)
 
 - name: Enable bird
   become: true
