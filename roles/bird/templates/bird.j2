@@ -1,13 +1,71 @@
-
 {% set areas = [] %}
+{% set bfdtest = [] %}
 {% for item in interfaces if item.area not in areas%}
-
-
     {% set x = areas.extend([item.area]) %}
+    {% if item.bfd is defined and item.bfd == True %}{% set y = bfdtest.extend([1]) %}{% endif %}
 {% endfor %}
-{% for area in areas | unique %}
-	{{ area }}
-	{% for item in interfaces if item.area == area %}
-		{{ item.ip }} {{ item.device }}
-	{% endfor %}	
-{% endfor %}
+
+log "/var/log/bird.log" all;
+log syslog all;
+
+{% if edge is defined and edge == True %}
+# redistribute default
+filter export_OSPF {
+	if ( net = 0.0.0.0/0 ) then {
+		ospf_metric2 = 100;
+		accept;
+	}
+	reject;
+}
+{% endif %}
+
+
+protocol kernel {
+        learn;                  
+        scan time 20;       
+        import all;            
+        export all;            
+};
+
+protocol device {
+        scan time 10;         
+};
+
+
+{% if bfdtest %}
+protocol bfd MyBFD {
+        {% for bfd_int in interfaces if bfd_int.bfd is defined and bfd_int.bfd == True %}interface "{{bfd_int.device}}" {
+                min rx interval 10 ms;
+                min tx interval 10 ms;
+                multiplier 4;
+        {% endfor %}};
+
+        {% for bfd_neigh in bfdneigh %}neighbor {{bfd_neigh.ip}};
+        {% endfor %}
+
+        
+}
+{% endif %}
+
+
+
+protocol ospf MyOSPF {
+	ecmp yes;
+	{% if edge is defined and edge == True %}export filter export_OSPF;{% endif %}
+
+
+
+	{% for area in areas | unique %}area {{ area }} {
+		networks {
+			{% for item in interfaces if item.area == area %}{{ item.net }}/{{ item.prefix }};
+			{% endfor %}};
+
+		{% for item in interfaces if item.area == area %}interface "{{ item.device}}" {
+			{% if item.bfd is defined and item.bfd == True %}bfd yes;
+			{% endif %}
+		{% endfor %}};
+	};
+	{% endfor %}
+
+}
+

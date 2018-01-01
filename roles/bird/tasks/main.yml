@@ -1,6 +1,12 @@
+- name: Enable bird
+  become: true
+  systemd: name=bird state=started enabled=yes
+  
 - name: Create Bird config
   become: true
   template: src=templates/bird.j2 dest=/etc/bird.conf mode=0644 owner=root group=root
-  with_items:
-  - "{{ interfaces }}"
+  notify:
+  - restart bird
+
+
 

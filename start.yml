@@ -3,7 +3,6 @@
   roles:
     - common
 
-
 - hosts: dummy
   roles:
     - dummy
@@ -12,37 +11,57 @@
   roles:
     - forward
 
+
 - hosts: r0
   vars:
+  - edge: yes
   - interfaces: 
-    - {device: "eth2.2", ip: "10.2.2.1", prefix: 24, vlan: 2, area: 0 }
+    - {device: "eth2.2", ip: "10.2.2.1", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
   roles:
   - networking
-  - edgefw
+  - bird
+
 
 - hosts: r1
   vars:
+  - dns: master
+  - bfdneigh:
+    - {ip: "10.4.4.10"}
+    - {ip: "10.4.4.20"}
   - interfaces: 
-    - {device: "eth2.2", ip: "10.2.2.254", prefix: 24, vlan: 2, area: 0 }
-    - {device: "eth3.4", ip: "10.4.4.254", prefix: 24, vlan: 4, area: 1 }
+    - {device: "eth2.2", ip: "10.2.2.254", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
+    - {device: "eth3.4", ip: "10.4.4.254", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes }
   roles:
   - networking
+  - bird
+
 
 - hosts: be1
   vars:
+  - dns: slave
+  - bfdneigh:
+    - {ip: "10.4.4.10"}
+    - {ip: "10.4.4.20"}
   - interfaces:
-    - {device: "eth2.4", ip: "10.4.4.10", prefix: 24, vlan: 4, area: 1 }
-    - {device: "dummy0", ip: "10.99.99.1", prefix: 24, area: 1 }
-
+    - {device: "eth2.4", ip: "10.4.4.10", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes}
+    - {device: "dummy0", ip: "10.99.99.1", net: "10.99.99.0", prefix: 24, area: 1 }
   roles:
   - networking
+  - bird
+
+
 
 - hosts: be2
   vars:
+  - dns: slave
+  - bfdneigh:
+    - {ip: "10.4.4.10"}
+    - {ip: "10.4.4.20"}
   - interfaces:
-    - {device: "eth2.4", ip: "10.4.4.20", prefix: 24, vlan: 4, area: 1 }
-    - {device: "dummy0", ip: "10.99.99.1", prefix: 24, area: 1 }
+    - {device: "eth2.4", ip: "10.4.4.20", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1 , bfd: yes}
+    - {device: "dummy0", ip: "10.99.99.1", net: "10.99.99.0", prefix: 24, area: 1 }
   roles:
   - networking
+  - bird
 
 
