@@ -1,0 +1,30 @@
+zone "mydomain.tld" {
+    {% if dns_type is defined and dns_type == 'master' %}
+    type master;
+    notify yes;
+    also-notify { 10.4.4.10; 10.4.4.20; };
+    {% endif %}
+
+    {% if dns_type is defined and dns_type == 'slave' %}
+    type slave;
+    masters { 10.2.2.1; };
+    {% endif %}
+    
+    file "/etc/named/zones/mydomain.tld.zone";
+};
+zone "10.in-addr.arpa" {
+    {% if dns_type is defined and dns_type == 'master' %}
+    type master;
+    notify yes;
+    also-notify { 10.4.4.10; 10.4.4.20; };
+    {% endif %}
+
+    {% if dns_type is defined and dns_type == 'slave' %}
+    type slave;
+    masters { 10.2.2.1; };
+    {% endif %}
+
+    file "/etc/named/zones/10.in-addr.arpa.zone";
+
+
+};

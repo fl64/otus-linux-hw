@@ -18,7 +18,7 @@
     state: present
   when: not epel_result.stat.exists
 
-- name: Install Bird, Quagga, ...
+- name: Install Bird, Quagga
   become: true
   yum:
     name: "{{ item }}"

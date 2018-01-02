@@ -1,3 +1,4 @@
+---
 - name: remove default route created with vagrant
   become: true
   lineinfile: dest=/etc/sysconfig/network-scripts/ifcfg-eth0
@@ -6,7 +7,7 @@
               line='DEFROUTE=no'
   notify:
   - restart network
-  when: (edge is not defined) and (edge != True)
+  when: (edge is not defined and edge != True)
 
 - name: Enable bird
   become: true

@@ -1,0 +1,22 @@
+{% if dns_type is defined and dns_type == 'master' %}
+
+$TTL	2d
+$ORIGIN	mydomain.tld.
+
+@     			IN      SOA  r0.mydomain.tld. admin.r0.mydomain.tld. (
+				2017121407 ; Serial
+				2H         ; Refresh
+				30M        ; Retry
+				1W         ; Expire
+				1D      )  ; Negative Cache TTL
+			
+				IN      NS      r0.mydomain.tld.
+				IN      NS      be1.mydomain.tld.
+				IN		NS		be2.mydomain.tld.
+r0				IN      A       10.2.2.1
+r1				IN      A       10.2.2.254
+				IN		A		10.4.4.254
+be1				IN      A       10.4.4.10
+be2				IN      A       10.4.4.20
+
+{% endif %}

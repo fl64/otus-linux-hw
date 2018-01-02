@@ -1,0 +1,59 @@
+---
+- name: Install named (bind and bind-utils)
+  become: true
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - bind
+  - bind-utils
+  - policycoreutils-python
+  tags:
+  - named
+
+- name: Enable named
+  become: true
+  systemd: name=named state=started enabled=yes
+  tags:
+  - named
+
+- name: Create zone dir
+  become: true
+  file: 
+    path: /etc/named/zones/
+    state: directory
+    owner: named
+    group: named
+    mode: 0755
+  tags:
+  - named
+  
+- name: Create named configs
+  become: true
+  template: src={{ item.j2 }} dest={{ item.dst }} mode=0664 owner=named group=named
+  notify:
+  - restart named
+  with_items:
+  - {j2: "templates/named.conf.j2", dst: "/etc/named.conf"}
+  - {j2: "templates/named.conf.local.j2", dst: "/etc/named/named.conf.local"}
+  - {j2: "templates/mydomain.tld.zone.j2", dst: "/etc/named/zones/mydomain.tld.zone"}
+  - {j2: "templates/10.in-addr.arpa.zone.j2", dst: "/etc/named/zones/10.in-addr.arpa.zone"}
+  tags:
+  - named
+
+- name: Set selinux fcontext to slave zone files
+  become: true
+  sefcontext:
+    target: '/etc/named/zones(/.*)?'
+    setype: named_cache_t 
+    state: present
+  tags:
+  - named
+  when: ( dns_type is defined and dns_type == 'slave' )
+
+- name: Run restore context to reload selinux
+  become: true
+  shell: restorecon -R -v /etc/named/zones
+  tags:
+  - named
+  when: ( dns_type is defined and dns_type == 'slave' )
