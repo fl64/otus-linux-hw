@@ -1,7 +1,7 @@
 # otus-linux-hw
 Otus homework #13
 Scheme:
-[](https://imgur.com/DAXnpvp.png)
+![](https://imgur.com/DAXnpvp.png)
 
 
 Created ansible roles:
