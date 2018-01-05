@@ -16,7 +16,7 @@ Created ansible roles:
 - quagga - install and confugure quagga
 - openbfdd - download, compile, install and configure openbfdd
 
-Network interface setting are defined in start\*.yml files.
+Network interface setting are defined in **start\*.yml** files.
 
 ## Otus homework #14
 ...
