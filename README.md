@@ -14,7 +14,9 @@ Created ansible roles:
 - named - install and configure named master and slaves 
 - networking - create and configure vlan and dummies
 - quagga - install and confugure quagga
-- openbfdd - install and configure openbfdd
+- openbfdd - download, compile, install and configure openbfdd
+
+Network interface setting are defined in start\*.yml files.
 
 ## Otus homework #14
 ...
