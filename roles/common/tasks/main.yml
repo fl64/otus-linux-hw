@@ -2,7 +2,7 @@
 - name: Check if EPEL exists
   stat: path={{ epel_repofile_path }}
   register: epel_result
- 
+  tags: epel, common
 - name: Install EPEL 
   become: true
   yum:
@@ -10,14 +10,14 @@
     state: present
   register: result
   when: not epel_result.stat.exists
- 
+  tags: epel, common 
 - name: Import EPEL GPG
   become: true
   rpm_key:
     key: "{{ epel_repo_gpg_key_url }}"
     state: present
   when: not epel_result.stat.exists
-
+  tags: epel, common 
 - name: Install Bird, Quagga
   become: true
   yum:
@@ -27,3 +27,9 @@
   - bird
   - quagga
   - tcpdump
+  tags: common
+  
+- name: Deploy knock scrpits
+  become: true
+  template: src=templates/knock.j2 dest=/usr/local/bin/knock.sh mode=0744 owner=vagrant group=vagrant
+  tags: common, knock

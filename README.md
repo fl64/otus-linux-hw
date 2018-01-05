@@ -13,6 +13,8 @@ Created ansible roles:
 - forward - enable ip_forward
 - named - install and configure named master and slaves 
 - networking - create and configure vlan and dummies
+- quagga - install and confugure quagga
+- openbfdd - install and configure openbfdd
 
 ## Otus homework #14
 ...

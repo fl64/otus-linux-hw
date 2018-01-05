@@ -1,0 +1,10 @@
+#!/bin/bash
+ports="6464 64646 64"
+host=$1
+for port in $ports
+do
+    echo * >/dev/tcp/$host/$port 2>/dev/null
+    echo "Knocking to --> tcp:$port"
+    sleep 0.5
+done
+ssh root@$1

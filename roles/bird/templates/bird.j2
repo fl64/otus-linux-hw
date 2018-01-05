@@ -47,8 +47,6 @@ protocol bfd MyBFD {
 }
 {% endif %}
 
-
-
 protocol ospf MyOSPF {
 	ecmp yes;
 	{% if edge is defined and edge == True %}export filter export_OSPF;{% endif %}

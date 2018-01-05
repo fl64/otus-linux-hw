@@ -1,0 +1,17 @@
+[Unit]
+    Description=openbfdd
+    After=network.target
+
+[Service]
+    Type=simple
+    User=root
+    ExecStart=/usr/local/bin/bfdd-beacon --nofork
+    ExecStartPost=/bin/sleep 3
+    ExecStartPost=/usr/local/bin/bfdd-control load /etc/openbfdd.conf
+    ExecStop=/usr/local/bin/bfdd-control stop
+
+    KillMode=process
+    KillSignal=SIGTERM
+    SendSIGKILL=no
+[Install]
+    WantedBy=multi-user.target

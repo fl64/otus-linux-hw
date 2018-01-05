@@ -8,18 +8,22 @@
   notify:
   - restart network
   when: (edge is not defined and edge != True)
-  tags: bird
+  tags: quagga
 
-- name: Enable bird
+- name: Enable quagga
   become: true
-  systemd: name=bird state=started enabled=yes
-  tags: bird 
-
-- name: Create Bird config
+  systemd: name={{ item }} state=started enabled=yes
+  with_items:
+  - zebra
+  - ospfd
+  tags: quagga
+  
+- name: Create ospfd.conf
   become: true
-  template: src=templates/bird.j2 dest=/etc/bird.conf mode=0644 owner=root group=root
+  template: src=templates/ospfd.j2 dest=/etc/quagga/ospfd.conf mode=0644 owner=quagga group=quagga
   notify:
-  - restart bird
-  tags: bird
+  - restart quagga
+  tags: quagga
+
 
 

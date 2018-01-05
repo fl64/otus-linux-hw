@@ -5,3 +5,4 @@
     name: dummy
     state: present
     params: 'numdummies=1'
+  tags: dummy

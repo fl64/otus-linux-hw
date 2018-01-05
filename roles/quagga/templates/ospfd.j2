@@ -1,0 +1,19 @@
+hostname {{ ansible_hostname }}
+password zebra
+log stdout
+
+
+{% for item in interfaces %}
+interface {{ item.device }}
+{% endfor %}
+
+router ospf
+	{% for item in interfaces %}
+	network {{ item.net }}/{{ item.prefix }} area {{ item.area }}
+	{% endfor %}
+	
+	{% if edge is defined and edge == True %}
+	default-information originate always
+	{% endif %}
+
+line vty

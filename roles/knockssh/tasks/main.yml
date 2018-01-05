@@ -4,25 +4,30 @@
   yum:
     name: iptables-services
     state: present
+  tags: knock
 
 - name: Enable iptables
   become: true
   systemd: name=iptables state=started enabled=yes
+  register: result
+  tags: knock
 
-- name: Create rules
+- name: Kill all default and create ssh knock
   become: true
   command: iptables {{ item }}
+  when: result.changed #if iptables first time installed
   notify: save rules
   with_items:
-  - '-P INPUT ACCEPT'  
-  - '-F'
-  - '-X KNOCK'
+  - "-P INPUT ACCEPT"
+  - "-F"
+  - "-N KNOCK"
   - '-A INPUT -i lo -m comment --comment "Accept localhost" -j ACCEPT'
   - '-A INPUT -m state --state RELATED,ESTABLISHED -m comment --comment "Accept existing connections" -j ACCEPT'
   - '-A INPUT -p ospf -m comment --comment "Allow OSPF" -j ACCEPT'
   - '-A INPUT -p icmp -m comment --comment "Allow ICMP" -j ACCEPT'
   - '-A INPUT -i eth1 -p tcp --dport 22 -m comment --comment "Allow SSH for tech net" -j ACCEPT'
-  - '-N KNOCK'
+  - '-A INPUT -i eth0 -p tcp --dport 22 -m comment --comment "Allow SSH for vagrant" -j ACCEPT'
+
   - '-A INPUT -m comment --comment "Go to knock cahins" -j KNOCK '
   - '-A INPUT -m comment --comment "Reject with ICMP" -j REJECT --reject-with icmp-host-prohibited'
   - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 6464 -m recent --set --name knock1 --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-host-prohibited'
@@ -30,3 +35,58 @@
   - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 64 -m recent --rcheck --seconds 10 --name knock2 --mask 255.255.255.255 --rsource -m recent --set --name knock3 --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-host-prohibited'
   - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 22 -m recent --rcheck --seconds 60 --name knock3 --mask 255.255.255.255 --rsource -j ACCEPT'
   - '-P INPUT DROP'
+  tags: knock
+# 
+# - name: Accept all local traffic
+#   become: true
+#   iptables: chain=INPUT in_interface=lo jump=ACCEPT
+# - name: Accept SSH on eth1 interfaces
+#   become: true
+#   iptables: chain=INPUT protocol=tcp in_interface=eth1 destination_port=22 jump=ACCEPT
+# - name: Accept ESTABLISHED, RELATED input traffice
+#   become: true
+#   iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
+#   #OSPF
+# - name: Accept OSPF In
+#   become: true
+#   iptables: chain=INPUT protocol=ospf jump=ACCEPT
+# - name: Accept OSPF Out
+#   become: true
+#   iptables: chain=OUTPUT protocol=ospf jump=ACCEPT
+#   #DNS
+# - name: Accept DNS (tcp) on eth2.2
+#   become: true
+#   iptables: chain=INPUT protocol=tcp destination_port=53 jump=ACCEPT
+# - name: Accept DNS (udp) on eth2.2
+#   become: true
+#   iptables: chain=INPUT protocol=udp destination_port=53 jump=ACCEPT
+# - name: Jump to KNOCK
+#   become: true
+#   iptables: chain=INPUT jump=KNOCK
+# - name: Jump to KNOCK
+#   become: true
+#   iptables: chain=INPUT jump=KNOCK 
+
+
+
+#- name: Create rules
+# become: true
+# command: iptables {{ item }}
+# notify: save rules
+# with_items:
+# - '-P INPUT ACCEPT'  
+# - '-F'
+# #- '-X KNOCK'
+#  - '-A INPUT -i lo -m comment --comment "Accept localhost" -j ACCEPT'
+#  - '-A INPUT -m state --state RELATED,ESTABLISHED -m comment --comment "Accept existing connections" -j ACCEPT'
+#  - '-A INPUT -p ospf -m comment --comment "Allow OSPF" -j ACCEPT'
+#  - '-A INPUT -p icmp -m comment --comment "Allow ICMP" -j ACCEPT'
+#  - '-A INPUT -i eth1 -p tcp --dport 22 -m comment --comment "Allow SSH for tech net" -j ACCEPT'
+#  - '-N KNOCK'
+#  - '-A INPUT -m comment --comment "Go to knock cahins" -j KNOCK '
+#  - '-A INPUT -m comment --comment "Reject with ICMP" -j REJECT --reject-with icmp-host-prohibited'
+#  - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 6464 -m recent --set --name knock1 --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-host-prohibited'
+#  - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 64646 -m recent --rcheck --seconds 10 --name knock1 --mask 255.255.255.255 --rsource -m recent --set --name knock2 --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-host-prohibited'
+#  - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 64 -m recent --rcheck --seconds 10 --name knock2 --mask 255.255.255.255 --rsource -m recent --set --name knock3 --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-host-prohibited'
+#  - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 22 -m recent --rcheck --seconds 60 --name knock3 --mask 255.255.255.255 --rsource -j ACCEPT'
+#  - '-P INPUT DROP'

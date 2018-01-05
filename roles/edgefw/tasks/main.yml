@@ -4,11 +4,13 @@
   yum:
     name: iptables-services
     state: present
+  tags: edgefw
 
 - name: Enable iptables
   become: true
   systemd: name=iptables state=started enabled=yes
   register: result
+  tags: edgefw
 
 - name: Kill all default firewalld rules
   become: true
@@ -18,7 +20,7 @@
   with_items:
   - "-P INPUT ACCEPT"
   - "-F"
-
+  tags: edgefw
 
 # INPUT
   # - "-A INPUT -i lo -j ACCEPT"
@@ -32,26 +34,33 @@
 - name: Accept all local traffic
   become: true
   iptables: chain=INPUT in_interface=lo jump=ACCEPT
+  tags: edgefw  
 - name: Accept SSH on all interfaces
   become: true
   iptables: chain=INPUT protocol=tcp destination_port=22 jump=ACCEPT
+  tags: edgefw
 - name: Accept ESTABLISHED, RELATED input traffice
   become: true
   iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
+  tags: edgefw
   #OSPF
 - name: Accept OSPF In
   become: true
   iptables: chain=INPUT protocol=ospf jump=ACCEPT
+  tags: edgefw
 - name: Accept OSPF Out
   become: true
   iptables: chain=OUTPUT protocol=ospf jump=ACCEPT
+  tags: edgefw
   #DNS
 - name: Accept DNS (tcp) on eth2.2
   become: true
   iptables: chain=INPUT protocol=tcp destination_port=53 jump=ACCEPT
+  tags: edgefw
 - name: Accept DNS (udp) on eth2.2
   become: true
   iptables: chain=INPUT protocol=udp destination_port=53 jump=ACCEPT
+  tags: edgefw
 # FORWARD
   # - "-A FORWARD -i eth2.2 -o eth0 -j ACCEPT"
   # - "-A FORWARD -i eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT"
@@ -60,24 +69,26 @@
 - name: Forward traffic from eth2.2 to eth0
   become: true
   iptables: chain=FORWARD in_interface=eth2.2 out_interface=eth0 jump=ACCEPT
+  tags: edgefw
 - name: Accept ESTABLISHED, RELATED transit traffic
   become: true
   iptables: chain=FORWARD ctstate=ESTABLISHED,RELATED jump=ACCEPT
+  tags: edgefw
 - name: Forward traffic from eth2.2 to eth0
   become: true
   iptables: chain=FORWARD in_interface=eth0 out_interface=eth2.2 jump=REJECT
-
+  tags: edgefw
 #NAT
 - name: Forward traffic from eth2.2 to eth0
   become: true
   iptables: chain=POSTROUTING table=nat out_interface=eth0 jump=MASQUERADE
-
+  tags: edgefw
 
 # Policy
 - name: Set INPUT policy to DROP
   become: true
   iptables: chain=INPUT policy=DROP 
-
+  tags: edgefw
 
 
 # - name: Create rules

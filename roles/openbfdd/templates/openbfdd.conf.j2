@@ -1,0 +1,5 @@
+session all set mintx 10 ms
+session all set minrx 10 ms
+session all set multi 4
+{% for bfd_neigh in bfdneigh %}allow {{bfd_neigh.ip}}
+{% endfor %}		 
