@@ -1,0 +1,32 @@
+---
+- name: install iptables-services
+  become: true
+  yum:
+    name: iptables-services
+    state: present
+
+- name: Enable iptables
+  become: true
+  systemd: name=iptables state=started enabled=yes
+
+- name: Create rules
+  become: true
+  command: iptables {{ item }}
+  notify: save rules
+  with_items:
+  - '-P INPUT ACCEPT'  
+  - '-F'
+  - '-X KNOCK'
+  - '-A INPUT -i lo -m comment --comment "Accept localhost" -j ACCEPT'
+  - '-A INPUT -m state --state RELATED,ESTABLISHED -m comment --comment "Accept existing connections" -j ACCEPT'
+  - '-A INPUT -p ospf -m comment --comment "Allow OSPF" -j ACCEPT'
+  - '-A INPUT -p icmp -m comment --comment "Allow ICMP" -j ACCEPT'
+  - '-A INPUT -i eth1 -p tcp --dport 22 -m comment --comment "Allow SSH for tech net" -j ACCEPT'
+  - '-N KNOCK'
+  - '-A INPUT -m comment --comment "Go to knock cahins" -j KNOCK '
+  - '-A INPUT -m comment --comment "Reject with ICMP" -j REJECT --reject-with icmp-host-prohibited'
+  - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 6464 -m recent --set --name knock1 --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-host-prohibited'
+  - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 64646 -m recent --rcheck --seconds 10 --name knock1 --mask 255.255.255.255 --rsource -m recent --set --name knock2 --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-host-prohibited'
+  - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 64 -m recent --rcheck --seconds 10 --name knock2 --mask 255.255.255.255 --rsource -m recent --set --name knock3 --mask 255.255.255.255 --rsource -j REJECT --reject-with icmp-host-prohibited'
+  - '-A KNOCK -p tcp -m state --state NEW -m tcp --dport 22 -m recent --rcheck --seconds 60 --name knock3 --mask 255.255.255.255 --rsource -j ACCEPT'
+  - '-P INPUT DROP'

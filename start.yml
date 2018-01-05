@@ -35,6 +35,7 @@
   roles:
   - networking
   - bird
+  - knockssh
 
 - hosts: be1
   vars:
