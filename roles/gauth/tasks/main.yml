@@ -30,6 +30,17 @@
   become: true
   tags: gauth
 
+
+- name: Configure google-authenticator 
+  command: google-authenticator --time-based --disallow-reuse --force --qr-mode=UTF8 --rate-limit=3 --rate-time=30 --step-size=30 --window-size=3
+  register: auth_info
+  tags: gauth
+
+- name: Save this!
+  debug: var=auth_info.stdout
+  tags: gauth
+
+
 - name: Change sshd_config
   lineinfile:
     path: /etc/ssh/sshd_config
@@ -42,8 +53,12 @@
     validate: 'sshd -f %s -T'
   with_items:
   - { regexp: '^ChallengeResponseAuthentication ', line: 'ChallengeResponseAuthentication yes' }
-  - { regexp: '^AuthenticationMethods ', line: 'AuthenticationMethods publickey,password publickey,keyboard-interactive'}
+  - { regexp: '^AuthenticationMethods ', line: 'AuthenticationMethods publickey,password publickey,publickey keyboard-interactive'}
   become: true
   tags: gauth
   notify:
   - restart sshd
+
+## For ansible is better to use https://duo.com/product/every-application/supported-applications/unix
+
+  
