@@ -23,6 +23,7 @@
   - quagga
   - edgefw
   - named
+  - top-secure
 
 - hosts: r1
   vars:
@@ -37,6 +38,7 @@
   - quagga
   #- knockssh
   - openbfdd
+  - gauth
 
 - hosts: be1
   vars:
@@ -50,6 +52,7 @@
   - networking
   - bird
   - named
+
 
 - hosts: be2
   vars:

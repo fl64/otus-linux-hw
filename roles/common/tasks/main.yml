@@ -3,6 +3,7 @@
   stat: path={{ epel_repofile_path }}
   register: epel_result
   tags: epel, common
+
 - name: Install EPEL 
   become: true
   yum:
@@ -11,6 +12,7 @@
   register: result
   when: not epel_result.stat.exists
   tags: epel, common 
+
 - name: Import EPEL GPG
   become: true
   rpm_key:
@@ -18,6 +20,7 @@
     state: present
   when: not epel_result.stat.exists
   tags: epel, common 
+  
 - name: Install Bird, Quagga
   become: true
   yum:

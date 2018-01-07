@@ -1,0 +1,49 @@
+---
+- name: Install google-authenticator
+  yum: 
+    name: google-authenticator
+    state: present
+  become: true
+  tags: gauth
+
+## !!! pamd ansible module breakes sshd file
+
+#- name: Insert a new rule before an existing rule
+#  pamd:
+#    name: sshd
+#    type: auth
+#    control: required
+#    module_path: pam_sepermit.so
+#    new_type: auth
+#    new_control: sufficient
+#    new_module_path: pam_google_authenticator.so 
+#    module_arguments: nullok
+#    state: before
+#  become: true
+#  tags: gauth
+- name: Change PAM sshd
+  lineinfile:
+    path: /etc/pam.d/sshd
+    regexp: '.*auth.*required.*pam_google_authenticator.so.*nullok'
+    line: 'auth required pam_google_authenticator.so nullok'
+    insertbefore: BOF
+  become: true
+  tags: gauth
+
+- name: Change sshd_config
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    insertafter: EOF
+    #backrefs: yes
+    backup: yes
+    validate: 'sshd -f %s -T'
+  with_items:
+  - { regexp: '^ChallengeResponseAuthentication ', line: 'ChallengeResponseAuthentication yes' }
+  - { regexp: '^AuthenticationMethods ', line: 'AuthenticationMethods publickey,password publickey,keyboard-interactive'}
+  become: true
+  tags: gauth
+  notify:
+  - restart sshd
