@@ -19,4 +19,8 @@ Created ansible roles:
 Network interface setting are defined in **start\*.yml** files.
 
 ## Otus homework #14
-...
+Created ansible roles:
+- ntp - install and run ntpd
+- gauth - ssh google-auth role (link to QR in ansible output)
+- top-secure - restrict access to top with pam+python script
+- pam_script - install and configure pam script (restrict access to system if no internet)

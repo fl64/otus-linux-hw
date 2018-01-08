@@ -1,0 +1,26 @@
+---
+- name: Install NTP
+  yum: 
+    name: ntp 
+    state: present
+  become: true
+  tags: ntp
+
+
+- name: Set timezone
+  become: true
+  shell: timedatectl set-timezone Europe/Moscow
+  tags: ntp
+
+- name: Sync time 
+  become: true
+  shell: ntpdate 0.centos.pool.ntp.org
+  tags: ntp
+
+- name: Enable NTPd
+  become: true
+  systemd:
+    name: ntpd
+    state: started
+    enabled: True
+  tags: ntp

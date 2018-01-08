@@ -3,6 +3,7 @@
   gather_facts: yes
   roles:
     - common
+    - ntp
 
 - hosts: dummy
   roles:
@@ -24,6 +25,7 @@
   - edgefw
   - named
   - top-secure
+  - pam_script
 
 - hosts: r1
   vars:
@@ -38,7 +40,7 @@
   - quagga
   #- knockssh
   - openbfdd
-  - gauth
+  #- gauth
 
 - hosts: be1
   vars:
@@ -53,7 +55,6 @@
   - bird
   - named
 
-
 - hosts: be2
   vars:
   - dns_type: slave
@@ -66,5 +67,4 @@
   - networking
   - bird
   - named
-
 
