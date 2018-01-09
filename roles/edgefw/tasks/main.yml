@@ -61,6 +61,12 @@
   become: true
   iptables: chain=INPUT protocol=udp destination_port=53 jump=ACCEPT
   tags: edgefw
+- name: Accept NTP (udp) 
+  become: true
+  iptables: chain=INPUT protocol=udp destination_port=123 jump=ACCEPT
+  tags: edgefw
+
+
 # FORWARD
   # - "-A FORWARD -i eth2.2 -o eth0 -j ACCEPT"
   # - "-A FORWARD -i eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT"

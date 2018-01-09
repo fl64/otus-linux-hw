@@ -24,3 +24,18 @@
   template: src=templates/top.py.j2 dest=/usr/local/bin/top mode=4755 owner=root group=root
   tags: secure-top
 
+- name: Add line to etc/profile
+  become: true
+  lineinfile: 
+    path: /etc/profile
+    regexp: '^account.*required.*pam_script.so'
+    insertafter: EOF
+    line: "alias top='/usr/local/bin/top'"
+  tags: secure-top
+
+- name: Lock top
+  become: true
+  file:
+    path: /usr/bin/top
+    mode: 0744
+  tags: secure-top
