@@ -1,9 +1,15 @@
-# otus-linux-hw
-
-## Otus homework #13
+# otus-linux-hw-13-14
 
 Scheme:
 ![](https://imgur.com/DAXnpvp.png)
+
+## Vagrant file
+vboxnet0 settings:
+10.0.0.1/24
+
+
+## Otus homework #13
+
 
 Created ansible roles:
 - bird - install and configure bird
