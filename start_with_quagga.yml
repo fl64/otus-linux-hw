@@ -41,6 +41,7 @@
   #- knockssh
   - openbfdd
   #- gauth
+  - top-secure
 
 - hosts: be1
   vars:

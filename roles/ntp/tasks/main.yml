@@ -12,12 +12,20 @@
   shell: timedatectl set-timezone Europe/Moscow
   tags: ntp
 
+- name: Enable NTPd and stop before time sync
+  become: true
+  systemd:
+    name: ntpd
+    state: stopped
+    enabled: True
+  tags: ntp
+
 - name: Sync time 
   become: true
   shell: ntpdate 0.centos.pool.ntp.org
   tags: ntp
 
-- name: Enable NTPd
+- name: Enable NTPd and start
   become: true
   systemd:
     name: ntpd
