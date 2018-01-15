@@ -1,0 +1,66 @@
+---
+- name: openldap install
+  yum: name={{ item }} state=installed
+  with_items: 
+  - openssl
+  - openldap-servers
+  - openldap-clients
+  become: true
+  tags: openldap
+
+- name: Enable slapd
+  systemd: name=slapd state=started enabled=yes
+  become: true 
+  tags: openldap
+
+- name: Create rootpw
+  shell: slappasswd -s {{ openldap_rootpw }} 
+  register: rootpw
+  become: true 
+  tags: openldap
+
+- name: Init ldap (step 1)
+  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0600
+  with_items:
+  - {j2: "templates/1_init.j2", dst: "/tmp/1_init.ldif", owner: "root", group: "root"}
+  - {j2: "templates/2_monitor.j2", dst: "/tmp/2_monitor.ldif", owner: "root", group: "root"}
+  - {j2: "templates/3_tls.j2", dst: "/tmp/3_tls.ldif", owner: "root", group: "root"}
+  - {j2: "templates/DBCONFIG.j2", dst: "/var/lib/ldap/DB_CONFIG", owner: "{{ openldap_user }}", group: "{{ openldap_user }}"}
+  become: true
+  tags: openldap
+
+- name: Deploy ldfs
+  command: "ldapmodify -Y EXTERNAL -H ldapi:/// -f {{ item }}"
+  with_items:
+  - /tmp/1_init.ldif
+  - /tmp/2_monitor.ldif
+  - /tmp/3_tls.ldif
+  become: true
+  tags: openldap
+
+- name: Create cert dir
+  file: path={{ openldap_dir }}/certs/ state=directory owner={{ openldap_user }} group={{ openldap_user }}
+  become: true
+  tags: openldap
+
+- name: Create self signed cert
+  shell: openssl req -newkey rsa:1024 -x509 -nodes -out server.pem -keyout server.pem -days 365 -subj '/C={{ openldap_country }}/ST={{ openldap_state }}/L={{ openldap_city }}/O={{ openldap_org }}/CN={{ ansible_hostname }}/' chdir={{ openldap_dir }}/certs/ 
+         creates={{ openldap_dir }}/certs/server.pem
+  become: true
+  tags: openldap
+
+- name: Set certpermissions
+  file: path={{ openldap_dir }}/certs/server.pem owner={{ openldap_user }} group={{ openldap_user }}
+  become: true
+  tags: openldap
+
+- name: Enable ldap ldaps ldapi
+  lineinfile: 
+    path: /etc/sysconfig/slapd
+    regexp: '^SLAPD_URLS='
+    insertafter: EOF
+    line: 'SLAPD_URLS="ldapi:/// ldap:/// ldaps:///"'
+  notify:
+  - restart slapd
+  become: true
+  tags: openldap

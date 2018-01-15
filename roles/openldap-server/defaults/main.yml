@@ -1,0 +1,12 @@
+openldap_domain: example.com
+openldap_rootpw: P@ssw0rd
+
+openldap_country: RU
+openldap_state: Moscow
+openldap_city: Moscow
+openldap_org: example inc
+
+openldap_tls: yes
+
+openldap_dir: /etc/openldap
+openldap_user: ldap

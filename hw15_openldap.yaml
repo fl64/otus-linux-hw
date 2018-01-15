@@ -1,3 +1,4 @@
+
 ---
 - hosts: all
   gather_facts: yes
@@ -23,12 +24,9 @@
   - networking
   - quagga
   - edgefw
-  - named
-  - top-secure
-  - pam_script
 
 - hosts: r1
-  vars:git 
+  vars:
   - bfdneigh:
     - {ip: "10.4.4.10"}
     - {ip: "10.4.4.20"}
@@ -38,10 +36,7 @@
   roles:
   - networking
   - quagga
-  #- knockssh
-  - openbfdd
-  #- gauth
-  - top-secure
+  - openldap-server
 
 - hosts: be1
   vars:
@@ -54,7 +49,6 @@
   roles:
   - networking
   - bird
-  - named
 
 - hosts: be2
   vars:
@@ -67,5 +61,4 @@
   roles:
   - networking
   - bird
-  - named
 
