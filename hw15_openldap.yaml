@@ -24,6 +24,7 @@
   - networking
   - quagga
   - edgefw
+  - named
 
 - hosts: r1
   vars:
@@ -49,6 +50,7 @@
   roles:
   - networking
   - bird
+  - named
 
 - hosts: be2
   vars:
@@ -61,4 +63,9 @@
   roles:
   - networking
   - bird
+  - named
 
+- hosts: all
+  roles:
+    - dns_resolver
+    - openldap-client

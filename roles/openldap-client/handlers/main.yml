@@ -1,0 +1,4 @@
+---
+- name: restart nslcd
+  systemd: name=nslcd state=restarted enabled=yes
+  become: true

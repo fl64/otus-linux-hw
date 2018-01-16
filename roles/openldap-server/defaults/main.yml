@@ -1,10 +1,10 @@
-openldap_domain: example.com
+openldap_domain: mydomain.tld
 openldap_rootpw: P@ssw0rd
 
 openldap_country: RU
 openldap_state: Moscow
 openldap_city: Moscow
-openldap_org: example inc
+openldap_org: Nexus inc
 
 openldap_tls: yes
 

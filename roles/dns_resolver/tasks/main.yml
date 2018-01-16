@@ -1,0 +1,6 @@
+---
+- name: Create resolver.conf
+  become: true
+  template: src=resolv.j2 dest=/etc/resolv.conf 
+  tags:
+  - resolver

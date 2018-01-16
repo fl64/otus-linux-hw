@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
   config.vm.box_check_update = false
   config.vm.box = "centos/7" 
   config.vm.define "r0" do |r0|
-    r0.vm.hostname = 'r0'
+    r0.vm.hostname = 'r0.mydomain.tld'
     r0.vm.network :"private_network", ip: "10.0.0.10", :name => 'vboxnet0', :adapter => 2
     r0.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan2", :adapter => 3
     r0.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
 
   end
   config.vm.define "r1" do |r1|
-    r1.vm.hostname = 'r1'
+    r1.vm.hostname = 'r1.mydomain.tld'
     r1.vm.network :"private_network", ip: "10.0.0.20", :name => 'vboxnet0', :adapter => 2
     r1.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan2", :adapter => 3
     r1.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan4", :adapter => 4
@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
     end
   end
   config.vm.define "be1" do |be1|
-    be1.vm.hostname = 'be1'
+    be1.vm.hostname = 'be1.mydomain.tld'
     be1.vm.network :"private_network", ip: "10.0.0.30", :name => 'vboxnet0', :adapter => 2
     be1.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan4", :adapter => 3
 #   be1.vm.provision "shell", 
@@ -49,7 +49,7 @@ Vagrant.configure("2") do |config|
     end
   end
   config.vm.define "be2" do |be2|
-    be2.vm.hostname = 'be2'
+    be2.vm.hostname = 'be2.mydomain.tld'
     be2.vm.network :"private_network", ip: "10.0.0.40", :name => 'vboxnet0', :adapter => 2
     be2.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan4", :adapter => 3
 #    be2.vm.provision "shell", 

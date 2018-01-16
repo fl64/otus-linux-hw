@@ -1,0 +1,4 @@
+---
+openldap_domain: mydomain.tld
+openldap_server: r1.mydomain.tld
+openldap_tls: yes

@@ -13,6 +13,13 @@ options {
 
 	bindkeys-file "/etc/named.iscdlv.key";
 
+	forwarders
+	{
+		8.8.8.8;
+		8.8.4.4;
+	};
+
+
 	managed-keys-directory "/var/named/dynamic";
 
 	pid-file "/run/named/named.pid";

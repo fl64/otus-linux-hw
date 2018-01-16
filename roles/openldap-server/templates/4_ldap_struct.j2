@@ -1,0 +1,998 @@
+dn: dc=mydomain,dc=tld
+objectClass: domain
+objectClass: top
+dc: mydomain
+
+dn: cn=ldapadm,dc=mydomain,dc=tld
+objectClass: organizationalRole
+cn: ldapadm
+description: LDAP Manager
+
+dn: ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Computers
+
+dn: ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Users
+
+dn: ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Projects
+
+dn: ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Servers
+
+dn: ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Workstations
+
+dn: ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Services
+
+dn: ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Hosting
+
+dn: ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: DevEnv
+
+dn: ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: TestEnv
+
+dn: ou=Networking,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Networking
+
+dn: ou=Routers,ou=Networking,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Routers
+
+dn: ou=Switches,ou=Networking,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Switches
+
+dn: cn=Admin,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1100
+cn: Admin
+
+dn: cn=Dev,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+cn: Dev
+gidNumber: 1300
+
+dn: cn=QA,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+cn: QA
+gidNumber: 1200
+
+dn: cn=PM,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+cn: PM
+gidNumber: 1400
+
+dn: cn=Head,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+cn: Head
+gidNumber: 1500
+
+dn: cn=Team1,cn=Dev,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+cn: Team1
+gidNumber: 1310
+
+dn: cn=Team2,cn=Dev,ou=Users,dc=mydomain,dc=tld
+cn: Team2
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1120
+
+dn: cn=Team3,cn=Dev,ou=Users,dc=mydomain,dc=tld
+cn: Team3
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1130
+
+dn: cn=cryzal,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+cn: cryzal
+gidNumber: 2002
+memberUid: dev1,dev2,dev3,pm2,qa2
+
+dn: cn=phpbrains,ou=Projects,dc=mydomain,dc=tld
+cn: phpbrains
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2007
+memberUid: dev4,dev5,dev5,qa3,pm3
+
+dn: cn=deepdocker,ou=Projects,dc=mydomain,dc=tld
+cn: deepdocker
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2004
+memberUid: dev1,dev2,dev3,pm2,qa2
+
+dn: cn=javahell,ou=Projects,dc=mydomain,dc=tld
+cn: javahell
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2005
+memberUid: dev4,dev5,dev5,qa3,pm3
+
+dn: cn=pyheaven,ou=Projects,dc=mydomain,dc=tld
+cn: pyheaven
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2008
+memberUid: dev7,dev,8,dev8,qa4,pm4
+
+dn: cn=congresslib,ou=Projects,dc=mydomain,dc=tld
+gidNumber: 2001
+cn: congresslib
+objectClass: top
+objectClass: posixGroup
+memberUid: dev1,dev2,dev3,pm2,qa2
+
+dn: cn=unblockchain,ou=Projects,dc=mydomain,dc=tld
+cn: unblockchain
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2009
+memberUid: dev7,dev,8,dev8,qa4,pm4
+
+dn: cn=cydoniaresort,ou=Projects,dc=mydomain,dc=tld
+cn: cydoniaresort
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2003
+memberUid: dev1,dev2,dev3,pm2,qa2
+
+dn: cn=worldbreakingnews,ou=Projects,dc=mydomain,dc=tld
+cn: worldbreakingnews
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2010
+memberUid: dev7,dev,8,dev8,qa4,pm4
+
+dn: cn=otus.lnx,ou=Projects,dc=mydomain,dc=tld
+cn: otus.lnx
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2006
+memberUid: dev4,dev5,dev5,qa3,pm3
+
+dn: cn=msk-sw-01,ou=Switches,ou=Networking,dc=mydomain,dc=tld
+ipHostNumber: 10.0.99.10
+cn: msk-sw-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-sw-02,ou=Switches,ou=Networking,dc=mydomain,dc=tld
+cn: msk-sw-02
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.0.99.11
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-sw-03,ou=Switches,ou=Networking,dc=mydomain,dc=tld
+cn: msk-sw-03
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.0.99.12
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-sw-04,ou=Switches,ou=Networking,dc=mydomain,dc=tld
+cn: msk-sw-04
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.0.99.13
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-r-01,ou=Routers,ou=Networking,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-r-01
+ipHostNumber: 10.0.99.1
+ipHostNumber: 10.0.0.1
+ipHostNumber: 10.6.6.1
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-r-02,ou=Routers,ou=Networking,dc=mydomain,dc=tld
+ipHostNumber: 10.6.6.2
+ipHostNumber: 10.0.99.2
+ipHostNumber: 10.1.2.1
+ipHostNumber: 10.1.1.1
+ipHostNumber: 10.5.100.1
+ipHostNumber: 10.6.100.1
+cn: msk-r-02
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-int-ns-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+cn: msk-int-ns-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.2.2
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-int-ldap-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+cn: msk-int-ldap-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.2.5
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-int-mon-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+cn: msk-int-mon-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.2.30
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-int-git-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+cn: msk-int-git-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.2.20
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-int-jira-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+cn: msk-int-jira-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.2.21
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-int-backup-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 10.1.2.10
+cn: msk-int-backup-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-host-nginx-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.1.20
+cn: msk-host-nginx-01
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-host-apache-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 10.1.1.10
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-host-apache-01
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-host-tomcat-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.1.30
+cn: msk-host-tomcat-01
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-db-mysql-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.1.120
+cn: msk-db-mysql-01
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-db-postgre-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.1.130
+cn: msk-db-postgre-01
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-db-mongo-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.1.110
+cn: msk-db-mongo-01
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-db-redis-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.1.140
+cn: msk-db-redis-01
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ou: Foregin
+objectClass: top
+objectClass: organizationalUnit
+
+dn: cn=msk-dev-env-01,ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-dev-env-01
+ipHostNumber: 10.1.100.10
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-dev-env-02,ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+cn: msk-dev-env-02
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.100.11
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-dev-env-03,ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+cn: msk-dev-env-03
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.100.12
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-dev-env-04,ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+cn: msk-dev-env-04
+objectClass: device
+objectClass: top
+objectClass: ipHost
+ipHostNumber: 10.1.100.13
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-test-env-01,ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-test-env-01
+ipHostNumber: 10.1.200.10
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-test-env-02,ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-test-env-02
+ipHostNumber: 10.1.200.11
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-test-env-03,ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-test-env-03
+ipHostNumber: 10.1.200.12
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=msk-test-env-04,ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-test-env-04
+ipHostNumber: 10.1.200.13
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=us-ny-srv-01,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: us-ny-srv-01
+ipHostNumber: 1.1.1.1
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=us-ny-srv-02,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: us-ny-srv-02
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=us-ny-srv-03,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: us-ny-srv-03
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=jp-tokyo-srv-01,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: jp-tokyo-srv-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=jp-tokyo-srv-02,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: jp-tokyo-srv-02
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=jp-tokyo-srv-03,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: jp-tokyo-srv-03
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=jp-tokyo-srv-04,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: jp-tokyo-srv-04
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=jp-tokyo-srv-05,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: jp-tokyo-srv-05
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=ir-belfast-srv-01,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: ir-belfast-srv-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=ir-belfast-srv-02,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: ir-belfast-srv-02
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=ir-belfast-srv-03,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: ir-belfast-srv-03
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=fr-paris-srv-01,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: fr-paris-srv-01
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=fr-paris-srv-02,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: fr-paris-srv-02
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=fr-paris-srv-03,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: fr-paris-srv-03
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=fr-paris-srv-04,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+ipHostNumber: 1.1.1.1
+cn: fr-paris-srv-04
+objectClass: device
+objectClass: top
+objectClass: ipHost
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+dn: cn=admin1,cn=Admin,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1101
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: admin1
+homeDirectory: /home/admin1
+uid: admin1
+cn: admin1
+gidNumber: 1100
+employeeType: HeadOfGroupAdmin
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+dn: cn=admin2,cn=Admin,ou=Users,dc=mydomain,dc=tld
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1102
+employeeType: NetworkAdmin
+cn: admin2
+homeDirectory: /home/admin2
+sn: admin2
+uid: admin2
+gidNumber: 1100
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+dn: cn=admin3,cn=Admin,ou=Users,dc=mydomain,dc=tld
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1103
+employeeType: Jr.NetworkAdmin
+cn: admin3
+homeDirectory: /home/admin3
+sn: admin3
+uid: admin3
+gidNumber: 1100
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+dn: cn=admin4,cn=Admin,ou=Users,dc=mydomain,dc=tld
+cn: admin4
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: admin4
+uid: admin4
+homeDirectory: /home/admin4
+uidNumber: 1104
+employeeType: HostingAdmin
+gidNumber: 1100
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+dn: cn=admin5,cn=Admin,ou=Users,dc=mydomain,dc=tld
+cn: admin5
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1105
+sn: admin5
+homeDirectory: /home/admin5
+uid: admin5
+employeeType: Jr.HostingAdmin
+gidNumber: 1100
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+dn: cn=qa1,cn=QA,ou=Users,dc=mydomain,dc=tld
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+cn: qa1
+sn: qa1
+uid: qa1
+uidNumber: 1201
+homeDirectory: /home/qa1
+gidNumber: 1200
+employeeType: HeadOfGroupQA
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=qa2,cn=QA,ou=Users,dc=mydomain,dc=tld
+gidNumber: 1200
+cn: qa2
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1202
+uid: qa2
+sn: qa2
+homeDirectory: /home/qa2
+employeeType: QA Tester
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=qa3,cn=QA,ou=Users,dc=mydomain,dc=tld
+gidNumber: 1200
+cn: qa3
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1203
+uid: qa3
+sn: qa3
+homeDirectory: /home/qa3
+employeeType: QA Tester
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=qa4,cn=QA,ou=Users,dc=mydomain,dc=tld
+gidNumber: 1200
+cn: qa4
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+homeDirectory: /home/qa4
+sn: qa4
+uid: qa4
+uidNumber: 1204
+employeeType: QA Tester
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=qa5,cn=QA,ou=Users,dc=mydomain,dc=tld
+gidNumber: 1200
+cn: qa5
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1205
+uid: qa5
+sn: qa5
+homeDirectory: /home/qa5
+employeeType: QA Tester
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev1,cn=Team1,cn=Dev,ou=Users,dc=mydomain,dc=tld
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+homeDirectory: /home/dev1
+cn: dev1
+gidNumber: 1310
+sn: dev1
+uid: dev1
+uidNumber: 1301
+employeeType: TeamLead
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev2,cn=Team1,cn=Dev,ou=Users,dc=mydomain,dc=tld
+gidNumber: 1310
+cn: dev2
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1302
+sn: dev2
+homeDirectory: /home/dev2
+uid: dev2
+employeeType: Developer
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev3,cn=Team1,cn=Dev,ou=Users,dc=mydomain,dc=tld
+gidNumber: 1310
+cn: dev3
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+homeDirectory: /home/dev3
+sn: dev3
+uid: dev3
+employeeType: Developer
+uidNumber: 1303
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev7,cn=Team3,cn=Dev,ou=Users,dc=mydomain,dc=tld
+employeeType: TeamLead
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+cn: dev7
+uidNumber: 1307
+uid: dev7
+sn: dev7
+homeDirectory: /home/dev7
+gidNumber: 1330
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev4,cn=Team2,cn=Dev,ou=Users,dc=mydomain,dc=tld
+employeeType: TeamLead
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+cn: dev4
+uidNumber: 1304
+gidNumber: 1320
+homeDirectory: /home/dev4
+sn: dev4
+uid: dev4
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev5,cn=Team2,cn=Dev,ou=Users,dc=mydomain,dc=tld
+employeeType: Developer
+homeDirectory: /home/dev2
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+gidNumber: 1320
+cn: dev5
+sn: dev5
+uid: dev5
+uidNumber: 1305
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev8,cn=Team3,cn=Dev,ou=Users,dc=mydomain,dc=tld
+employeeType: Developer
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: dev8
+uid: dev8
+uidNumber: 1308
+gidNumber: 1330
+cn: dev8
+homeDirectory: /home/dev8
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev9,cn=Team3,cn=Dev,ou=Users,dc=mydomain,dc=tld
+employeeType: Developer
+gidNumber: 1330
+cn: dev9
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+homeDirectory: /home/dev9
+sn: dev9
+uid: dev9
+uidNumber: 1309
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=dev6,cn=Team2,cn=Dev,ou=Users,dc=mydomain,dc=tld
+employeeType: Developer
+gidNumber: 1320
+cn: dev6
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+homeDirectory: /home/dev6
+sn: dev6
+uid: dev6
+uidNumber: 1306
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=pm1,cn=PM,ou=Users,dc=mydomain,dc=tld
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+cn: pm1
+employeeType: HeadOfGroupPM
+sn: pm1
+uid: pm1
+homeDirectory: /home/pm1
+gidNumber: 1400
+uidNumber: 1401
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=pm2,cn=PM,ou=Users,dc=mydomain,dc=tld
+cn: pm2
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+employeeType: PM
+uid: pm2
+sn: pm2
+homeDirectory: /home/pm2
+gidNumber: 1400
+uidNumber: 1402
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=pm3,cn=PM,ou=Users,dc=mydomain,dc=tld
+employeeType: PM
+cn: pm3
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uid: pm3
+sn: pm3
+homeDirectory: /home/pm3
+gidNumber: 1400
+uidNumber: 1403
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=pm4,cn=PM,ou=Users,dc=mydomain,dc=tld
+employeeType: PM
+cn: pm4
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uid: pm4
+sn: pm4
+homeDirectory: /home/pm4
+gidNumber: 1400
+uidNumber: 1404
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=head1,cn=Head,ou=Users,dc=mydomain,dc=tld
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+cn: head1
+homeDirectory: /home/head1
+sn: head1
+uid: head1
+gidNumber: 1500
+uidNumber: 1501
+employeeType: CEO
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=head2,cn=Head,ou=Users,dc=mydomain,dc=tld
+gidNumber: 1500
+cn: head2
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1502
+homeDirectory: /home/head2
+sn: head2
+uid: head2
+employeeType: Accountant
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
+
+dn: cn=head3,cn=Head,ou=Users,dc=mydomain,dc=tld
+employeeType: Accountant
+gidNumber: 1500
+cn: head3
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+uidNumber: 1503
+homeDirectory: /home/head3
+sn: head3
+uid: head3
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+loginShell: /bin/bash
