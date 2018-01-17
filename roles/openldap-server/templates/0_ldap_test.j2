@@ -30,7 +30,6 @@ cn: {{ prj.cn }}
 
 {% endfor %}
 
-
 {% for user in Users %}
 dn: cn={{ user.cn }},{{ user.dnp }},{{ dcdn }}
 uidNumber: {{ user.uidnum }}
@@ -48,6 +47,7 @@ gidNumber: {{ user.gid  }}
 employeeType: {{ user.position  }}
 userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
  =
+
 {% endfor %}
 
 {% for dev in Devices %}
