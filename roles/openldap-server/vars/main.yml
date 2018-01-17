@@ -1,0 +1,131 @@
+---
+Orgs:
+ - { ou: "Users",     dnp: "" }
+ - { ou: "Projects",  dnp: "" }
+ - { ou: "Computers", dnp: "" }
+ - { ou: "Servers",      dnp: "ou=Computers" }
+ - { ou: "Workstations", dnp: "ou=Computers" }
+ - { ou: "Hosting",      dnp: "ou=Computers" }
+ - { ou: "DevEnv",       dnp: "ou=Computers" }
+ - { ou: "TestEnv",      dnp: "ou=Computers" }
+ - { ou: "Networking", dnp: "" }
+ - { ou: "Routers",  dnp: "ou=Networking" }
+ - { ou: "Switches", dnp: "ou=Networking" }
+ - { ou: "Foregin",  dnp: "ou=Foregin,ou=Servers,ou=Computers" }
+ - { ou: "Japan",    dnp: "ou=Foregin,ou=Servers,ou=Computers" }
+ - { ou: "US",       dnp: "ou=Foregin,ou=Servers,ou=Computers" }
+ - { ou: "France",   dnp: "ou=Foregin,ou=Servers,ou=Computers" }
+
+Groups:
+- { gid: 1100, cn: "Admin", dnp: "ou=Users" }
+- { gid: 1200, cn: "QA",    dnp: "ou=Users" }
+- { gid: 1300, cn: "Dev",   dnp: "ou=Users" }
+- { gid: 1310, cn: "Team1", dnp: "ou=Dev,ou=Users" }
+- { gid: 1320, cn: "Team2", dnp: "ou=Dev,ou=Users" }
+- { gid: 1330, cn: "Team3", dnp: "ou=Dev,ou=Users" }
+- { gid: 1400, cn: "PM",    dnp: "ou=Users" }
+- { gid: 1500, cn: "Head",  dnp: "ou=Users" }
+
+Projects:
+- { gid: 2001, cn: "cryzal", dnp: "ou=Projects", membersUid: "1310" }
+- { gid: 2002, cn: "phpbrains", dnp: "ou=Projects", membersUid: "1310" }
+- { gid: 2003, cn: "deepdocker", dnp: "ou=Projects", membersUid: "1310" }
+- { gid: 2004, cn: "javahell", dnp: "ou=Projects", membersUid: "1320" }
+- { gid: 2005, cn: "pyheaven", dnp: "ou=Projects", membersUid: "1320" }
+- { gid: 2006, cn: "congresslib", dnp: "ou=Projects", membersUid: "1320" }
+- { gid: 2007, cn: "unblockchain", dnp: "ou=Projects", membersUid: "1320" }
+- { gid: 2008, cn: "cydoniaresort", dnp: "ou=Projects", membersUid: "1320" }
+- { gid: 2009, cn: "worldbreakingnews", dnp: "ou=Projects", membersUid: "1320" }
+- { gid: 2010, cn: "otus.lnx", dnp: "ou=Projects", membersUid: "1330" }
+- { gid: 2011, cn: "prj1", dnp: "ou=Projects", membersUid: "1330" }
+- { gid: 2012, cn: "prj2", dnp: "ou=Projects", membersUid: "1330" }
+- { gid: 2013, cn: "prj3", dnp: "ou=Projects", membersUid: "1330" }
+- { gid: 2014, cn: "prj4", dnp: "ou=Projects", membersUid: "1330" }
+
+Users:
+ - { uidnum: 1101, gid: 1100, cn: "Auguste Piccard", dnp: "cn=Admin,ou=Users", position: "Head of Admin Group" }
+ - { uidnum: 1102, gid: 1100, cn: "Émile Henriot", dnp: "cn=Admin,ou=Users", position: "Network Admin" }
+ - { uidnum: 1103, gid: 1100, cn: "Paul Ehrenfest", dnp: "cn=Admin,ou=Users", position: "Jr.Network Admin" }
+ - { uidnum: 1104, gid: 1100, cn: "Édouard Herzen", dnp: "cn=Admin,ou=Users", position: "HostingA dmin" }
+ - { uidnum: 1105, gid: 1100, cn: "Erwin Schrödinger", dnp: "cn=Admin,ou=Users", position: "Jr.Hosting Admin" }
+
+ - { uidnum: 1201, gid: 1200, cn: "Wolfgang Pauli", dnp: "cn=QA,ou=Users", position: "Head of QA Group" }
+ - { uidnum: 1202, gid: 1200, cn: "Werner Heisenberg", dnp: "cn=QA,ou=Users", position: "QA" }
+ - { uidnum: 1203, gid: 1200, cn: "Ralph Fowler", dnp: "cn=QA,ou=Users", position: "QA" }
+ - { uidnum: 1204, gid: 1200, cn: "Léon Brillouin", dnp: "cn=QA,ou=Users", position: "QA" }
+ - { uidnum: 1205, gid: 1200, cn: "Peter Debye", dnp: "cn=QA,ou=Users", position: "QA" } 
+
+ - { uidnum: 1301, gid: 1310, cn: "Martin Knudsen", dnp: "cn=Team1,cn=Dev,ou=Users", position: "Team Lead" }
+ - { uidnum: 1302, gid: 1310, cn: "William Lawrence", dnp: "cn=Team1,cn=Dev,ou=Users", position: "Developer" } 
+ - { uidnum: 1303, gid: 1310, cn: "Paul Dirac", dnp: "cn=Team1,cn=Dev,ou=Users", position: "Developer" } 
+
+ - { uidnum: 1304, gid: 1320, cn: "Arthur Compton", dnp: "cn=Team2,cn=Dev,ou=Users", position: "Team Lead" }
+ - { uidnum: 1305, gid: 1320, cn: "Max Born", dnp: "cn=Team2,cn=Dev,ou=Users", position: "Developer" } 
+ - { uidnum: 1306, gid: 1320, cn: "Niels Bohr", dnp: "cn=Team2,cn=Dev,ou=Users", position: "Developer" } 
+
+ - { uidnum: 1307, gid: 1330, cn: "Irving Langmuir", dnp: "cn=Team3,cn=Dev,ou=Users", position: "Team Lead" }
+ - { uidnum: 1308, gid: 1330, cn: "Max Planck", dnp: "cn=Team3,cn=Dev,ou=Users", position: "Developer" } 
+ - { uidnum: 1309, gid: 1330, cn: "Marie Curie", dnp: "cn=Team3,cn=Dev,ou=Users", position: "Developer" } 
+
+ - { uidnum: 1401, gid: 1400, cn: "Hendrik Lorentz", dnp: "cn=Team3,ou=Users", position: "Head of PM Group" }
+ - { uidnum: 1402, gid: 1400, cn: "Albert Einstein", dnp: "cn=Team3,ou=Users", position: "Project manager" } 
+ - { uidnum: 1403, gid: 1400, cn: "Paul Langevin", dnp: "cn=Team3,ou=Users", position: "Project manager" }
+ - { uidnum: 1404, gid: 1400, cn: "Charles-Eugène Guye", dnp: "cn=Team3,ou=Users", position: "Project manager" } 
+
+ - { uidnum: 1501, gid: 1500, cn: "Owen Richardson", dnp: "cn=Head,ou=Users", position: "Head of PM Group" }
+ - { uidnum: 1502, gid: 1500, cn: "CTR Wilson", dnp: "cn=Head,ou=Users", position: "Main Accountant" } 
+ - { uidnum: 1503, gid: 1500, cn: "Hendrik Kramers", dnp: "cn=Head,ou=Users", position: "Accountant" }
+
+Devices:
+ - { cn: "msk-sw-01", ip: {"10.0.99.10"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Switches,ou=Networking" }
+ - { cn: "msk-sw-02", ip: {"10.0.99.11"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Switches,ou=Networking" }
+ - { cn: "msk-sw-03", ip: {"10.0.99.12"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Switches,ou=Networking" }
+ - { cn: "msk-sw-04", ip: {"10.0.99.13"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Switches,ou=Networking" }
+
+ - { cn: "msk-int-ns-01", ip: {"10.1.2.2"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Services,ou=Servers,ou=Computers" }
+ - { cn: "msk-int-ns-02", ip: {"10.1.2.4"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Services,ou=Servers,ou=Computers" }
+
+ - { cn: "msk-int-ldap-01",   ip: {"10.1.2.10"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Services,ou=Servers,ou=Computers" }
+ - { cn: "msk-int-mon-01",    ip: {"10.1.2.20"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Services,ou=Servers,ou=Computers" }
+ - { cn: "msk-int-git-01",    ip: {"10.1.2.30"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Services,ou=Servers,ou=Computers" }
+ - { cn: "msk-int-jira-01",   ip: {"10.1.2.31"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Services,ou=Servers,ou=Computers" }
+ - { cn: "msk-int-ldap-01",   ip: {"10.1.2.100"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Services,ou=Servers,ou=Computers" }
+ - { cn: "msk-int-backup-01", ip: {"10.1.2.40"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Services,ou=Servers,ou=Computers" }
+
+ - { cn: "msk-host-apache-01", ip: {"10.1.1.11"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+ - { cn: "msk-host-apache-02", ip: {"10.1.1.12"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+ - { cn: "msk-host-nginx-01",  ip: {"10.1.1.21"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+ - { cn: "msk-host-nginx-02",  ip: {"10.1.1.22"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+ - { cn: "msk-host-tomcat-01", ip: {"10.1.1.30"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+ - { cn: "msk-db-mysql-01",    ip: {"10.1.1.110"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+ - { cn: "msk-db-postgre-01",  ip: {"10.1.1.112"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+ - { cn: "msk-db-mongo-01",    ip: {"10.1.1.120"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+ - { cn: "msk-db-redis-01",    ip: {"10.1.1.122"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Hosting,ou=Servers,ou=Computers" }
+
+ - { cn: "msk-dev-env-01", ip: {"10.1.100.10"}, owner: "cn=Dev,ou=Users,dc=mydomain,dc=tld", dnp: "ou=DevEnv,ou=Servers,ou=Computers" }
+ - { cn: "msk-dev-env-02", ip: {"10.1.100.20"}, owner: "cn=Dev,ou=Users,dc=mydomain,dc=tld", dnp: "ou=DevEnv,ou=Servers,ou=Computers" }
+ - { cn: "msk-dev-env-03", ip: {"10.1.100.30"}, owner: "cn=Dev,ou=Users,dc=mydomain,dc=tld", dnp: "ou=DevEnv,ou=Servers,ou=Computers" }
+ - { cn: "msk-dev-env-04", ip: {"10.1.100.40"}, owner: "cn=Dev,ou=Users,dc=mydomain,dc=tld", dnp: "ou=DevEnv,ou=Servers,ou=Computers" }
+
+ - { cn: "msk-test-env-01", ip: {"10.1.200.10"}, owner: "cn=Dev,ou=Users,dc=mydomain,dc=tld", dnp: "ou=TestEnv,ou=Servers,ou=Computers" }
+ - { cn: "msk-test-env-02", ip: {"10.1.200.20"}, owner: "cn=Dev,ou=Users,dc=mydomain,dc=tld", dnp: "ou=TestEnv,ou=Servers,ou=Computers" }
+ - { cn: "msk-test-env-03", ip: {"10.1.200.30"}, owner: "cn=Dev,ou=Users,dc=mydomain,dc=tld", dnp: "ou=TestEnv,ou=Servers,ou=Computers" }
+ - { cn: "msk-test-env-04", ip: {"10.1.200.40"}, owner: "cn=Dev,ou=Users,dc=mydomain,dc=tld", dnp: "ou=TestEnv,ou=Servers,ou=Computers" }
+
+ - { cn: "jp-tokyo-srv-01", ip: {"117.102.176.202"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Japan,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "jp-tokyo-srv-02", ip: {"117.102.176.203"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Japan,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "jp-tokyo-srv-03", ip: {"117.102.176.204"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Japan,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "jp-tokyo-srv-04", ip: {"117.102.176.205"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=Japan,ou=Foregin,ou=Servers,ou=Computers" }
+
+ - { cn: "us-ny-srv-01", ip: {"138.68.46.177"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=US,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "us-ny-srv-02", ip: {"138.68.46.179"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=US,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "us-la-srv-01", ip: {"138.68.46.180"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=US,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "us-la-srv-02", ip: {"138.68.46.182"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=US,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "us-la-srv-03", ip: {"138.68.46.184"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=US,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "us-la-srv-04", ip: {"138.68.46.185"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=US,ou=Foregin,ou=Servers,ou=Computers" }
+
+ - { cn: "fr-paris-srv-01", ip: {"151.80.124.104"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=France,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "fr-paris-srv-02", ip: {"151.80.124.105"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=France,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "fr-paris-srv-03", ip: {"151.80.124.106"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=France,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "fr-paris-srv-04", ip: {"151.80.124.107"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=France,ou=Foregin,ou=Servers,ou=Computers" }
+ - { cn: "fr-paris-srv-05", ip: {"151.80.124.108","151.80.124.109","151.80.124.110"}, owner: "cn=Admin,ou=Users,dc=mydomain,dc=tld", dnp: "ou=France,ou=Foregin,ou=Servers,ou=Computers" }

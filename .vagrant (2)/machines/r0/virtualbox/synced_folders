@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/user/tishkov.pavel@gmail.com/git/otus-linux-hw","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

@@ -26,10 +26,10 @@
   - {j2: "templates/2_monitor.j2", dst: "/tmp/2_monitor.ldif", owner: "root", group: "root"}
   - {j2: "templates/3_tls.j2", dst: "/tmp/3_tls.ldif", owner: "root", group: "root"}
   - {j2: "templates/4_ldap_struct.j2", dst: "/tmp/4_ldap_struct.ldif", owner: "root", group: "root"}
-  
+  - {j2: "templates/0_ldap_test.j2", dst: "/tmp/0_ldap_test.ldif", owner: "root", group: "root"}
   - {j2: "templates/DBCONFIG.j2", dst: "/var/lib/ldap/DB_CONFIG", owner: "{{ openldap_user }}", group: "{{ openldap_user }}"}
   become: true
-  tags: openldap
+  tags: openldap, test
 
 - name: Deploy ldfs
   command: "ldapmodify -Y EXTERNAL -H ldapi:/// -f {{ item }}"

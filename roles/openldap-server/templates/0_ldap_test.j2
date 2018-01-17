@@ -1,0 +1,64 @@
+{% set dcdn = "dc="+openldap_domain.split('.')[0]+",dc="+openldap_domain.split('.')[1] %}
+dn: {{ dcdn }}
+objectClass: domain
+objectClass: top
+dc: {{ openldap_domain.split('.')[0] }}
+
+{% for org in Orgs %}
+dn: ou={{ org.ou }},{{ org.dnp }},{{ dcdn }}
+objectClass: top
+objectClass: organizationalUnit
+ou: {{ org.ou }}
+
+{% endfor %}
+
+{% for group in Groups %}
+dn: cn={{ group.cn }},{{ group.dnp }},{{ dcdn }}
+objectClass: top
+objectClass: posixGroup
+gidNumber: {{ group.gid }}
+cn: {{ group.cn }}
+
+{% endfor %}
+
+{% for prj in Projects %}
+dn: cn={{ prj.cn }},{{ prj.dnp }},{{ dcdn }}
+objectClass: top
+objectClass: posixGroup
+gidNumber: {{ prj.gid }}
+cn: {{ prj.cn }}
+
+{% endfor %}
+
+
+{% for user in Users %}
+dn: cn={{ user.cn }},{{ user.dnp }},{{ dcdn }}
+uidNumber: {{ user.uidnum }}
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: {{ user.cn.split(' ')[1] }}
+homeDirectory: /home/{{ user.cn.split(' ')[1] | lower }}
+uid: {{ user.cn.split(' ')[0][0] | lower }}.{{ user.cn.split(' ')[1] | lower }}
+cn: {{ user.cn  }}
+gidNumber: {{ user.gid  }}
+employeeType: {{ user.position  }}
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+{% endfor %}
+
+{% for dev in Devices %}
+dn: cn={{ dev.cn }},{{ dev.dnp }},{{ dcdn }}
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: {{ dev.cn }}
+{% for i in dev.ip %}
+ipHostNumber: {{ i }}
+{% endfor %}
+owner: {{ dev.owner }}
+
+{% endfor %}
