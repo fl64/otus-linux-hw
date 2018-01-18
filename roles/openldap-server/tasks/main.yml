@@ -17,7 +17,7 @@
   shell: slappasswd -s {{ openldap_rootpw }} 
   register: rootpw
   become: true 
-  tags: openldap, test
+  tags: openldap
 
 - name: Init ldap
   template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0600
@@ -26,13 +26,12 @@
   - {j2: "templates/2_monitor.j2", dst: "/tmp/2_monitor.ldif", owner: "root", group: "root"}
   - {j2: "templates/3_tls.j2", dst: "/tmp/3_tls.ldif", owner: "root", group: "root"}
   - {j2: "templates/4_ldap_struct.j2", dst: "/tmp/4_ldap_struct.ldif", owner: "root", group: "root"}
-  - {j2: "templates/0_ldap_test.j2", dst: "/tmp/0_ldap_test.ldif", owner: "root", group: "root"}
   - {j2: "templates/DBCONFIG.j2", dst: "/var/lib/ldap/DB_CONFIG", owner: "{{ openldap_user }}", group: "{{ openldap_user }}"}
   become: true
-  tags: openldap, test
+  tags: openldap
 
 - name: Deploy ldfs
-  command: "ldapmodify -Y EXTERNAL -H ldapi:/// -f {{ item }}"
+  command: "ldapmodify -c -Y EXTERNAL -H ldapi:/// -f {{ item }}"
   with_items:
   - /tmp/1_init.ldif
   - /tmp/2_monitor.ldif
@@ -80,9 +79,9 @@
   - /etc/openldap/schema/nis.ldif
   - /etc/openldap/schema/inetorgperson.ldif
   become: true
-  tags: openldap
+  tags: openldap, schema
 
 - name: Deploy ldap sctructure
-  command: 'ldapadd -x -w P@ssw0rd -D "cn=ldapadm,dc=mydomain,dc=tld" -f /tmp/4_ldap_struct.ldif'
+  command: 'ldapadd -c -x -w P@ssw0rd -D "cn=ldapadm,dc=mydomain,dc=tld" -f /tmp/4_ldap_struct.ldif'
   become: true
   tags: openldap

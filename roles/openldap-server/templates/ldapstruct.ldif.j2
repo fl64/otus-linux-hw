@@ -1,0 +1,1463 @@
+# extended LDIF
+#
+# LDAPv3
+# base <dc=mydomain,dc=tld> with scope subtree
+# filter: (objectclass=*)
+# requesting: ALL
+#
+
+# mydomain.tld
+dn: dc=mydomain,dc=tld
+objectClass: domain
+objectClass: top
+dc: mydomain
+
+# Users, mydomain.tld
+dn: ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Users
+
+# Projects, mydomain.tld
+dn: ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Projects
+
+# Computers, mydomain.tld
+dn: ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Computers
+
+# Servers, Computers, mydomain.tld
+dn: ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Servers
+
+# Workstations, Computers, mydomain.tld
+dn: ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Workstations
+
+# Hosting, Servers, Computers, mydomain.tld
+dn: ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Hosting
+
+# DevEnv, Servers, Computers, mydomain.tld
+dn: ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: DevEnv
+
+# TestEnv, Servers, Computers, mydomain.tld
+dn: ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: TestEnv
+
+# Services, Servers, Computers, mydomain.tld
+dn: ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Services
+
+# Networking, mydomain.tld
+dn: ou=Networking,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Networking
+
+# Routers, Networking, mydomain.tld
+dn: ou=Routers,ou=Networking,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Routers
+
+# Switches, Networking, mydomain.tld
+dn: ou=Switches,ou=Networking,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Switches
+
+# Foregin, Servers, Computers, mydomain.tld
+dn: ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Foregin
+
+# Japan, Foregin, Servers, Computers, mydomain.tld
+dn: ou=Japan,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: Japan
+
+# US, Foregin, Servers, Computers, mydomain.tld
+dn: ou=US,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: US
+
+# France, Foregin, Servers, Computers, mydomain.tld
+dn: ou=France,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: top
+objectClass: organizationalUnit
+ou: France
+
+# Admin, Users, mydomain.tld
+dn: cn=Admin,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1100
+cn: Admin
+
+# QA, Users, mydomain.tld
+dn: cn=QA,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1200
+cn: QA
+
+# Dev, Users, mydomain.tld
+dn: cn=Dev,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1300
+cn: Dev
+
+# Team1, Dev, Users, mydomain.tld
+dn: cn=Team1,cn=Dev,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1310
+cn: Team1
+
+# Team2, Dev, Users, mydomain.tld
+dn: cn=Team2,cn=Dev,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1320
+cn: Team2
+
+# Team3, Dev, Users, mydomain.tld
+dn: cn=Team3,cn=Dev,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1330
+cn: Team3
+
+# PM, Users, mydomain.tld
+dn: cn=PM,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1400
+cn: PM
+
+# Head, Users, mydomain.tld
+dn: cn=Head,ou=Users,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 1500
+cn: Head
+
+# cryzal, Projects, mydomain.tld
+dn: cn=cryzal,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2001
+cn: cryzal
+memberUid: 1301,1302,1303
+
+# phpbrains, Projects, mydomain.tld
+dn: cn=phpbrains,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2002
+cn: phpbrains
+memberUid: 1301,1302,1303
+
+# deepdocker, Projects, mydomain.tld
+dn: cn=deepdocker,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2003
+cn: deepdocker
+memberUid: 1301,1302,1303
+
+# javahell, Projects, mydomain.tld
+dn: cn=javahell,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2004
+cn: javahell
+memberUid: 1304,1305,1306
+
+# pyheaven, Projects, mydomain.tld
+dn: cn=pyheaven,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2005
+cn: pyheaven
+memberUid: 1304,1305,1306
+
+# congresslib, Projects, mydomain.tld
+dn: cn=congresslib,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2006
+cn: congresslib
+memberUid: 1304,1305,1306
+
+# unblockchain, Projects, mydomain.tld
+dn: cn=unblockchain,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2007
+cn: unblockchain
+memberUid: 1304,1305,1306
+
+# cydoniaresort, Projects, mydomain.tld
+dn: cn=cydoniaresort,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2008
+cn: cydoniaresort
+memberUid: 1304,1305,1306
+
+# worldbreakingnews, Projects, mydomain.tld
+dn: cn=worldbreakingnews,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2009
+cn: worldbreakingnews
+memberUid: 1304,1305,1306
+
+# otus.lnx, Projects, mydomain.tld
+dn: cn=otus.lnx,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2010
+cn: otus.lnx
+memberUid: 1307,1308,1309
+
+# prj1, Projects, mydomain.tld
+dn: cn=prj1,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2011
+cn: prj1
+memberUid: 1307,1308,1309
+
+# prj2, Projects, mydomain.tld
+dn: cn=prj2,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2012
+cn: prj2
+memberUid: 1307,1308,1309
+
+# prj3, Projects, mydomain.tld
+dn: cn=prj3,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2013
+cn: prj3
+memberUid: 1307,1308,1309
+
+# prj4, Projects, mydomain.tld
+dn: cn=prj4,ou=Projects,dc=mydomain,dc=tld
+objectClass: top
+objectClass: posixGroup
+gidNumber: 2014
+cn: prj4
+memberUid: 1307,1308,1309
+
+# Auguste Piccard, Admin, Users, mydomain.tld
+dn: cn=Auguste Piccard,cn=Admin,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1101
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Piccard
+homeDirectory: /home/piccard
+uid: a.piccard
+cn: Auguste Piccard
+gidNumber: 1100
+employeeType: Head of Admin Group
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Emile Henriot, Admin, Users, mydomain.tld
+dn: cn=Emile Henriot,cn=Admin,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1102
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Henriot
+homeDirectory: /home/henriot
+uid: e.henriot
+cn: Emile Henriot
+gidNumber: 1100
+employeeType: Network Admin
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Paul Ehrenfest, Admin, Users, mydomain.tld
+dn: cn=Paul Ehrenfest,cn=Admin,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1103
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Ehrenfest
+homeDirectory: /home/ehrenfest
+uid: p.ehrenfest
+cn: Paul Ehrenfest
+gidNumber: 1100
+employeeType: Jr.Network Admin
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Edouard Herzen, Admin, Users, mydomain.tld
+dn: cn=Edouard Herzen,cn=Admin,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1104
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Herzen
+homeDirectory: /home/herzen
+uid: e.herzen
+cn: Edouard Herzen
+gidNumber: 1100
+employeeType: HostingA dmin
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Erwin Schrodinger, Admin, Users, mydomain.tld
+dn: cn=Erwin Schrodinger,cn=Admin,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1105
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Schrodinger
+homeDirectory: /home/schrodinger
+uid: e.schrodinger
+cn: Erwin Schrodinger
+gidNumber: 1100
+employeeType: Jr.Hosting Admin
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Wolfgang Pauli, QA, Users, mydomain.tld
+dn: cn=Wolfgang Pauli,cn=QA,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1201
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Pauli
+homeDirectory: /home/pauli
+uid: w.pauli
+cn: Wolfgang Pauli
+gidNumber: 1200
+employeeType: Head of QA Group
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Werner Heisenberg, QA, Users, mydomain.tld
+dn: cn=Werner Heisenberg,cn=QA,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1202
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Heisenberg
+homeDirectory: /home/heisenberg
+uid: w.heisenberg
+cn: Werner Heisenberg
+gidNumber: 1200
+employeeType: QA
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Ralph Fowler, QA, Users, mydomain.tld
+dn: cn=Ralph Fowler,cn=QA,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1203
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Fowler
+homeDirectory: /home/fowler
+uid: r.fowler
+cn: Ralph Fowler
+gidNumber: 1200
+employeeType: QA
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# L\C3\A9on Brillouin, QA, Users, mydomain.tld
+dn:: Y249TMOpb24gQnJpbGxvdWluLGNuPVFBLG91PVVzZXJzLGRjPW15ZG9tYWluLGRjPXRsZA==
+uidNumber: 1204
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Brillouin
+homeDirectory: /home/brillouin
+uid: l.brillouin
+cn:: TMOpb24gQnJpbGxvdWlu
+gidNumber: 1200
+employeeType: QA
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Peter Debye, QA, Users, mydomain.tld
+dn: cn=Peter Debye,cn=QA,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1205
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Debye
+homeDirectory: /home/debye
+uid: p.debye
+cn: Peter Debye
+gidNumber: 1200
+employeeType: QA
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Martin Knudsen, Team1, Dev, Users, mydomain.tld
+dn: cn=Martin Knudsen,cn=Team1,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1301
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Knudsen
+homeDirectory: /home/knudsen
+uid: m.knudsen
+cn: Martin Knudsen
+gidNumber: 1310
+employeeType: Team Lead
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# William Lawrence, Team1, Dev, Users, mydomain.tld
+dn: cn=William Lawrence,cn=Team1,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1302
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Lawrence
+homeDirectory: /home/lawrence
+uid: w.lawrence
+cn: William Lawrence
+gidNumber: 1310
+employeeType: Developer
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Paul Dirac, Team1, Dev, Users, mydomain.tld
+dn: cn=Paul Dirac,cn=Team1,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1303
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Dirac
+homeDirectory: /home/dirac
+uid: p.dirac
+cn: Paul Dirac
+gidNumber: 1310
+employeeType: Developer
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Arthur Compton, Team2, Dev, Users, mydomain.tld
+dn: cn=Arthur Compton,cn=Team2,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1304
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Compton
+homeDirectory: /home/compton
+uid: a.compton
+cn: Arthur Compton
+gidNumber: 1320
+employeeType: Team Lead
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Max Born, Team2, Dev, Users, mydomain.tld
+dn: cn=Max Born,cn=Team2,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1305
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Born
+homeDirectory: /home/born
+uid: m.born
+cn: Max Born
+gidNumber: 1320
+employeeType: Developer
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Niels Bohr, Team2, Dev, Users, mydomain.tld
+dn: cn=Niels Bohr,cn=Team2,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1306
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Bohr
+homeDirectory: /home/bohr
+uid: n.bohr
+cn: Niels Bohr
+gidNumber: 1320
+employeeType: Developer
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Irving Langmuir, Team3, Dev, Users, mydomain.tld
+dn: cn=Irving Langmuir,cn=Team3,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1307
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Langmuir
+homeDirectory: /home/langmuir
+uid: i.langmuir
+cn: Irving Langmuir
+gidNumber: 1330
+employeeType: Team Lead
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Max Planck, Team3, Dev, Users, mydomain.tld
+dn: cn=Max Planck,cn=Team3,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1308
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Planck
+homeDirectory: /home/planck
+uid: m.planck
+cn: Max Planck
+gidNumber: 1330
+employeeType: Developer
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Marie Curie, Team3, Dev, Users, mydomain.tld
+dn: cn=Marie Curie,cn=Team3,cn=Dev,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1309
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Curie
+homeDirectory: /home/curie
+uid: m.curie
+cn: Marie Curie
+gidNumber: 1330
+employeeType: Developer
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Hendrik Lorentz, PM, Users, mydomain.tld
+dn: cn=Hendrik Lorentz,cn=PM,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1401
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Lorentz
+homeDirectory: /home/lorentz
+uid: h.lorentz
+cn: Hendrik Lorentz
+gidNumber: 1400
+employeeType: Head of PM Group
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Albert Einstein, PM, Users, mydomain.tld
+dn: cn=Albert Einstein,cn=PM,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1402
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Einstein
+homeDirectory: /home/einstein
+uid: a.einstein
+cn: Albert Einstein
+gidNumber: 1400
+employeeType: Project manager
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Paul Langevin, PM, Users, mydomain.tld
+dn: cn=Paul Langevin,cn=PM,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1403
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Langevin
+homeDirectory: /home/langevin
+uid: p.langevin
+cn: Paul Langevin
+gidNumber: 1400
+employeeType: Project manager
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Charles-Eug\C3\A8ne Guye, PM, Users, mydomain.tld
+dn:: Y249Q2hhcmxlcy1FdWfDqG5lIEd1eWUsY249UE0sb3U9VXNlcnMsZGM9bXlkb21haW4sZGM9d
+ Gxk
+uidNumber: 1404
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Guye
+homeDirectory: /home/guye
+uid: c.guye
+cn:: Q2hhcmxlcy1FdWfDqG5lIEd1eWU=
+gidNumber: 1400
+employeeType: Project manager
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Owen Richardson, Head, Users, mydomain.tld
+dn: cn=Owen Richardson,cn=Head,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1501
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Richardson
+homeDirectory: /home/richardson
+uid: o.richardson
+cn: Owen Richardson
+gidNumber: 1500
+employeeType: Head of PM Group
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# CTR Wilson, Head, Users, mydomain.tld
+dn: cn=CTR Wilson,cn=Head,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1502
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Wilson
+homeDirectory: /home/wilson
+uid: c.wilson
+cn: CTR Wilson
+gidNumber: 1500
+employeeType: Main Accountant
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# Hendrik Kramers, Head, Users, mydomain.tld
+dn: cn=Hendrik Kramers,cn=Head,ou=Users,dc=mydomain,dc=tld
+uidNumber: 1503
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+objectClass: top
+objectClass: shadowAccount
+objectClass: posixAccount
+sn: Kramers
+homeDirectory: /home/kramers
+uid: h.kramers
+cn: Hendrik Kramers
+gidNumber: 1500
+employeeType: Accountant
+loginShell: /bin/bash
+userPassword:: e1NTSEF9cnFGZWZOTTRaWlBNcnd6MnNqYkF3VVhwankwR21lQnFYbUxHOWc9PQ=
+ =
+
+# msk-r-01, Routers, Networking, mydomain.tld
+dn: cn=msk-r-01,ou=Routers,ou=Networking,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-r-01
+ipHostNumber: 10.0.88.1
+ipHostNumber: 10.1.200.1
+ipHostNumber: 10.1.2.1
+ipHostNumber: 10.1.100.1
+ipHostNumber: 10.1.1.1
+ipHostNumber: 10.0.99.1
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-r-02, Routers, Networking, mydomain.tld
+dn: cn=msk-r-02,ou=Routers,ou=Networking,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-r-02
+ipHostNumber: 10.0.88.2
+ipHostNumber: 10.0.99.2
+ipHostNumber: 10.0.0.1
+ipHostNumber: 10.0.1.1
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-sw-01, Switches, Networking, mydomain.tld
+dn: cn=msk-sw-01,ou=Switches,ou=Networking,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-sw-01
+ipHostNumber: 10.0.99.10
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-sw-02, Switches, Networking, mydomain.tld
+dn: cn=msk-sw-02,ou=Switches,ou=Networking,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-sw-02
+ipHostNumber: 10.0.99.11
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-sw-03, Switches, Networking, mydomain.tld
+dn: cn=msk-sw-03,ou=Switches,ou=Networking,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-sw-03
+ipHostNumber: 10.0.99.12
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-sw-04, Switches, Networking, mydomain.tld
+dn: cn=msk-sw-04,ou=Switches,ou=Networking,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-sw-04
+ipHostNumber: 10.0.99.13
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-int-ns-01, Services, Servers, Computers, mydomain.tld
+dn: cn=msk-int-ns-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-int-ns-01
+ipHostNumber: 10.1.2.2
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-int-ns-02, Services, Servers, Computers, mydomain.tld
+dn: cn=msk-int-ns-02,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-int-ns-02
+ipHostNumber: 10.1.2.4
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-int-ldap-01, Services, Servers, Computers, mydomain.tld
+dn: cn=msk-int-ldap-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-int-ldap-01
+ipHostNumber: 10.1.2.10
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-int-mon-01, Services, Servers, Computers, mydomain.tld
+dn: cn=msk-int-mon-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-int-mon-01
+ipHostNumber: 10.1.2.20
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-int-git-01, Services, Servers, Computers, mydomain.tld
+dn: cn=msk-int-git-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-int-git-01
+ipHostNumber: 10.1.2.30
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-int-jira-01, Services, Servers, Computers, mydomain.tld
+dn: cn=msk-int-jira-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-int-jira-01
+ipHostNumber: 10.1.2.31
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-int-backup-01, Services, Servers, Computers, mydomain.tld
+dn: cn=msk-int-backup-01,ou=Services,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-int-backup-01
+ipHostNumber: 10.1.2.40
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-host-apache-01, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-host-apache-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-host-apache-01
+ipHostNumber: 10.1.1.11
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-host-apache-02, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-host-apache-02,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-host-apache-02
+ipHostNumber: 10.1.1.12
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-host-nginx-01, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-host-nginx-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-host-nginx-01
+ipHostNumber: 10.1.1.21
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-host-nginx-02, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-host-nginx-02,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-host-nginx-02
+ipHostNumber: 10.1.1.22
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-host-tomcat-01, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-host-tomcat-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-host-tomcat-01
+ipHostNumber: 10.1.1.30
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-db-mysql-01, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-db-mysql-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-db-mysql-01
+ipHostNumber: 10.1.1.110
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-db-postgre-01, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-db-postgre-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-db-postgre-01
+ipHostNumber: 10.1.1.112
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-db-mongo-01, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-db-mongo-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-db-mongo-01
+ipHostNumber: 10.1.1.120
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-db-redis-01, Hosting, Servers, Computers, mydomain.tld
+dn: cn=msk-db-redis-01,ou=Hosting,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-db-redis-01
+ipHostNumber: 10.1.1.122
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-dev-env-01, DevEnv, Servers, Computers, mydomain.tld
+dn: cn=msk-dev-env-01,ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-dev-env-01
+ipHostNumber: 10.1.100.10
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+# msk-dev-env-02, DevEnv, Servers, Computers, mydomain.tld
+dn: cn=msk-dev-env-02,ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-dev-env-02
+ipHostNumber: 10.1.100.20
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+# msk-dev-env-03, DevEnv, Servers, Computers, mydomain.tld
+dn: cn=msk-dev-env-03,ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-dev-env-03
+ipHostNumber: 10.1.100.30
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+# msk-dev-env-04, DevEnv, Servers, Computers, mydomain.tld
+dn: cn=msk-dev-env-04,ou=DevEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-dev-env-04
+ipHostNumber: 10.1.100.40
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+# msk-test-env-01, TestEnv, Servers, Computers, mydomain.tld
+dn: cn=msk-test-env-01,ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-test-env-01
+ipHostNumber: 10.1.200.10
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+# msk-test-env-02, TestEnv, Servers, Computers, mydomain.tld
+dn: cn=msk-test-env-02,ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-test-env-02
+ipHostNumber: 10.1.200.20
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+# msk-test-env-03, TestEnv, Servers, Computers, mydomain.tld
+dn: cn=msk-test-env-03,ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-test-env-03
+ipHostNumber: 10.1.200.30
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+# msk-test-env-04, TestEnv, Servers, Computers, mydomain.tld
+dn: cn=msk-test-env-04,ou=TestEnv,ou=Servers,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-test-env-04
+ipHostNumber: 10.1.200.40
+owner: cn=Dev,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-01, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-01,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-01
+ipHostNumber: 10.0.0.11
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-02, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-02,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-02
+ipHostNumber: 10.0.0.12
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-03, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-03,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-03
+ipHostNumber: 10.0.0.13
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-04, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-04,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-04
+ipHostNumber: 10.0.0.14
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-05, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-05,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-05
+ipHostNumber: 10.0.0.15
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-06, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-06,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-06
+ipHostNumber: 10.0.0.16
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-07, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-07,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-07
+ipHostNumber: 10.0.0.17
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-08, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-08,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-08
+ipHostNumber: 10.0.0.18
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-09, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-09,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-09
+ipHostNumber: 10.0.0.19
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-10, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-10,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-10
+ipHostNumber: 10.0.0.20
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-11, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-11,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-11
+ipHostNumber: 10.0.0.21
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-12, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-12,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-12
+ipHostNumber: 10.0.0.22
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-13, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-13,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-13
+ipHostNumber: 10.0.0.23
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-14, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-14,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-14
+ipHostNumber: 10.0.0.24
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-15, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-15,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-15
+ipHostNumber: 10.0.0.25
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-16, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-16,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-16
+ipHostNumber: 10.0.0.26
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-17, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-17,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-17
+ipHostNumber: 10.0.0.27
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-18, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-18,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-18
+ipHostNumber: 10.0.0.28
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-19, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-19,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-19
+ipHostNumber: 10.0.0.29
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-20, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-20,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-20
+ipHostNumber: 10.0.0.30
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-31, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-31,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-31
+ipHostNumber: 10.0.0.31
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-32, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-32,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-32
+ipHostNumber: 10.0.0.32
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-33, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-33,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-33
+ipHostNumber: 10.0.0.33
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-34, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-34,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-34
+ipHostNumber: 10.0.0.34
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-35, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-35,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-35
+ipHostNumber: 10.0.0.35
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-36, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-36,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-36
+ipHostNumber: 10.0.0.36
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-37, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-37,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-37
+ipHostNumber: 10.0.0.37
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# msk-wks-38, Workstations, Computers, mydomain.tld
+dn: cn=msk-wks-38,ou=Workstations,ou=Computers,dc=mydomain,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: msk-wks-38
+ipHostNumber: 10.0.0.38
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# jp-tokyo-srv-01, Japan, Foregin, Servers, Computers, mydomain.tld
+dn: cn=jp-tokyo-srv-01,ou=Japan,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain
+ ,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: jp-tokyo-srv-01
+ipHostNumber: 117.102.176.202
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# jp-tokyo-srv-02, Japan, Foregin, Servers, Computers, mydomain.tld
+dn: cn=jp-tokyo-srv-02,ou=Japan,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain
+ ,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: jp-tokyo-srv-02
+ipHostNumber: 117.102.176.203
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# jp-tokyo-srv-03, Japan, Foregin, Servers, Computers, mydomain.tld
+dn: cn=jp-tokyo-srv-03,ou=Japan,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain
+ ,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: jp-tokyo-srv-03
+ipHostNumber: 117.102.176.204
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# jp-tokyo-srv-04, Japan, Foregin, Servers, Computers, mydomain.tld
+dn: cn=jp-tokyo-srv-04,ou=Japan,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain
+ ,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: jp-tokyo-srv-04
+ipHostNumber: 117.102.176.205
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# us-ny-srv-01, US, Foregin, Servers, Computers, mydomain.tld
+dn: cn=us-ny-srv-01,ou=US,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: us-ny-srv-01
+ipHostNumber: 138.68.46.177
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# us-ny-srv-02, US, Foregin, Servers, Computers, mydomain.tld
+dn: cn=us-ny-srv-02,ou=US,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: us-ny-srv-02
+ipHostNumber: 138.68.46.179
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# us-la-srv-01, US, Foregin, Servers, Computers, mydomain.tld
+dn: cn=us-la-srv-01,ou=US,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: us-la-srv-01
+ipHostNumber: 138.68.46.180
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# us-la-srv-02, US, Foregin, Servers, Computers, mydomain.tld
+dn: cn=us-la-srv-02,ou=US,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: us-la-srv-02
+ipHostNumber: 138.68.46.182
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# us-la-srv-03, US, Foregin, Servers, Computers, mydomain.tld
+dn: cn=us-la-srv-03,ou=US,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: us-la-srv-03
+ipHostNumber: 138.68.46.184
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# us-la-srv-04, US, Foregin, Servers, Computers, mydomain.tld
+dn: cn=us-la-srv-04,ou=US,ou=Foregin,ou=Servers,ou=Computers,dc=mydomain,dc=tl
+ d
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: us-la-srv-04
+ipHostNumber: 138.68.46.185
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# fr-paris-srv-01, France, Foregin, Servers, Computers, mydomain.tld
+dn: cn=fr-paris-srv-01,ou=France,ou=Foregin,ou=Servers,ou=Computers,dc=mydomai
+ n,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: fr-paris-srv-01
+ipHostNumber: 151.80.124.104
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# fr-paris-srv-02, France, Foregin, Servers, Computers, mydomain.tld
+dn: cn=fr-paris-srv-02,ou=France,ou=Foregin,ou=Servers,ou=Computers,dc=mydomai
+ n,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: fr-paris-srv-02
+ipHostNumber: 151.80.124.105
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# fr-paris-srv-03, France, Foregin, Servers, Computers, mydomain.tld
+dn: cn=fr-paris-srv-03,ou=France,ou=Foregin,ou=Servers,ou=Computers,dc=mydomai
+ n,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: fr-paris-srv-03
+ipHostNumber: 151.80.124.106
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# fr-paris-srv-04, France, Foregin, Servers, Computers, mydomain.tld
+dn: cn=fr-paris-srv-04,ou=France,ou=Foregin,ou=Servers,ou=Computers,dc=mydomai
+ n,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: fr-paris-srv-04
+ipHostNumber: 151.80.124.107
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# fr-paris-srv-05, France, Foregin, Servers, Computers, mydomain.tld
+dn: cn=fr-paris-srv-05,ou=France,ou=Foregin,ou=Servers,ou=Computers,dc=mydomai
+ n,dc=tld
+objectClass: device
+objectClass: top
+objectClass: ipHost
+cn: fr-paris-srv-05
+ipHostNumber: 151.80.124.108
+owner: cn=Admin,ou=Users,dc=mydomain,dc=tld
+
+# search result
+search: 2
+result: 0 Success
+
+# numResponses: 139
+# numEntries: 138

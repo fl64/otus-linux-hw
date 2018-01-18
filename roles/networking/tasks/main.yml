@@ -31,4 +31,4 @@
   notify:
   - restart network
   tags: networking
-
+- meta: flush_handlers

@@ -1,6 +1,10 @@
 ---
 - name: Create resolver.conf
-  become: true
+  
   template: src=resolv.j2 dest=/etc/resolv.conf 
+  notify:
+  - restart network
+  become: true
   tags:
   - resolver
+- meta: flush_handlers

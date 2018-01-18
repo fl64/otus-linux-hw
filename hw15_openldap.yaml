@@ -67,5 +67,5 @@
 
 - hosts: all
   roles:
-    - dns_resolver
-    - openldap-client
+  - dns_resolver
+  - openldap-client
