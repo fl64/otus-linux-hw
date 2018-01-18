@@ -73,15 +73,19 @@
   tags: openldap
 
 - name: Deploy shcemas
-  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f {{ item }}"
+  command: "ldapadd -Y EXTERNAL -H ldapi:/// -f {{ item.schema }}"
+  args:
+    creates: "{{ item.file }}"
   with_items:
-  - /etc/openldap/schema/cosine.ldif
-  - /etc/openldap/schema/nis.ldif
-  - /etc/openldap/schema/inetorgperson.ldif
+  - { schema: "/etc/openldap/schema/cosine.ldif", file: "/etc/openldap/slapd.d/cn=config/cn=schema/cn={1}cosine.ldif" }
+  - { schema: "/etc/openldap/schema/nis.ldif", file: "/etc/openldap/slapd.d/cn=config/cn=schema/cn={2}nis.ldif" }
+  - { schema: "/etc/openldap/schema/inetorgperson.ldif", file: "/etc/openldap/slapd.d/cn=config/cn=schema/cn={3}inetorgperson.ldif"}
   become: true
   tags: openldap, schema
 
 - name: Deploy ldap sctructure
   command: 'ldapadd -c -x -w P@ssw0rd -D "cn=ldapadm,dc=mydomain,dc=tld" -f /tmp/4_ldap_struct.ldif'
+  register: result
+  failed_when: ( result.rc != 68 and result.rc != 0 )
   become: true
   tags: openldap
