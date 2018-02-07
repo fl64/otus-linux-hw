@@ -19,7 +19,7 @@
   - edge: yes
   - dns_type: master
   - interfaces: 
-    - {device: "eth2.2", ip: "10.2.2.1", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
+    - {device: "enp0s9.2", ip: "10.2.2.1", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
   roles:
   - networking
   - quagga
@@ -32,8 +32,8 @@
     - {ip: "10.4.4.10"}
     - {ip: "10.4.4.20"}
   - interfaces: 
-    - {device: "eth2.2", ip: "10.2.2.254", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
-    - {device: "eth3.4", ip: "10.4.4.254", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes }
+    - {device: "enp0s9.2", ip: "10.2.2.254", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
+    - {device: "enp0s10.4", ip: "10.4.4.254", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes }
   roles:
   - networking
   - quagga
@@ -45,7 +45,7 @@
   - bfdneigh:
     - {ip: "10.4.4.254"}
   - interfaces:
-    - {device: "eth2.4", ip: "10.4.4.10", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes}
+    - {device: "enp0s9.4", ip: "10.4.4.10", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes}
     - {device: "dummy0", ip: "10.99.99.1", net: "10.99.99.0", prefix: 24, area: 1 }
   roles:
   - networking
@@ -58,7 +58,7 @@
   - bfdneigh:
     - {ip: "10.4.4.254"}
   - interfaces:
-    - {device: "eth2.4", ip: "10.4.4.20", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1 , bfd: yes}
+    - {device: "enp0s9.4", ip: "10.4.4.20", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1 , bfd: yes}
     - {device: "dummy0", ip: "10.99.99.1", net: "10.99.99.0", prefix: 24, area: 1 }
   roles:
   - networking
@@ -68,4 +68,8 @@
 - hosts: all
   roles:
   - dns_resolver
+
+
+- hosts: all
+  roles:
   - openldap-client

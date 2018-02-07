@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_agent = true
 
   config.vm.box_check_update = false
-  config.vm.box = "centos/7" 
+  config.vm.box = "generic/centos7" 
   config.vm.define "r0" do |r0|
     r0.vm.hostname = 'r0.mydomain.tld'
     r0.vm.network :"private_network", ip: "10.0.0.10", :name => 'vboxnet0', :adapter => 2
@@ -20,6 +20,8 @@ Vagrant.configure("2") do |config|
     end
 
   end
+  config.vm.box_check_update = false
+  config.vm.box = "generic/centos7" 
   config.vm.define "r1" do |r1|
     r1.vm.hostname = 'r1.mydomain.tld'
     r1.vm.network :"private_network", ip: "10.0.0.20", :name => 'vboxnet0', :adapter => 2
@@ -34,6 +36,8 @@ Vagrant.configure("2") do |config|
       vb.linked_clone = true
     end
   end
+  config.vm.box_check_update = false
+  config.vm.box = "generic/centos7" 
   config.vm.define "be1" do |be1|
     be1.vm.hostname = 'be1.mydomain.tld'
     be1.vm.network :"private_network", ip: "10.0.0.30", :name => 'vboxnet0', :adapter => 2
@@ -48,6 +52,8 @@ Vagrant.configure("2") do |config|
       vb.linked_clone = true
     end
   end
+  config.vm.box_check_update = false
+  config.vm.box = "generic/centos7"   
   config.vm.define "be2" do |be2|
     be2.vm.hostname = 'be2.mydomain.tld'
     be2.vm.network :"private_network", ip: "10.0.0.40", :name => 'vboxnet0', :adapter => 2

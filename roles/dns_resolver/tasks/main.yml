@@ -1,10 +1,40 @@
 ---
+- name: Disable dhcpclient modify resolve.conf for enp0s3
+  lineinfile: dest=/etc/sysconfig/network-scripts/ifcfg-enp0s3
+              regexp='^PEERDNS=no'
+              insertafter=EOF
+              line='PEERDNS=no'
+#  notify:
+#  - restart network
+  tags: 
+  - resolver
+  become: true
+
 - name: Create resolver.conf
-  
+
   template: src=resolv.j2 dest=/etc/resolv.conf 
-  notify:
-  - restart network
+#  notify:
+#  - restart network
   become: true
   tags:
   - resolver
-- meta: flush_handlers
+
+
+
+#- meta: flush_handlers
+
+#- name: wait for ping 8.8.8.8
+#  command: "ping -c 4 8.8.8.8"
+#  register: test
+#  tags:
+#  - resolver  
+#- debug: msg={{ test }}
+#  tags:
+#  - resolver
+
+
+#
+#- name: Waiting for the repos
+#  wait_for: host=http://mirror.centos.org port=80 delay=5 state=started
+#  tags: 
+#  - resolver

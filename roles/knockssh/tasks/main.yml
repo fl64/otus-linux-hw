@@ -25,8 +25,8 @@
   - '-A INPUT -m state --state RELATED,ESTABLISHED -m comment --comment "Accept existing connections" -j ACCEPT'
   - '-A INPUT -p ospf -m comment --comment "Allow OSPF" -j ACCEPT'
   - '-A INPUT -p icmp -m comment --comment "Allow ICMP" -j ACCEPT'
-  - '-A INPUT -i eth1 -p tcp --dport 22 -m comment --comment "Allow SSH for tech net" -j ACCEPT'
-  - '-A INPUT -i eth0 -p tcp --dport 22 -m comment --comment "Allow SSH for vagrant" -j ACCEPT'
+  - '-A INPUT -i enp0s8 -p tcp --dport 22 -m comment --comment "Allow SSH for tech net" -j ACCEPT'
+  - '-A INPUT -i enp0s3 -p tcp --dport 22 -m comment --comment "Allow SSH for vagrant" -j ACCEPT'
 
   - '-A INPUT -m comment --comment "Go to knock cahins" -j KNOCK '
   - '-A INPUT -m comment --comment "Reject with ICMP" -j REJECT --reject-with icmp-host-prohibited'
@@ -40,9 +40,9 @@
 # - name: Accept all local traffic
 #   become: true
 #   iptables: chain=INPUT in_interface=lo jump=ACCEPT
-# - name: Accept SSH on eth1 interfaces
+# - name: Accept SSH on enp0s8 interfaces
 #   become: true
-#   iptables: chain=INPUT protocol=tcp in_interface=eth1 destination_port=22 jump=ACCEPT
+#   iptables: chain=INPUT protocol=tcp in_interface=enp0s8 destination_port=22 jump=ACCEPT
 # - name: Accept ESTABLISHED, RELATED input traffice
 #   become: true
 #   iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
@@ -54,10 +54,10 @@
 #   become: true
 #   iptables: chain=OUTPUT protocol=ospf jump=ACCEPT
 #   #DNS
-# - name: Accept DNS (tcp) on eth2.2
+# - name: Accept DNS (tcp) on enp0s9.2
 #   become: true
 #   iptables: chain=INPUT protocol=tcp destination_port=53 jump=ACCEPT
-# - name: Accept DNS (udp) on eth2.2
+# - name: Accept DNS (udp) on enp0s9.2
 #   become: true
 #   iptables: chain=INPUT protocol=udp destination_port=53 jump=ACCEPT
 # - name: Jump to KNOCK
@@ -81,7 +81,7 @@
 #  - '-A INPUT -m state --state RELATED,ESTABLISHED -m comment --comment "Accept existing connections" -j ACCEPT'
 #  - '-A INPUT -p ospf -m comment --comment "Allow OSPF" -j ACCEPT'
 #  - '-A INPUT -p icmp -m comment --comment "Allow ICMP" -j ACCEPT'
-#  - '-A INPUT -i eth1 -p tcp --dport 22 -m comment --comment "Allow SSH for tech net" -j ACCEPT'
+#  - '-A INPUT -i enp0s8 -p tcp --dport 22 -m comment --comment "Allow SSH for tech net" -j ACCEPT'
 #  - '-N KNOCK'
 #  - '-A INPUT -m comment --comment "Go to knock cahins" -j KNOCK '
 #  - '-A INPUT -m comment --comment "Reject with ICMP" -j REJECT --reject-with icmp-host-prohibited'
