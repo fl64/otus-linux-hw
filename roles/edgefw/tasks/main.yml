@@ -66,6 +66,17 @@
   iptables: chain=INPUT protocol=udp destination_port=123 jump=ACCEPT
   tags: edgefw
 
+### BACULA
+- name: Accept Bacula SD
+  become: true
+  iptables: chain=INPUT protocol=tcp destination_port=9103 jump=ACCEPT
+  tags: edgefw
+
+- name: Accept Bacula FD
+  become: true
+  iptables: chain=INPUT protocol=tcp destination_port=9102 jump=ACCEPT
+  tags: edgefw
+
 
 # FORWARD
   # - "-A FORWARD -i enp0s9.2 -o enp0s3 -j ACCEPT"

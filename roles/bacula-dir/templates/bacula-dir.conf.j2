@@ -1,0 +1,196 @@
+Director {                            # define myself
+  Name = bacula-dir
+  DIRport = 9101                # where we listen for UA connections
+  QueryFile = "/etc/bacula/query.sql"
+  WorkingDirectory = "/var/spool/bacula"
+  PidDirectory = "/var/run"
+  Maximum Concurrent Jobs = 1
+  Password = "{{ bacula_dir.pass }}"         # Console password
+  Messages = Daemon
+  DirAddress = {{ bacula_dir.ip }}
+}
+
+JobDefs {
+  Name = "DefaultBackupJob"
+  Type = Backup
+  Level = Incremental
+  FileSet = "ConfigFileSet"
+  Schedule = "WeeklyCycle"
+  Storage = File
+  Messages = Standard
+  Pool = File
+  Full Backup Pool = Full-Pool
+  Incremental Backup Pool = Inc-Pool
+  Differential Backup Pool = Diff-Pool
+  Priority = 10
+  Write Bootstrap = "/var/spool/bacula/%c.bsr"
+}
+
+{% for client in bacula_fd.client %}
+Job {
+  Name = "BackupConfigs-{{ client.name }}"
+  JobDefs = "DefaultBackupJob"
+  Client = bacula-fd-{{ client.name }}
+}
+{% endfor %}
+
+
+JobDefs {
+  Name = "DefaultRestoreJob"
+  Type = Restore
+  FileSet="ConfigFileSet"                  
+  Storage = File                      
+  Pool = Default
+  Messages = Standard
+  Where = /tmp/bacula-restores
+}
+
+{% for client in bacula_fd.client %}
+Job {
+  Name = "RestoreConfigs-{{ client.name }}"
+  JobDefs = "DefaultRestoreJob"
+  Client = bacula-fd-{{ client.name }}
+}
+{% endfor %}
+
+Schedule {
+  Name = "WeeklyCycle"
+  Run = Full 1st sun at 23:05
+  Run = Differential 2nd-5th sun at 23:05
+  Run = Incremental mon-sat at 23:05
+}
+
+# This schedule does the catalog. It starts after the WeeklyCycle
+Schedule {
+  Name = "WeeklyCycleAfterBackup"
+  Run = Full sun-sat at 23:10
+}
+
+# List of files to be backed up
+FileSet {
+  Name = "ConfigFileSet"
+  Include {
+    Options {
+      signature = MD5
+      compression = GZIP
+    }
+    File = /etc/bird.conf
+    File = /etc/pam.d/
+  }
+}
+
+
+{% for client in bacula_fd.client %}
+
+Client {
+  Name = bacula-fd-{{ client.name }}
+  Address = {{ client.ip }}
+  FDPort = 9102
+  Catalog = MyCatalog
+  Password = "{{ bacula_fd.pass }}"          # password for FileDaemon
+  File Retention = 30 days            # 30 days
+  Job Retention = 6 months            # six months
+  AutoPrune = yes                     # Prune expired Jobs/Files
+}
+{% endfor %}
+
+
+
+Storage {
+  Name = File
+  Address = {{ bacula_sd.ip }}                # N.B. Use a fully qualified name here
+  SDPort = 9103
+  Password = "{{ bacula_sd.pass }}"
+  Device = FileStorage
+  Media Type = File
+}
+
+
+
+Catalog {
+  Name = MyCatalog
+  dbname = "bacula"; dbuser = "bacula"; dbpassword = "{{ mariadb.bacula_pass  }}"
+}
+
+Messages {
+  Name = Standard
+
+  mailcommand = "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula: %t %e of %c %l\" %r"
+  operatorcommand = "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula: Intervention needed for %j\" %r"
+  mail = root@localhost = all, !skipped            
+  operator = root@localhost = mount
+  console = all, !skipped, !saved
+
+  append = "/var/log/bacula/bacula.log" = all, !skipped
+  catalog = all
+}
+
+
+Messages {
+  Name = Daemon
+  mailcommand = "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<%r\>\" -s \"Bacula daemon message\" %r"
+  mail = root@localhost = all, !skipped            
+  console = all, !skipped, !saved
+  append = "/var/log/bacula/bacula.log" = all, !skipped
+}
+
+Pool {
+   Name = Full-Pool
+   Pool Type = Backup
+   Recycle = yes
+   AutoPrune = yes
+   Volume Retention = 2 months
+   Maximum Volume Jobs = 1
+   Label Format = Full-
+   Maximum Volumes = 10
+}
+
+Pool {
+   Name = Inc-Pool
+   Pool Type = Backup
+   Recycle = yes
+   AutoPrune = yes
+   Volume Retention = 14 days
+   Maximum Volume Jobs = 1
+   Label Format = Inc-
+   Maximum Volumes = 80
+}
+
+Pool {
+   Name = Diff-Pool
+   Pool Type = Backup
+   Recycle = yes
+   AutoPrune = yes
+   Volume Retention = 30 days
+   Maximum Volume Jobs = 1
+   Label Format = Diff-
+   Maximum Volumes = 10
+}
+
+
+Pool {
+  Name = Default
+  Pool Type = Backup
+  Recycle = yes                       # Bacula can automatically recycle Volumes
+  AutoPrune = yes                     # Prune expired volumes
+  Volume Retention = 365 days         # one year
+}
+
+# File Pool definition
+Pool {
+  Name = File
+  Pool Type = Backup
+  Label Format = Local-
+  Recycle = yes                       # Bacula can automatically recycle Volumes
+  AutoPrune = yes                     # Prune expired volumes
+  Volume Retention = 365 days         # one year
+  Maximum Volume Bytes = 50G          # Limit Volume size to something reasonable
+  Maximum Volumes = 100               # Limit number of Volumes in Pool
+}
+
+# Scratch pool definition
+Pool {
+  Name = Scratch
+  Pool Type = Backup
+}
+

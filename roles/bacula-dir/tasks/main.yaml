@@ -1,0 +1,72 @@
+---
+- name: Install bacula direrctor components
+  yum: name={{ item }} state=installed
+  with_items:
+  - bacula-director
+  - bacula-console
+  - mariadb-server
+  - mariadb
+  - MySQL-python
+  tags: bacula-dir
+
+- name: Enable mariadb
+  systemd: name=mariadb state=started enabled=yes
+  tags: bacula-dir
+
+- name: Check root password
+  command: 'mysql -uroot -p{{ mariadb.root_pass }} -e"quit"'
+  register: check_mariadb_root 
+  ignore_errors: yes
+  tags: bacula-dir
+
+- name: Debug!
+  debug: msg="{{ check_mariadb_root }}"
+
+- name: Change root password
+  command: 'mysql -uroot -e"UPDATE mysql.user SET Password=PASSWORD(''{{ mariadb.root_pass }}'') WHERE User=''root'';FLUSH PRIVILEGES;"'
+  when: not (check_mariadb_root.rc==0)
+  tags: bacula-dir
+
+- name: Remove anonymous
+  mysql_user: 
+    name: '' 
+    state: absent 
+    host_all: yes
+    login_user: root
+    login_password: "{{ mariadb.root_pass }}"
+  tags: bacula-dir
+
+- name: Set bacula user password
+  mysql_user: login_user=root
+              login_password="{{ mariadb.root_pass }}"
+              check_implicit_admin=yes
+              name=bacula
+              password={{ mariadb.bacula_pass  }}
+  tags: bacula-dir
+
+
+- name: Set alternatives
+  alternatives: name=libbaccats.so path=/usr/lib64/libbaccats-mysql.so
+  tags: bacula-dir
+
+- name: Create bacula DB
+  command: "{{ item }}"
+  with_items:
+    - /usr/libexec/bacula/grant_mysql_privileges -uroot -p{{ mariadb.root_pass }}
+    - /usr/libexec/bacula/create_mysql_database -uroot -p{{ mariadb.root_pass }}
+    - /usr/libexec/bacula/make_mysql_tables -uroot -p{{ mariadb.root_pass }}
+  tags: bacula-dir
+
+- name: Enable bacula server
+  systemd: name=bacula-dir state=started enabled=yes
+  tags: bacula-dir
+
+- name: Deploy bacula-dir configs
+  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644 backup=yes
+  with_items:
+  - {j2: "templates/bacula-dir.conf.j2", dst: "/etc/bacula/bacula-dir.conf", owner: "root", group: "bacula"}
+  - {j2: "templates/bconsole.conf.j2", dst: "/etc/bacula/bconsole.conf", owner: "root", group: "bacula"}
+  notify: 
+    - restart bacula-dir
+  tags: bacula-dir
+

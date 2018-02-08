@@ -1,0 +1,16 @@
+---
+- name: Install bacula FD components
+  yum: name=bacula-client state=installed
+  tags: bacula-fd
+
+- name: Enable bacula client
+  systemd: name=bacula-fd state=started enabled=yes
+  tags: bacula-fd
+  
+- name: Deploy configs
+  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644 backup=yes
+  with_items:
+  - {j2: "templates/bacula-fd.conf.j2", dst: "/etc/bacula/bacula-fd.conf", owner: "root", group: "bacula"}
+  notify: 
+    - restart bacula-fd
+  tags: bacula-fd

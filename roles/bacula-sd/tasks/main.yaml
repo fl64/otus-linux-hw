@@ -1,0 +1,37 @@
+---
+- name: Install bacula SD components
+  yum: name=bacula-storage state=installed
+  tags: bacula-sd
+
+- name: Enable bacula SD
+  systemd: name=bacula-sd state=started enabled=yes
+  tags: bacula-sd
+
+- name: Create backup dir ({{ bacula_sd.backup_dir }})
+  file: 
+    path: "{{ bacula_sd.backup_dir }}"
+    state: directory
+    owner: bacula
+    group: bacula
+    mode: 0770
+  tags: bacula-sd
+  
+- name: Deploy sd config
+  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644 backup=yes
+  with_items:
+  - {j2: "templates/bacula-sd.conf.j2", dst: "/etc/bacula/bacula-sd.conf", owner: "root", group: "bacula"}
+  notify: 
+      - restart bacula-sd
+  tags: bacula-sd
+
+- name: Set selinux fcontext to slave zone files
+  sefcontext:
+    target: '{{ bacula_sd.backup_dir }}(/.*)?'
+    setype: bacula_store_t 
+    state: present
+  tags: bacula-sd
+
+- name: Run restore context to reload selinux
+  shell: restorecon -R -v {{ bacula_sd.backup_dir }}
+  tags: bacula-sd
+

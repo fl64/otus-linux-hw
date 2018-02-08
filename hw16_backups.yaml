@@ -29,6 +29,7 @@
   - quagga
   - edgefw
   - named
+  - bacula-sd
 
 - hosts: r1
   become: true
@@ -43,6 +44,8 @@
   - networking
   - quagga
   - openldap-server
+  - openldap-backup
+  - bacula-dir
 
 - hosts: be1
   become: true
@@ -81,3 +84,4 @@
   become: true
   roles:
   - openldap-client
+  - bacula-fd
