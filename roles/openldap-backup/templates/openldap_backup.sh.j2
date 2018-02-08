@@ -1,0 +1,119 @@
+#!/bin/bash
+
+DATE=`date +%Y/%m/%d`
+BKP_DATE=`date +%Y-%m-%d-%H-%M-%S`
+SLAPD_DIR="/etc/openldap/slapd.d/"
+SLADP_CERT_DIR="/etc/openldap/certs/"
+SLADP_CONFIG="/etc/openldap/*.conf"
+BASE_DIR="/var/backup/ldap/"
+BACKUP_DIR=${BASE_DIR}${DATE}
+RETENTION=14
+DIT_SUFFIX=""
+DIT_CONFIG="cn=config"
+
+BKP_DATA_FILE="slapd.data.${BKP_DATE}.ldif"
+BKP_CONF_FILE="slapd.conf.${BKP_DATE}.ldif"
+BKP_ARCH_FILE="slapd.${BKP_DATE}.tar"
+
+LOGFILE="/var/backup/ldap/backup.log"
+
+
+# Check rights and dirs
+log () {
+	echo $(date +%Y-%m-%d_%H:%M:%S)" ${1}" | tee -a ${LOGFILE}
+}
+
+init () {
+	# r u root?
+	if [ `id -u` -ne "0" ]; then
+		log "ERROR: only root can run this script."
+	 	exit 1
+	fi
+
+	# if backup dir exits?
+	if [ ! -d ${BACKUP_DIR} ]; then
+	 	mkdir -p ${BACKUP_DIR}
+	 	if [ "$?" -ne "0" ]; then
+	  		log "ERROR: could not create the backup directory."
+	  	exit 1
+	 	fi
+	fi
+
+    # if log file exists?
+	if [ ! -f ${LOGFILE} ]; then
+		touch ${LOGFILE}
+
+		if [ "$?" -ne "0" ]; then
+	  		log "ERROR: could not create the log file."
+	  		exit 1
+	 	fi
+	fi
+	#check args
+	if [ -z ${1} ]; then
+		log "ERROR: Need a base for slapd." 
+		exit 1
+	fi
+	
+	IFS="."
+	for i in $1; do
+		DIT_SUFFIX=${DIT_SUFFIX}"dc=$i,"
+	done
+	DIT_SUFFIX=${DIT_SUFFIX::-1}
+}
+
+backup () {
+	# Check if same files exists?
+	IFS=" "
+	for f in $BKP_ARCH_FILE $BKP_CONF_FILE $BKP_DATA_FILE; do
+		if [ -s $f ]; then
+			log "ERROR: File ${f} already exists."
+			exit 1
+		fi
+	done
+
+
+	# Backup data to LDIF
+	/usr/sbin/slapcat -F ${SLAPD_DIR} -b ${DIT_SUFFIX} -l ${BACKUP_DIR}/${BKP_DATA_FILE} >/dev/null 2>&1 
+	if [ "$?" -ne "0" ]; then
+		log "ERROR: Cant create data LDIF"
+		exit 1
+	fi	
+
+	# Backup config to LDIF
+	/usr/sbin/slapcat -F ${SLAPD_DIR} -b ${DIT_CONFIG} -l ${BACKUP_DIR}/${BKP_CONF_FILE} >/dev/null 2>&1 
+	if [ "$?" -ne "0" ]; then
+		log "ERROR: Cant create config LDIF"
+		exit 1
+	fi	
+
+	tar -cvf ${BACKUP_DIR}/${BKP_ARCH_FILE} ${BACKUP_DIR}/*.ldif --remove-files >/dev/null 2>&1 
+	if [ "$?" -ne "0" ]; then
+		log "ERROR: Cant create TAR"
+		exit 1
+	fi
+
+	tar -rvf ${BACKUP_DIR}/${BKP_ARCH_FILE} ${SLADP_CERT_DIR} ${SLADP_CONFIG} >/dev/null 2>&1 
+	if [ "$?" -ne "0" ]; then
+		log "ERROR: Cant add certs to TAR"
+		exit 1
+	fi
+
+	gzip ${BACKUP_DIR}/${BKP_ARCH_FILE} >/dev/null 2>&1 
+	if [ "$?" -ne "0" ]; then
+		log "ERROR: Cant create GZIP"
+		exit 1
+	fi
+}
+
+cleanup (){
+	find ${BACKUP_DIR} -mindepth 1 -maxdepth 3 -type d -mtime +${RETENTION} -exec rm -rt {} \;
+}
+
+init $1
+backup
+cleanup
+
+
+
+
+

@@ -38,6 +38,7 @@
   - networking
   - quagga
   - openldap-server
+  - openldap-backup
 
 - hosts: be1
   vars:
@@ -68,7 +69,6 @@
 - hosts: all
   roles:
   - dns_resolver
-
 
 - hosts: all
   roles:
