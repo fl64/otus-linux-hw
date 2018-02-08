@@ -3,3 +3,14 @@
   become: true
   tags:
   - openldap-backup
+
+- name: Create cron job
+  cron: 
+    name: "Backup openldap"
+    user: "root"
+    minute: "00"
+    hour: "12"
+    job: "/usr/local/sbin/openldap_backup.sh mydomain.tld"
+  become: true
+  tags:
+  - openldap-backup
