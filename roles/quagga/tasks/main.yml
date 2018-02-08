@@ -2,7 +2,7 @@
 - name: remove default route created with vagrant
   become: true
   lineinfile: dest=/etc/sysconfig/network-scripts/ifcfg-enp0s3
-              regexp=''
+              regexp='^DEFROUTE='
               insertafter=EOF
               line='DEFROUTE=no'
   notify:

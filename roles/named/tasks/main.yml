@@ -40,7 +40,7 @@
   - {j2: "templates/10.in-addr.arpa.zone.j2", dst: "/etc/named/zones/10.in-addr.arpa.zone"}
   tags:
   - named
-
+- meta: flush_handlers  
 - name: Set selinux fcontext to slave zone files
   become: true
   sefcontext:

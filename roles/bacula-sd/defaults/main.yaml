@@ -12,6 +12,6 @@ bacula_fd:
 bacula_sd:   
   ip: "10.2.2.1"
   pass: P@ssw0rd
-  backup_dir: "/backups"
+  backup_dir: "/bacula"
 mariadb:
   pass: P@ssw0rd

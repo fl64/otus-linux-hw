@@ -3,6 +3,7 @@
 - hosts: all
   become: true
   gather_facts: yes
+  serial: 1
   roles:
     - common
     - ntp
@@ -13,6 +14,7 @@
     - dummy
 
 - hosts: routers
+  serial: 1
   become: true
   roles:
     - forward
@@ -26,7 +28,7 @@
     - {device: "enp0s9.2", ip: "10.2.2.1", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
   roles:
   - networking
-  - quagga
+  - bird
   - edgefw
   - named
   - bacula-sd
@@ -42,7 +44,7 @@
     - {device: "enp0s10.4", ip: "10.4.4.254", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes }
   roles:
   - networking
-  - quagga
+  - bird
   - openldap-server
   - openldap-backup
   - bacula-dir
@@ -77,11 +79,13 @@
 
 - hosts: all
   become: true
+  serial: 1
   roles:
   - dns_resolver
 
 - hosts: all
   become: true
+  serial: 1
   roles:
-  - openldap-client
   - bacula-fd
+  #- openldap-client

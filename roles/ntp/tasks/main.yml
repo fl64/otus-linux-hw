@@ -23,6 +23,7 @@
 - name: Sync time 
   become: true
   shell: ntpdate 0.centos.pool.ntp.org
+  ignore_errors: yes
   tags: ntp
 
 - name: Enable NTPd and start

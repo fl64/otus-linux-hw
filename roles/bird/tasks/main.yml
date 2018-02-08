@@ -2,13 +2,18 @@
 - name: remove default route created with vagrant
   become: true
   lineinfile: dest=/etc/sysconfig/network-scripts/ifcfg-enp0s3
-              regexp=''
+              regexp='^DEFROUTE='
               insertafter=EOF
               line='DEFROUTE=no'
-  notify:
-  - restart network
   when: (edge is not defined and edge != True)
   tags: bird
+
+- name: Restart network
+  become: true
+  systemd: name=network state=restarted
+  when: (edge is not defined and edge != True)
+  tags: bird
+
 
 - name: Enable bird
   become: true
@@ -18,8 +23,10 @@
 - name: Create Bird config
   become: true
   template: src=templates/bird.j2 dest=/etc/bird.conf mode=0644 owner=root group=root
-  notify:
-  - restart bird
   tags: bird
 
+- name: Restart bird
+  become: true
+  systemd: name=bird state=restarted
+  tags: bird
 
