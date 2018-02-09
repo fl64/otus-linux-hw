@@ -27,6 +27,16 @@
     insertbefore: BOF
   tags: gauth
 
+- name: Change PAM login
+  lineinfile:
+    path: /etc/pam.d/login
+    regexp: '.*auth.*required.*pam_google_authenticator.so.*nullok'
+    line: 'auth required pam_google_authenticator.so nullok'
+    insertbefore: BOF
+  tags: gauth
+
+
+
 
 - name: Configure google-authenticator 
   command: google-authenticator --time-based --disallow-reuse --force --qr-mode=UTF8 --rate-limit=3 --rate-time=30 --step-size=30 --window-size=3

@@ -3,12 +3,12 @@ password zebra
 log stdout
 
 
-{% for item in interfaces %}
+{% for item in interfaces if item.area is defined %}
 interface {{ item.device }}
 {% endfor %}
 
 router ospf
-	{% for item in interfaces %}
+	{% for item in interfaces if item.area is defined %}
 	network {{ item.net }}/{{ item.prefix }} area {{ item.area }}
 	{% endfor %}
 	
