@@ -35,8 +35,8 @@
     - {device: "enp0s9.2", ip: "10.2.2.1", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
   roles:
   - networking
-#  - bird
-  - quagga
+  - bird
+#  - quagga
   - edgefw
 
 
@@ -54,10 +54,10 @@
     - {device: "enp0s10.4", ip: "10.4.4.254", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes }
   roles:
   - networking
-# - bird
-  - quagga
-  - openbfdd
-   
+  - bird
+#  - quagga
+#  - openbfdd
+
 - hosts: be1
   become: true
   vars:
