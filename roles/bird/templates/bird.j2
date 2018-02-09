@@ -1,6 +1,6 @@
 {% set areas = [] %}
 {% set bfdtest = [] %}
-{% for item in interfaces if item.area not in areas%}
+{% for item in interfaces if item.area is defined and item.area not in areas%}
     {% set x = areas.extend([item.area]) %}
     {% if item.bfd is defined and item.bfd == True %}{% set y = bfdtest.extend([1]) %}{% endif %}
 {% endfor %}
@@ -55,10 +55,10 @@ protocol ospf MyOSPF {
 
 	{% for area in areas | unique %}area {{ area }} {
 		networks {
-			{% for item in interfaces if item.area == area %}{{ item.net }}/{{ item.prefix }};
+			{% for item in interfaces if item.area is defined and item.area == area %}{{ item.net }}/{{ item.prefix }};
 		{% endfor %}};
 
-		{% for item in interfaces if item.area == area %}interface "{{ item.device}}" {
+		{% for item in interfaces if item.area is defined and item.area == area %}interface "{{ item.device}}" {
 			{% if item.bfd is defined and item.bfd == True %}bfd yes;{% endif %}
 		};
 		{% endfor %}

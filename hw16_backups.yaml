@@ -38,6 +38,9 @@
   - bird
   - edgefw
 
+
+
+
 - hosts: r1
   become: true
   vars:
@@ -45,6 +48,7 @@
     - {ip: "10.4.4.10"}
     - {ip: "10.4.4.20"}
   - interfaces: 
+    - {device: "enp0s3", ip: "10.0.2.15", net: "10.0.2.0", prefix: 24 }
     - {device: "enp0s9.2", ip: "10.2.2.254", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
     - {device: "enp0s10.4", ip: "10.4.4.254", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes }
   roles:
@@ -57,6 +61,7 @@
   - bfdneigh:
     - {ip: "10.4.4.254"}
   - interfaces:
+    - {device: "enp0s3", ip: "10.0.2.15", net: "10.0.2.0", prefix: 24 }
     - {device: "enp0s9.4", ip: "10.4.4.10", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes}
     - {device: "dummy0", ip: "10.99.99.1", net: "10.99.99.0", prefix: 24, area: 1 }
   roles:
@@ -69,6 +74,7 @@
   - bfdneigh:
     - {ip: "10.4.4.254"}
   - interfaces:
+    - {device: "enp0s3", ip: "10.0.2.15", net: "10.0.2.0", prefix: 24 }
     - {device: "enp0s9.4", ip: "10.4.4.20", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1 , bfd: yes}
     - {device: "dummy0", ip: "10.99.99.1", net: "10.99.99.0", prefix: 24, area: 1 }
   roles:

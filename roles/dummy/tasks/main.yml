@@ -1,4 +1,8 @@
 ---
+- name: Add dummy mod
+  template: src=templates/dummy.conf.j2 dest=/etc/modules-load.d/dummy.conf mode=0644 owner=root group=root
+  tags: dummy
+
 - name: enable dummy
   modprobe:
     name: dummy
