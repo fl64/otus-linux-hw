@@ -1,7 +1,7 @@
 # otus-linux-hw
 
 Scheme:
-![](https://raw.githubusercontent.com/fl64/otus-linux-hw/master/shceme.png)
+![](https://raw.githubusercontent.com/fl64/otus-linux-hw/master/draw.io-scheme.png)
 
 ## Vagrant file
 vboxnet0 settings:
