@@ -2,7 +2,7 @@
 - name: Install named (bind and bind-utils)
   yum:
     name: "{{ item }}"
-    stcate: present
+    state: present
   with_items:
   - bind
   - bind-utils

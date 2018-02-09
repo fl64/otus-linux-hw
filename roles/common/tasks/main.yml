@@ -28,6 +28,10 @@
   - quagga
   - tcpdump
   tags: common
+
+- name: Enable system chache
+  systemd: name=nscd state=started enabled=yes
+  tags: common
   
 - name: Deploy knock scrpits
   template: src=templates/knock.j2 dest=/usr/local/bin/knock.sh mode=0744 owner=vagrant group=vagrant

@@ -1,9 +1,4 @@
 ---
-
-- debug: msg={{ mariadb.pass }}
-  tags: uuu
-
-
 - name: Install bacula direrctor components
   yum: name={{ item }} state=installed
   with_items:
