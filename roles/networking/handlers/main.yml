@@ -1,11 +1,6 @@
 ---
-- name: restart network service
-  service: name=ospfd state=restarted
-  listen: "restart network"
-
-- name: kill dhclient
-  command: pkill dhclient
-  listen: "restart network"
-
+- name: restart network
+  service: name=network state=restarted
+  
 - name: save rules
   command: /usr/libexec/iptables/iptables.init save 

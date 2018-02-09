@@ -6,7 +6,7 @@
               line='DEFROUTE=no'
   when: (edge is not defined and edge != True)
   notify:
-  - restarte network
+  - restart network
   tags: bird
 
 ##- name: Restart network
