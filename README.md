@@ -1,7 +1,7 @@
-# otus-linux-hw-13-14
+# otus-linux-hw
 
 Scheme:
-![](https://imgur.com/DAXnpvp.png)
+![](https://raw.githubusercontent.com/fl64/otus-linux-hw/master/shceme.png)
 
 ## Vagrant file
 vboxnet0 settings:
