@@ -1,16 +1,30 @@
 network:
   r0:
+    edge: yes
+    dns_type: master
     interfaces: 
     - {device: "enp0s9.2", ip: "10.2.2.1", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
   r1:
+    edge: no
+    bfdneigh:
+    - {ip: "10.4.4.10"}
+    - {ip: "10.4.4.20"}
     interfaces: 
     - {device: "enp0s9.2", ip: "10.2.2.254", net: "10.2.2.0", prefix: 24, vlan: 2, area: 0 }
     - {device: "enp0s10.4", ip: "10.4.4.254", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes }
   be1:
+    edge: no
+    dns_type: slave
+    bfdneigh:
+    - {ip: "10.4.4.254"}
     interfaces:
     - {device: "enp0s9.4", ip: "10.4.4.10", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes}
     - {device: "dummy0", ip: "10.99.99.1", net: "10.99.99.0", prefix: 24, area: 1 }
   be2:
+    edge: no
+    dns_type: slave
+    bfdneigh:
+    - {ip: "10.4.4.254"}
     interfaces:
     - {device: "enp0s9.4", ip: "10.4.4.20", net: "10.4.4.0", prefix: 24, vlan: 4, area: 1, bfd: yes}
     - {device: "dummy0", ip: "10.99.99.1", net: "10.99.99.0", prefix: 24, area: 1 }

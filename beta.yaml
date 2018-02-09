@@ -1,4 +1,7 @@
 ---
 - hosts: all
+  become: true
+  vars_files: 
+  - network-landscape.yaml
   roles:
-  - networking2
+  - bird2

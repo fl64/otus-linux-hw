@@ -1,10 +1,14 @@
 ---
-- name: restart network
-  systemd: 
-    name: network.service
-    state: restarted
-
 - name: restart bird
   systemd: 
     name: bird
     state: restarted
+
+- name: restart network service
+  service: name=ospfd state=restarted
+  listen: "restart network"
+
+- name: kill dhclient
+  command: pkill dhclient
+  listen: "restart network"
+

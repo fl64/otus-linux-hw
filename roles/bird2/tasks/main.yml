@@ -4,15 +4,13 @@
               regexp='^DEFROUTE='
               insertafter=EOF
               line='DEFROUTE=no'
-  when: (edge is not defined and edge != True)
-  notify:
-  - restarte network
+  when: (network[ansible_hostname].edge is not defined or network[ansible_hostname].edge != True)
   tags: bird
 
-##- name: Restart network
-##  systemd: name=network state=restarted
-##  when: (edge is not defined and edge != True)
-##  tags: bird
+- name: Restart network
+  systemd: name=network state=restarted
+  when: (network[ansible_hostname].edge is not defined or network[ansible_hostname].edge != True)
+  tags: bird
 
 
 - name: Enable bird
