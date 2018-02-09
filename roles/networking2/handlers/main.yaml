@@ -1,0 +1,8 @@
+---
+- name: restart network
+  systemd: 
+    name: network.service
+    state: restarted
+
+- name: save rules
+  command: /usr/libexec/iptables/iptables.init save 
