@@ -1,4 +1,3 @@
 ---
 - name: restart slapd
   systemd: name=slapd state=restarted enabled=yes
-  become: true

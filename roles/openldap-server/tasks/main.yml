@@ -5,18 +5,15 @@
   - openssl
   - openldap-servers
   - openldap-clients
-  become: true
   tags: openldap
 
 - name: Enable slapd
   systemd: name=slapd state=started enabled=yes
-  become: true 
   tags: openldap
 
 - name: Create rootpw
   shell: slappasswd -s {{ openldap_rootpw }} 
   register: rootpw
-  become: true 
   tags: openldap
 
 - name: Init ldap
@@ -27,7 +24,6 @@
   - {j2: "templates/3_tls.j2", dst: "/tmp/3_tls.ldif", owner: "root", group: "root"}
   - {j2: "templates/4_ldap_struct.j2", dst: "/tmp/4_ldap_struct.ldif", owner: "root", group: "root"}
   - {j2: "templates/DBCONFIG.j2", dst: "/var/lib/ldap/DB_CONFIG", owner: "{{ openldap_user }}", group: "{{ openldap_user }}"}
-  become: true
   tags: openldap
 
 - name: Deploy ldfs
@@ -36,29 +32,24 @@
   - /tmp/1_init.ldif
   - /tmp/2_monitor.ldif
   - /tmp/3_tls.ldif
-  become: true
   tags: openldap
 
 - name: Create cert dir
   file: path={{ openldap_dir }}/certs/ state=directory owner={{ openldap_user }} group={{ openldap_user }}
-  become: true
   tags: openldap
 
 - name: Get hostname
   shell: hostname
   register: ldap_hostname
-  become: true
   tags: openldap
 
 - name: Create self signed cert
   shell: openssl req -newkey rsa:1024 -x509 -nodes -out server.pem -keyout server.pem -days 365 -subj '/C={{ openldap_country }}/ST={{ openldap_state }}/L={{ openldap_city }}/O={{ openldap_org }}/CN={{ ldap_hostname.stdout }}/' chdir={{ openldap_dir }}/certs/ 
          creates={{ openldap_dir }}/certs/server.pem
-  become: true
   tags: openldap
 
 - name: Set certpermissions
   file: path={{ openldap_dir }}/certs/server.pem owner={{ openldap_user }} group={{ openldap_user }}
-  become: true
   tags: openldap
 
 - name: Enable ldap ldaps ldapi
@@ -69,7 +60,6 @@
     line: 'SLAPD_URLS="ldapi:/// ldap:/// ldaps:///"'
   notify:
   - restart slapd
-  become: true
   tags: openldap
 
 - name: Deploy shcemas
@@ -80,12 +70,10 @@
   - { schema: "/etc/openldap/schema/cosine.ldif", file: "/etc/openldap/slapd.d/cn=config/cn=schema/cn={1}cosine.ldif" }
   - { schema: "/etc/openldap/schema/nis.ldif", file: "/etc/openldap/slapd.d/cn=config/cn=schema/cn={2}nis.ldif" }
   - { schema: "/etc/openldap/schema/inetorgperson.ldif", file: "/etc/openldap/slapd.d/cn=config/cn=schema/cn={3}inetorgperson.ldif"}
-  become: true
   tags: openldap, schema
 
 - name: Deploy ldap sctructure
   command: 'ldapadd -c -x -w P@ssw0rd -D "cn=ldapadm,dc={{ openldap_domain.split(".")[0] }},dc={{ openldap_domain.split(".")[1] }}" -f /tmp/4_ldap_struct.ldif'
   register: result
   failed_when: ( result.rc != 68 and result.rc != 0 )
-  become: true
   tags: openldap

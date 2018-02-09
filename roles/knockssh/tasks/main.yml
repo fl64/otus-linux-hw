@@ -1,19 +1,16 @@
 ---
 - name: install iptables-services
-  become: true
   yum:
     name: iptables-services
     state: present
   tags: knock
 
 - name: Enable iptables
-  become: true
   systemd: name=iptables state=started enabled=yes
   register: result
   tags: knock
 
 - name: Kill all default and create ssh knock
-  become: true
   command: iptables {{ item }}
   when: result.changed #if iptables first time installed
   notify: save rules
@@ -38,40 +35,30 @@
   tags: knock
 # 
 # - name: Accept all local traffic
-#   become: true
-#   iptables: chain=INPUT in_interface=lo jump=ACCEPT
+#   #   iptables: chain=INPUT in_interface=lo jump=ACCEPT
 # - name: Accept SSH on enp0s8 interfaces
-#   become: true
-#   iptables: chain=INPUT protocol=tcp in_interface=enp0s8 destination_port=22 jump=ACCEPT
+#   #   iptables: chain=INPUT protocol=tcp in_interface=enp0s8 destination_port=22 jump=ACCEPT
 # - name: Accept ESTABLISHED, RELATED input traffice
-#   become: true
-#   iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
+#   #   iptables: chain=INPUT ctstate=ESTABLISHED,RELATED jump=ACCEPT
 #   #OSPF
 # - name: Accept OSPF In
-#   become: true
-#   iptables: chain=INPUT protocol=ospf jump=ACCEPT
+#   #   iptables: chain=INPUT protocol=ospf jump=ACCEPT
 # - name: Accept OSPF Out
-#   become: true
-#   iptables: chain=OUTPUT protocol=ospf jump=ACCEPT
+#   #   iptables: chain=OUTPUT protocol=ospf jump=ACCEPT
 #   #DNS
 # - name: Accept DNS (tcp) on enp0s9.2
-#   become: true
-#   iptables: chain=INPUT protocol=tcp destination_port=53 jump=ACCEPT
+#   #   iptables: chain=INPUT protocol=tcp destination_port=53 jump=ACCEPT
 # - name: Accept DNS (udp) on enp0s9.2
-#   become: true
-#   iptables: chain=INPUT protocol=udp destination_port=53 jump=ACCEPT
+#   #   iptables: chain=INPUT protocol=udp destination_port=53 jump=ACCEPT
 # - name: Jump to KNOCK
-#   become: true
-#   iptables: chain=INPUT jump=KNOCK
+#   #   iptables: chain=INPUT jump=KNOCK
 # - name: Jump to KNOCK
-#   become: true
-#   iptables: chain=INPUT jump=KNOCK 
+#   #   iptables: chain=INPUT jump=KNOCK 
 
 
 
 #- name: Create rules
-# become: true
-# command: iptables {{ item }}
+# # command: iptables {{ item }}
 # notify: save rules
 # with_items:
 # - '-P INPUT ACCEPT'  

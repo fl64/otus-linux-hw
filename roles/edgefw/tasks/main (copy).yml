@@ -1,17 +1,14 @@
 ---
 - name: install iptables-services
-  become: true
-  yum:
+    yum:
     name: iptables-services
     state: present
 
 - name: Enable iptables
-  become: true
-  systemd: name=iptables state=started enabled=yes
+    systemd: name=iptables state=started enabled=yes
 
 - name: Create rules
-  become: true
-  command: iptables {{ item }}
+    command: iptables {{ item }}
   notify: save rules
   with_items:
   - "-P INPUT ACCEPT"  

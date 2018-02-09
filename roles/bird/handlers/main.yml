@@ -1,12 +1,10 @@
 ---
 - name: restart network
-  become: true
   systemd: 
     name: network.service
     state: restarted
 
 - name: restart bird
-  become: true
   systemd: 
     name: bird
     state: restarted

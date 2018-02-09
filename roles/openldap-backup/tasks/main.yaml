@@ -1,6 +1,5 @@
 - name: Deploy LDAP backup script
   template: src=templates/openldap_backup.sh.j2 dest=/usr/local/sbin/openldap_backup.sh owner=root group=root mode=0755
-  become: true
   tags:
   - openldap-backup
 
@@ -11,6 +10,5 @@
     minute: "00"
     hour: "12"
     job: "/usr/local/sbin/openldap_backup.sh mydomain.tld"
-  become: true
   tags:
   - openldap-backup

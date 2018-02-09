@@ -1,6 +1,9 @@
 ---
 - name: Install bacula SD components
-  yum: name=bacula-storage state=installed
+  yum: name={{ item }} state=installed
+  with_items:
+  - bacula-storage
+  - policycoreutils-python
   tags: bacula-sd
 
 - name: Enable bacula SD

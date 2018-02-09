@@ -3,29 +3,24 @@
   yum: 
     name: python-pip 
     state: present
-  become: true
   tags: secure-top
 
 - name: Install python-pam module
   pip: 
     name: python-pam
     umask: "0022"
-  become: True
   tags: secure-top
 
 - name: Deploy pam module
-  become: true
   template: src=templates/mypam.j2 dest=/etc/pam.d/mypam mode=0644 owner=root group=root
   tags: secure-top
 
 
 - name: Deploy script
-  become: true
   template: src=templates/top.py.j2 dest=/usr/local/bin/top mode=4755 owner=root group=root
   tags: secure-top
 
 - name: Add line to etc/profile
-  become: true
   lineinfile: 
     path: /etc/profile
     regexp: '^account.*required.*pam_script.so'
@@ -34,7 +29,6 @@
   tags: secure-top
 
 - name: Lock top
-  become: true
   file:
     path: /usr/bin/top
     mode: 0744

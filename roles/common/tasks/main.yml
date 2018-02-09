@@ -5,7 +5,6 @@
   tags: epel, common
 
 - name: Install EPEL 
-  become: true
   yum:
     name: "{{ epel_repo_url }}"
     state: present
@@ -14,7 +13,6 @@
   tags: epel, common 
 
 - name: Import EPEL GPG
-  become: true
   rpm_key:
     key: "{{ epel_repo_gpg_key_url }}"
     state: present
@@ -22,7 +20,6 @@
   tags: epel, common 
   
 - name: Install Bird, Quagga
-  become: true
   yum:
     name: "{{ item }}"
     state: present
@@ -33,6 +30,5 @@
   tags: common
   
 - name: Deploy knock scrpits
-  become: true
   template: src=templates/knock.j2 dest=/usr/local/bin/knock.sh mode=0744 owner=vagrant group=vagrant
   tags: common, knock

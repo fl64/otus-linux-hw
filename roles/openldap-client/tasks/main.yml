@@ -5,12 +5,10 @@
   - nss-pam-ldapd
   - openldap-clients
   - openssl
-  become: true
   tags: openldap-client
 
 - name: Enable nslcd
   systemd: name=nslcd state=started enabled=yes
-  become: true 
   tags: openldap-client
 
 
@@ -21,26 +19,22 @@
     owner: root
     group: root
     mode: 0644
-  become: true
   tags: openldap-client
   
 - name: Get and install LDAP cert ()
   shell: 'echo -n | openssl s_client -connect 127.0.0.1:636 | sed -ne "/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p" > /etc/openldap/cacerts/cert.pem'
   args:
     creates: /etc/openldap/cacerts/cert.pem
-  become: true
   tags: openldap-client
 
 - name: Restore context
   shell: 'restorecon /etc/openldap/cacerts/cert.pem'
-  become: true
   tags: openldap-client
 
 - name: Enable LDAP auth
   shell: 'authconfig --enableldap --enableldapauth --ldapserver={{ openldap_server }} --ldapbasedn=dc={{ openldap_domain.split(".")[0] }},dc={{ openldap_domain.split(".")[1] }} --enableldaptls --enablemkhomedir --enablemkhomedir --updateall'
   notify:
     restart nslcd
-  become: true
   tags: openldap-client
 
 - name: Disable cert check
@@ -51,5 +45,4 @@
     line: 'tls_reqcert never'
   notify:
     restart nslcd
-  become: true
   tags: openldap-client

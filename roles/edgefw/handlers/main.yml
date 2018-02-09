@@ -1,4 +1,3 @@
 ---
 - name: save rules
-  become: true
   command: /usr/libexec/iptables/iptables.init save 

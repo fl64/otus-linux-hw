@@ -15,7 +15,6 @@
   tags: openbfdd
 
 - name: Install dev tools
-  become: true
   yum: name={{ item }} state=present
   with_items:
   - make
@@ -24,7 +23,6 @@
   tags: openbfdd
 
 - name: Configure make and install openbfdd
-  become: true
   command: '{{ item }}'
   args:
     chdir: '/tmp/openbfdd-0.5.3'
@@ -35,16 +33,13 @@
   tags: openbfdd
 
 - name: Create openbfdd.conf
-  become: true
   template: src=templates/openbfdd.conf.j2 dest=/etc/openbfdd.conf mode=0644 owner=root group=root
   tags: openbfdd
 
 - name: Create openbfdd.service
-  become: true
   template: src=templates/openbfdd.service.j2 dest=/etc/systemd/system/openbfdd.service mode=0644 owner=root group=root
   tags: openbfdd
 
 - name: Start openbfdd
-  become: true
   systemd: state=started name=openbfdd daemon_reload=yes
   tags: openbfdd

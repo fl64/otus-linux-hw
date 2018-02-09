@@ -1,16 +1,13 @@
 ---
 - name: restart network
-  become: true
   systemd: 
     name: network.service
     state: restarted
 
 - name: restart zebra
-  become: true
   systemd: name=zebra state=restarted
   listen: "restart quagga"
 
 - name: restart ospfd
-  become: true
   service: name=ospfd state=restarted
   listen: "restart quagga"

@@ -3,16 +3,13 @@
   yum: 
     name: pam_script
     state: present
-  become: true
   tags: pam_script
 
 - name: Deploy pam module
-  become: true
   template: src=templates/ping_acct.j2 dest=/etc/pam-script.d/ping_acct mode=0755 owner=root group=root
   tags: pam_script
 
 - name: Add line to pam.d/login
-  become: true
   lineinfile: 
     path: /etc/pam.d/login
     regexp: '^account.*required.*pam_script.so'

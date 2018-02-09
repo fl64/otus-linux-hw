@@ -3,17 +3,14 @@
   yum: 
     name: ntp 
     state: present
-  become: true
   tags: ntp
 
 
 - name: Set timezone
-  become: true
   shell: timedatectl set-timezone Europe/Moscow
   tags: ntp
 
 - name: Enable NTPd and stop before time sync
-  become: true
   systemd:
     name: ntpd
     state: stopped
@@ -21,13 +18,11 @@
   tags: ntp
 
 - name: Sync time 
-  become: true
   shell: ntpdate 0.centos.pool.ntp.org
   ignore_errors: yes
   tags: ntp
 
 - name: Enable NTPd and start
-  become: true
   systemd:
     name: ntpd
     state: started

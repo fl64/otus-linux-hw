@@ -3,7 +3,6 @@
   yum: 
     name: google-authenticator
     state: present
-  become: true
   tags: gauth
 
 ## !!! pamd ansible module breakes sshd file
@@ -19,15 +18,13 @@
 #    new_module_path: pam_google_authenticator.so 
 #    module_arguments: nullok
 #    state: before
-#  become: true
-#  tags: gauth
+#  #  tags: gauth
 - name: Change PAM sshd
   lineinfile:
     path: /etc/pam.d/sshd
     regexp: '.*auth.*required.*pam_google_authenticator.so.*nullok'
     line: 'auth required pam_google_authenticator.so nullok'
     insertbefore: BOF
-  become: true
   tags: gauth
 
 
@@ -54,7 +51,6 @@
   with_items:
   - { regexp: '^ChallengeResponseAuthentication ', line: 'ChallengeResponseAuthentication yes' }
   - { regexp: '^AuthenticationMethods ', line: 'AuthenticationMethods publickey,password publickey,publickey keyboard-interactive'}
-  become: true
   tags: gauth
   notify:
   - restart sshd

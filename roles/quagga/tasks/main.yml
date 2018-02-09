@@ -1,6 +1,5 @@
 ---
 - name: remove default route created with vagrant
-  become: true
   lineinfile: dest=/etc/sysconfig/network-scripts/ifcfg-enp0s3
               regexp='^DEFROUTE='
               insertafter=EOF
@@ -11,7 +10,6 @@
   tags: quagga
 
 - name: Enable quagga
-  become: true
   systemd: name={{ item }} state=started enabled=yes
   with_items:
   - zebra
@@ -19,7 +17,6 @@
   tags: quagga
   
 - name: Create ospfd.conf
-  become: true
   template: src=templates/ospfd.j2 dest=/etc/quagga/ospfd.conf mode=0644 owner=quagga group=quagga
   notify:
   - restart quagga

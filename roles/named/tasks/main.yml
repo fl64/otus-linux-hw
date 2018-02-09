@@ -1,9 +1,8 @@
 ---
 - name: Install named (bind and bind-utils)
-  become: true
   yum:
     name: "{{ item }}"
-    state: present
+    stcate: present
   with_items:
   - bind
   - bind-utils
@@ -12,13 +11,11 @@
   - named
 
 - name: Enable named
-  become: true
   systemd: name=named state=started enabled=yes
   tags:
   - named
 
 - name: Create zone dir
-  become: true
   file: 
     path: /etc/named/zones/
     state: directory
@@ -29,7 +26,6 @@
   - named
   
 - name: Create named configs
-  become: true
   template: src={{ item.j2 }} dest={{ item.dst }} mode=0664 owner=named group=named
   notify:
   - restart named
@@ -42,7 +38,6 @@
   - named
 - meta: flush_handlers  
 - name: Set selinux fcontext to slave zone files
-  become: true
   sefcontext:
     target: '/etc/named/zones(/.*)?'
     setype: named_cache_t 
@@ -52,7 +47,6 @@
   when: ( dns_type is defined and dns_type == 'slave' )
 
 - name: Run restore context to reload selinux
-  become: true
   shell: restorecon -R -v /etc/named/zones
   tags:
   - named

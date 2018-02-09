@@ -1,11 +1,13 @@
 ---
 - hosts: all
+  become: true
   gather_facts: yes
   roles:
     - common
     - ntp
 
 - hosts: dummy
+  become: true
   roles:
     - dummy
 
@@ -14,6 +16,7 @@
     - forward
 
 - hosts: r0
+  become: true
   vars:
   - edge: yes
   - dns_type: master
@@ -28,7 +31,8 @@
   - pam_script
 
 - hosts: r1
-  vars:git 
+  become: true
+  vars:
   - bfdneigh:
     - {ip: "10.4.4.10"}
     - {ip: "10.4.4.20"}
@@ -44,6 +48,7 @@
   - top-secure
 
 - hosts: be1
+  become: true
   vars:
   - dns_type: slave
   - bfdneigh:
@@ -57,6 +62,7 @@
   - named
 
 - hosts: be2
+  become: true
   vars:
   - dns_type: slave
   - bfdneigh:
