@@ -31,18 +31,23 @@
   shell: 'restorecon /etc/openldap/cacerts/cert.pem'
   tags: openldap-client
 
+- name: Disable cert check
+  lineinfile: 
+    path: /etc/nslcd.conf
+    regexp: '^tls_reqcert'
+    insertafter: EOF
+    line: 'tls_reqcert never'
+  notify:
+    restart nslcd
+  tags: openldap-client
+
+
 - name: Enable LDAP auth
   shell: 'authconfig --enableldap --enableldapauth --ldapserver={{ openldap_server }} --ldapbasedn=dc={{ openldap_domain.split(".")[0] }},dc={{ openldap_domain.split(".")[1] }} --enableldaptls --enablemkhomedir --enablemkhomedir --updateall'
   notify:
     restart nslcd
   tags: openldap-client
 
-- name: Disable cert check
-  lineinfile: 
-    path: /etc/nslcd.conf
-    regexp: '^#tls_reqcert never'
-    insertafter: EOF
-    line: 'tls_reqcert never'
-  notify:
-    restart nslcd
+- name: Sleep while service UP
+  shell: 'sleep 10'
   tags: openldap-client

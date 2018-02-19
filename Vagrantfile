@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     r0.vm.network :"private_network", ip: "10.0.0.10", :name => 'vboxnet0', :adapter => 2
     r0.vm.network :"private_network", auto_config: false, virtualbox__intnet: "vlan2", :adapter => 3
     r0.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
-
+    r0.vm.provision "shell", inline: "grubby --update-kernel=ALL --args='vga=789'"
     r0.vm.provider :virtualbox do |vb|
       vb.name = "r0"
       vb.linked_clone = true
@@ -31,6 +31,8 @@ Vagrant.configure("2") do |config|
 #        run: "always",
 #        inline: "ip route delete default"
     r1.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
+    r1.vm.provision "shell", inline: "grubby --update-kernel=ALL --args='vga=789'"
+
     r1.vm.provider :virtualbox do |vb|
       vb.name = "r1"
       vb.linked_clone = true
