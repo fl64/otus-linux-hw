@@ -1,0 +1,4 @@
+---
+bacula_sd:   
+  ip: "10.2.2.1"
+  backup_dir: "/bacula"

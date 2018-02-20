@@ -5,7 +5,7 @@ Director {                            # define myself
   WorkingDirectory = "/var/spool/bacula"
   PidDirectory = "/var/run"
   Maximum Concurrent Jobs = 1
-  Password = "{{ bacula_dir.pass }}"         # Console password
+  Password = "{{ password.bacula.dir }}"         # Console password
   Messages = Daemon
   DirAddress = {{ bacula_dir.ip }}
 }
@@ -88,7 +88,7 @@ Client {
   Address = {{ client.ip }}
   FDPort = 9102
   Catalog = MyCatalog
-  Password = "{{ bacula_fd.pass }}"          # password for FileDaemon
+  Password = "{{ password.bacula.fd }}"          # password for FileDaemon
   File Retention = 30 days            # 30 days
   Job Retention = 6 months            # six months
   AutoPrune = yes                     # Prune expired Jobs/Files
@@ -101,7 +101,7 @@ Storage {
   Name = File
   Address = {{ bacula_sd.ip }}                # N.B. Use a fully qualified name here
   SDPort = 9103
-  Password = "{{ bacula_sd.pass }}"
+  Password = "{{ password.bacula.sd }}"
   Device = FileStorage
   Media Type = File
 }
@@ -110,7 +110,7 @@ Storage {
 
 Catalog {
   Name = MyCatalog
-  dbname = "bacula"; dbuser = "bacula"; dbpassword = "{{ mariadb.bacula_pass  }}"
+  dbname = "bacula"; dbuser = "bacula"; dbpassword = "{{ password.mariadb.bacula  }}"
 }
 
 Messages {

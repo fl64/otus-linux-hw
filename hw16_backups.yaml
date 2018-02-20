@@ -93,7 +93,7 @@
   vars:
   - dns_type: master
   vars_files:
-  - vault/bacula_vars.yaml
+  - vault/secret_vars.yaml
   roles:
   - named
   - bacula-sd
@@ -101,7 +101,7 @@
 - hosts: r1
   become: true
   vars_files:
-  - vault/bacula_vars.yaml
+  - vault/secret_vars.yaml
   roles:
   - openldap-server
   - openldap-backup
@@ -112,7 +112,7 @@
   vars:
   - dns_type: slave
   vars_files:
-  - vault/bacula_vars.yaml
+  - vault/secret_vars.yaml
   roles:
   - named
 
@@ -120,7 +120,7 @@
   become: true
   serial: 1
   vars_files:
-  - vault/bacula_vars.yaml
+  - vault/secret_vars.yaml
   roles:
   - dns_resolver
   - bacula-fd

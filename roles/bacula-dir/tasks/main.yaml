@@ -14,7 +14,7 @@
   tags: bacula-dir
 
 - name: Check root password
-  command: 'mysql -uroot -p{{ mariadb.root_pass }} -e"quit"'
+  command: 'mysql -uroot -p{{ password.mariadb.root }} -e"quit"'
   register: check_mariadb_root 
   ignore_errors: yes
   tags: bacula-dir
@@ -23,7 +23,7 @@
   debug: msg="{{ check_mariadb_root }}"
 
 - name: Change root password
-  command: 'mysql -uroot -e"UPDATE mysql.user SET Password=PASSWORD(''{{ mariadb.root_pass }}'') WHERE User=''root'';FLUSH PRIVILEGES;"'
+  command: 'mysql -uroot -e"UPDATE mysql.user SET Password=PASSWORD(''{{ password.mariadb.root }}'') WHERE User=''root'';FLUSH PRIVILEGES;"'
   when: not (check_mariadb_root.rc==0)
   tags: bacula-dir
 
@@ -33,15 +33,15 @@
     state: absent 
     host_all: yes
     login_user: root
-    login_password: "{{ mariadb.root_pass }}"
+    login_password: "{{ password.mariadb.root }}"
   tags: bacula-dir
 
 - name: Set bacula user password
   mysql_user: login_user=root
-              login_password="{{ mariadb.root_pass }}"
+              login_password="{{ password.mariadb.root }}"
               check_implicit_admin=yes
               name=bacula
-              password={{ mariadb.bacula_pass  }}
+              password={{ password.mariadb.bacula  }}
   tags: bacula-dir
 
 
@@ -52,9 +52,9 @@
 - name: Create bacula DB
   command: "{{ item }}"
   with_items:
-    - /usr/libexec/bacula/grant_mysql_privileges -uroot -p{{ mariadb.root_pass }}
-    - /usr/libexec/bacula/create_mysql_database -uroot -p{{ mariadb.root_pass }}
-    - /usr/libexec/bacula/make_mysql_tables -uroot -p{{ mariadb.root_pass }}
+    - /usr/libexec/bacula/grant_mysql_privileges -uroot -p{{ password.mariadb.root }}
+    - /usr/libexec/bacula/create_mysql_database -uroot -p{{ password.mariadb.root }}
+    - /usr/libexec/bacula/make_mysql_tables -uroot -p{{ password.mariadb.root }}
   tags: bacula-dir
 
 - name: Enable bacula server
