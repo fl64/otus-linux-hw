@@ -4,46 +4,15 @@
   with_items:
   - bacula-director
   - bacula-console
-  - mariadb-server
-  - mariadb
-  - MySQL-python
   tags: bacula-dir
 
-- name: Enable mariadb
-  systemd: name=mariadb state=started enabled=yes
-  tags: bacula-dir
-
-- name: Check root password
-  command: 'mysql -uroot -p{{ password.mariadb.root }} -e"quit"'
-  register: check_mariadb_root 
-  ignore_errors: yes
-  tags: bacula-dir
-
-- name: Debug!
-  debug: msg="{{ check_mariadb_root }}"
-
-- name: Change root password
-  command: 'mysql -uroot -e"UPDATE mysql.user SET Password=PASSWORD(''{{ password.mariadb.root }}'') WHERE User=''root'';FLUSH PRIVILEGES;"'
-  when: not (check_mariadb_root.rc==0)
-  tags: bacula-dir
-
-- name: Remove anonymous
-  mysql_user: 
-    name: '' 
-    state: absent 
-    host_all: yes
-    login_user: root
-    login_password: "{{ password.mariadb.root }}"
-  tags: bacula-dir
-
-- name: Set bacula user password
+- name: Create bacula user
   mysql_user: login_user=root
               login_password="{{ password.mariadb.root }}"
               check_implicit_admin=yes
               name=bacula
               password={{ password.mariadb.bacula  }}
   tags: bacula-dir
-
 
 - name: Set alternatives
   alternatives: name=libbaccats.so path=/usr/lib64/libbaccats-mysql.so

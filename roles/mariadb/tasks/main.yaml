@@ -1,0 +1,36 @@
+---
+- name: Install bacula direrctor components
+  yum: name={{ item }} state=installed
+  with_items:
+  - mariadb-server
+  - mariadb
+  - MySQL-python
+  tags: mairadb
+
+- name: Enable mariadb
+  systemd: name=mariadb state=started enabled=yes
+  tags: mairadb
+
+- name: Check root password
+  command: 'mysql -uroot -p{{ password.mariadb.root }} -e"quit"'
+  register: check_mariadb_root 
+  ignore_errors: yes
+  tags: mairadb
+
+- name: Debug!
+  debug: msg="{{ check_mariadb_root }}"
+  tags: mairadb
+
+- name: Change root password
+  command: 'mysql -uroot -e"UPDATE mysql.user SET Password=PASSWORD(''{{ password.mariadb.root }}'') WHERE User=''root'';FLUSH PRIVILEGES;"'
+  when: not (check_mariadb_root.rc==0)
+  tags: mairadb
+
+- name: Remove anonymous
+  mysql_user: 
+    name: '' 
+    state: absent 
+    host_all: yes
+    login_user: root
+    login_password: "{{ password.mariadb.root }}"
+  tags: mairadb

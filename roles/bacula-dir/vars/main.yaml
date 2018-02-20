@@ -2,11 +2,11 @@
 bacula_dir:
   ip: "10.2.2.254"
 bacula_fd:
-  client: 
+  client:
   - {ip: "10.2.2.1", name: "r0"}
   - {ip: "10.2.2.254", name: "r1"}
   - {ip: "10.4.4.10", name: "be1"}
   - {ip: "10.4.4.20", name: "be2"}
-bacula_sd:   
+bacula_sd:
   ip: "10.2.2.1"
   backup_dir: "/bacula"

@@ -105,6 +105,7 @@
   roles:
   - openldap-server
   - openldap-backup
+  - mariadb
   - bacula-dir
 
 - hosts: be1, be2
