@@ -1,0 +1,4 @@
+---
+graphite:
+  db_user: graphite
+  db_name: graphite

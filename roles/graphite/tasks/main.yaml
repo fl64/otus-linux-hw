@@ -1,0 +1,49 @@
+---
+- name: Install bacula direrctor components
+  yum: name={{ item }} state=installed
+  with_items:
+  - graphite-web
+  - python-carbon
+  - httpd
+  tags: graphite
+
+- name: Create graphite user
+  mysql_user: login_user=root
+              login_password="{{ password.mariadb.root }}"
+              check_implicit_admin=yes
+              name=graphite
+              password={{ password.mariadb.graphite  }}
+  tags: graphite
+
+- name: Create a graphite DB
+  mysql_db:
+    login_user: root
+    login_password: "{{ password.mariadb.root }}"
+    name: "{{ graphite.db_name }}"
+    state: present
+  register: db_created
+  tags: graphite
+
+- name: Grant user rights
+  mysql_user: login_user=root
+              login_password="{{ password.mariadb.root }}"
+              name="{{ graphite.db_user }}"
+              priv="{{ graphite.db_name }}.*:ALL"
+              state=present
+  tags: graphite
+
+
+
+##- name: Enable bacula server
+##  systemd: name=bacula-dir state=started enabled=yes
+##  tags: bacula-dir
+##
+##- name: Deploy bacula-dir configs
+##  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644 backup=yes
+##  with_items:
+##  - {j2: "templates/bacula-dir.conf.j2", dst: "/etc/bacula/bacula-dir.conf", owner: "root", group: "bacula"}
+##  - {j2: "templates/bconsole.conf.j2", dst: "/etc/bacula/bconsole.conf", owner: "root", group: "bacula"}
+##  notify: 
+##    - restart bacula-dir
+##  tags: bacula-dir
+
