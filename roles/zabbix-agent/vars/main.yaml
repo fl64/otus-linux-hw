@@ -13,3 +13,58 @@ zabbix_agent:
       ip: 10.4.4.10
     be2:
       ip: 10.4.4.20
+
+  #body: '{"params": {"password": "{{ password.zabbix }}", "user": "{{ zabbix_server.user }}"}, "jsonrpc": "2.0", "method": "user.login","id": 0}'
+json_userlogin:
+  id: 0
+  jsonrpc: 2.0
+  method: user.login
+  params:
+    password: "{{ password.zabbix }}"
+    user: "{{ zabbix_server.user }}"
+
+#body: '{ "jsonrpc": "2.0", "method": "hostgroup.get", "params": { "output": "extend", "filter": { "name": "Linux servers"} }, "id":4, "auth": "{{zabbix_token.json.result}}" }'
+
+json_hostgroupget:
+  id: 1
+  jsonrpc: 2.0
+  method: hostgroup.get
+  params: 
+    output: extend
+    filter: 
+      name: "Linux servers"
+  auth: "{{ zabbix_token.json.result }}"
+
+#body: '{ "jsonrpc": "2.0", "method": "host.create", "params": { "host": "{{ansible_hostname}}", "interfaces": [ { "type": "1", "main": "1", "useip": "1", "ip": "{{ zabbix_agent.clients[ansible_hostname].ip}}", "dns": "", "port": "10050" } ] }, "id":1, "auth": "{{zabbix_token.json.result}}" }'
+
+json_hostcreate:
+  id: 2
+  jsonrpc: 2.0
+  method: host.create
+  params: 
+    host: "{{ansible_hostname}}"
+    interfaces:
+    - type: 1
+      main: 1
+      userip: 1
+      ip: "{{ zabbix_agent.clients[ansible_hostname].ip}}"
+      dns: ""
+      port: "10050"
+    groups:
+    - groupid: 2
+  auth: "{{ zabbix_token.json.result }}"
+json_hostget:
+  id: 3
+  jsonrpc: 2.0
+  method: host.get
+  params: 
+    output: 
+      - hostid
+      - host
+    selectGroups: extend
+    selectInterfaces: 
+      - interfaceid
+      - ip
+  auth: "{{ zabbix_token.json.result }}"
+
+

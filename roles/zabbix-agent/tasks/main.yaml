@@ -51,7 +51,8 @@
   uri:
     url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
     method: POST
-    body: '{"params": {"password": "{{ password.zabbix }}", "user": "{{ zabbix_server.user }}"}, "jsonrpc": "2.0", "method": "user.login","id": 0}'
+    #body: '{"params": {"password": "{{ password.zabbix }}", "user": "{{ zabbix_server.user }}"}, "jsonrpc": "2.0", "method": "user.login","id": 0}'
+    body: "{{ json_userlogin | to_json }}"
     body_format: json
     headers:
       Content-Type: "application/json"
@@ -63,13 +64,12 @@
   when: zabbix_token.error is not defined
   tags: zabbix-agent
 
-
-
 - name: Show host groups
   uri:
     url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
     method: POST
-    body: '{ "jsonrpc": "2.0", "method": "hostgroup.get", "params": { "output": "extend", "filter": { "name": "Linux servers"} }, "id":4, "auth": "{{zabbix_token.json.result}}" }'
+    body: "{{ json_hostgroupget | to_json }}"
+    #body: '{ "jsonrpc": "2.0", "method": "hostgroup.get", "params": { "output": "extend", "filter": { "name": "Linux servers"} }, "id":4, "auth": "{{zabbix_token.json.result}}" }'
     body_format: json
     headers:
       Content-Type: "application/json"
@@ -85,7 +85,8 @@
   uri:
     url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
     method: POST
-    body: '{ "jsonrpc": "2.0", "method": "host.create", "params": { "host": "{{ansible_hostname}}", "interfaces": [ { "type": "1", "main": "1", "useip": "1", "ip": "{{ zabbix_agent.clients[ansible_hostname].ip}}", "dns": "", "port": "10050" } ] }, "id":1, "auth": "{{zabbix_token.json.result}}" }'
+    body: "{{ json_hostcreate | to_json }}"
+#    body: '{ "jsonrpc": "2.0", "method": "host.create", "params": { "host": "{{ansible_hostname}}", "interfaces": [ { "type": "1", "main": "1", "useip": "1", "ip": "{{ zabbix_agent.clients[ansible_hostname].ip}}", "dns": "", "port": "10050" } ] }, "id":1, "auth": "{{zabbix_token.json.result}}" }'
     body_format: json
     headers:
       Content-Type: "application/json"
@@ -102,7 +103,8 @@
   uri:
     url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
     method: POST
-    body: '{ "jsonrpc": "2.0", "method": "host.get", "params": { "output": [ "hostid", "host" ], "selectInterfaces": [ "interfaceid", "ip" ] }, "id":2, "auth": "{{zabbix_token.json.result}}" }'
+    body: "{{ json_hostget | to_json }}"
+#    body: '{ "jsonrpc": "2.0", "method": "host.get", "params": { "output": [ "hostid", "host" ], "selectInterfaces": [ "interfaceid", "ip" ] }, "id":2, "auth": "{{zabbix_token.json.result}}" }'
     body_format: json
     headers:
       Content-Type: "application/json"
@@ -111,6 +113,6 @@
   tags: zabbix-agent
 
 - name: Show zabbix hosts
-  debug: msg={{zabbix_hosts}}
-  when: zabbix_hosts.json.error is not defined
+  debug: msg={{ zabbix_hosts }}
+#  when: zabbix_hosts.json.error is not defined
   tags: zabbix-agent
