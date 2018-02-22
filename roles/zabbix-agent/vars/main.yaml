@@ -1,0 +1,15 @@
+---
+zabbix_server:
+  ip: 10.2.2.254
+  user: admin
+zabbix_agent:
+  server: 10.2.2.254
+  clients:
+    r0: 
+      ip: 10.2.2.1
+    r1:
+      ip: 10.2.2.254
+    be1:
+      ip: 10.4.4.10
+    be2:
+      ip: 10.4.4.20

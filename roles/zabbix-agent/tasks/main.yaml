@@ -1,0 +1,116 @@
+---
+- name: Disable selinux
+  selinux: state=disabled
+  tags: zabbix-agent
+
+- name: Check if zabbix repo exists
+  stat: path=/etc/yum.repos.d/zabbix.repo
+  register: zabbix_result
+  tags: zabbix-agent, zabbix-repo
+
+- name: "Install zabbix repo"
+  yum: name=http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-2.el7.noarch.rpm state=present
+  when: not zabbix_result.stat.exists
+  tags: zabbix-agent, zabbix-repo
+#- name: Deploy zabbix repo
+#  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644
+#  with_items:
+#  - {j2: "templates/zabbix.repo.j2", dst: "/etc/yum.repo.d/zabbix.repo", owner: "root", group: "root"}
+#  tags: zabbix-agent
+
+- name: Install packets
+  yum: name=zabbix-agent state=installed
+  tags: zabbix-agent
+
+- name: Configure zabbix_agentd.conf
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    insertafter: EOF
+    #backrefs: yes
+    backup: yes
+  with_items:
+  - { regexp: '^Server=', line: 'Server={{ zabbix_agent.server }}' }
+  notify:
+    - restart zabbix-agent
+  tags: zabbix-agent
+
+
+- name: start zabbix-agent service
+  systemd: name=zabbix-agent state=started enabled=true
+  tags: zabbix-agent
+
+#- name: Get zabbix REST API auth token
+#  command: 'curl -X POST -H ''Content-Type: application/json-rpc'' -d ''{"params": {"password": "{{ password.zabbix }}", "user": "{{ zabbix_server.user }}"}, "jsonrpc": "2.0", "method": "user.login","id": 0}'' http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php'
+#  register: zabbix_token
+#  tags: zabbix-agent
+
+- name: Get zabbix REST API auth token
+  uri:
+    url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
+    method: POST
+    body: '{"params": {"password": "{{ password.zabbix }}", "user": "{{ zabbix_server.user }}"}, "jsonrpc": "2.0", "method": "user.login","id": 0}'
+    body_format: json
+    headers:
+      Content-Type: "application/json"
+  register: zabbix_token
+  tags: zabbix-agent
+
+- name: debug
+  debug: msg={{zabbix_token.json.result}}
+  when: zabbix_token.error is not defined
+  tags: zabbix-agent
+
+
+
+- name: Show host groups
+  uri:
+    url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
+    method: POST
+    body: '{ "jsonrpc": "2.0", "method": "hostgroup.get", "params": { "output": "extend", "filter": { "name": "Linux servers"} }, "id":4, "auth": "{{zabbix_token.json.result}}" }'
+    body_format: json
+    headers:
+      Content-Type: "application/json"
+  register: zabbix_groups
+  when: zabbix_token.error is not defined
+  tags: zabbix-agent
+
+- name: Show zabbix hosts
+  debug: msg={{zabbix_groups.json.result[0].groupid}}
+  tags: zabbix-agent
+
+- name: Add zabbix hosts
+  uri:
+    url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
+    method: POST
+    body: '{ "jsonrpc": "2.0", "method": "host.create", "params": { "host": "{{ansible_hostname}}", "interfaces": [ { "type": "1", "main": "1", "useip": "1", "ip": "{{ zabbix_agent.clients[ansible_hostname].ip}}", "dns": "", "port": "10050" } ] }, "id":1, "auth": "{{zabbix_token.json.result}}" }'
+    body_format: json
+    headers:
+      Content-Type: "application/json"
+  register: zabbix_add_host
+  when: zabbix_token.error is not defined
+  tags: zabbix-agent
+
+- name: Add zabbix hosts
+  debug: msg={{ zabbix_add_host }}
+  tags: zabbix-agent
+
+
+- name: Show zabbix hosts
+  uri:
+    url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
+    method: POST
+    body: '{ "jsonrpc": "2.0", "method": "host.get", "params": { "output": [ "hostid", "host" ], "selectInterfaces": [ "interfaceid", "ip" ] }, "id":2, "auth": "{{zabbix_token.json.result}}" }'
+    body_format: json
+    headers:
+      Content-Type: "application/json"
+  register: zabbix_hosts
+  when: zabbix_token.error is not defined
+  tags: zabbix-agent
+
+- name: Show zabbix hosts
+  debug: msg={{zabbix_hosts}}
+  when: zabbix_hosts.json.error is not defined
+  tags: zabbix-agent

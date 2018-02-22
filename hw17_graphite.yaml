@@ -106,6 +106,7 @@
   - mariadb
   - bacula-dir
   - graphite
+  - zabbix-server
 
 - hosts: be1, be2
   become: true
@@ -125,3 +126,4 @@
   - dns_resolver
   - bacula-fd
   - openldap-client
+  - zabbix-agent

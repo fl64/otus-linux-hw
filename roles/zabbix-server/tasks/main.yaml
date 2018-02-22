@@ -1,0 +1,121 @@
+- name: Disable selinux
+  selinux: state=disabled
+  tags: zabbix-server
+
+
+- name: Check if zabbix repo exists
+  stat: path=/etc/yum.repos.d/zabbix.repo
+  register: zabbix_result
+  tags: zabbix-server, zabbix-repo
+
+- name: "Install zabbix repo"
+  yum: name=http://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-2.el7.noarch.rpm state=present
+  when: not zabbix_result.stat.exists
+  tags: zabbix-server, zabbix-repo
+#- name: Deploy zabbix repo
+#  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644
+#  with_items:
+#  - {j2: "templates/zabbix.repo.j2", dst: "/etc/yum.repo.d/zabbix.repo", owner: "root", group: "root"}
+#  tags: zabbix-server
+
+- name: Install packets
+  yum: name={{ item }} state=installed
+  with_items: 
+  - zabbix-server-mysql
+  - zabbix-web-mysql
+  - httpd
+  tags: zabbix-server
+
+- name: Create a zabbix DB
+  mysql_db:
+    login_user: root
+    login_password: "{{ password.mariadb.root }}"
+    name: "{{ zabbix.db_name }}"
+    state: present
+  register: db_created
+  tags: zabbix-server
+
+- mysql_user:
+    name: "{{ zabbix.db_user }}"
+    password: "{{ password.mariadb.zabbix }}"
+    priv: '{{ zabbix.db_name }}.*:ALL'
+    state: present
+    login_user: root
+    login_password: "{{ password.mariadb.root }}"
+  tags: zabbix-server
+
+
+- name: get Zabbix version
+  shell: 'rpm -qi zabbix-server-mysql | grep Version | cut -d ":" -f 2 | tr -d "[:space:]"'
+  register: zabbix_version
+  tags: zabbix-server
+
+
+- name: get Zabbix version
+  yum: list=zabbix-server-mysql
+  register: test
+  tags: zabbix-server
+
+
+- name: Debug!
+  debug: msg="{{ test }}"
+  tags: zabbix-server
+
+- name: Deploy DB
+  mysql_db:
+    name: "{{ zabbix.db_name }}"
+    state: import
+    target: "/usr/share/doc/zabbix-server-mysql-{{ zabbix_version.stdout }}/create.sql.gz"
+    login_user: "{{ zabbix.db_user }}"
+    login_password: "{{ password.mariadb.zabbix }}"
+  when: db_created.changed 
+  tags: zabbix-server
+
+- name: Configure zabbix_server.conf
+  lineinfile:
+    path: /etc/zabbix/zabbix_server.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    insertafter: EOF
+    #backrefs: yes
+    backup: yes
+  with_items:
+  - { regexp: '^DBHost=', line: 'DBHost=localhost' }
+  - { regexp: '^DBName=', line: 'DBName={{ zabbix.db_name }}'}
+  - { regexp: '^DBUser=', line: 'DBUser={{ zabbix.db_user }}'}
+  - { regexp: '^DBPassword=', line: 'DBPassword={{ password.mariadb.zabbix }}'}
+  - { regexp: '^ListenPort=', line: 'ListenPort=10051'}
+  tags: zabbix-server
+
+
+- name: Configure zabbix_server.conf
+  lineinfile:
+    path: /etc/httpd/conf.d/zabbix.conf
+    regexp: "#.*php_value.*date.timezone"
+    line: "php_value date.timezone Europe/Moscow"
+    state: present
+    insertafter: '.*IfModule mod_php5.c'
+    #backrefs: yes
+    backup: yes
+  notify:
+  - restart httpd
+  tags: zabbix-server
+
+
+- name: Deploy config
+  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644
+  with_items:
+  - {j2: "templates/zabbix.conf.php.j2", dst: "/etc/zabbix/web/zabbix.conf.php", owner: "root", group: "root"}
+  notify:
+  - restart httpd
+  tags: zabbix-server
+
+- name: Enable httpd
+  systemd: name=httpd state=started enabled=true
+  tags: zabbix-server
+
+- name: Enable zabbix
+  systemd: name=zabbix-server state=started enabled=true
+  tags: zabbix-server
+
