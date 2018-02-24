@@ -55,6 +55,11 @@
   iptables: chain=INPUT protocol=udp destination_port=123 jump=ACCEPT
   tags: edgefw
 
+### Zabbix
+- name: Accept zabbix
+  iptables: chain=INPUT in_interface=enp0s9.2 protocol=tcp destination_port=10050 jump=ACCEPT
+  tags: edgefw
+
 ### BACULA
 - name: Accept Bacula SD
   iptables: chain=INPUT protocol=tcp destination_port=9103 jump=ACCEPT

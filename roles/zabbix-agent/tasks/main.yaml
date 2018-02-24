@@ -34,7 +34,7 @@
   with_items:
   - { regexp: '^Server=', line: 'Server={{ zabbix_agent.server }}' }
   notify:
-    - restart zabbix-agent
+  - restart zabbix-agent
   tags: zabbix-agent
 
 
@@ -60,11 +60,11 @@
   tags: zabbix-agent
 
 - name: debug
-  debug: msg={{zabbix_token.json.result}}
+  debug: msg="REST API token = {{zabbix_token.json.result}}"
   when: zabbix_token.error is not defined
   tags: zabbix-agent
 
-- name: Show host groups
+- name: Get groups
   uri:
     url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
     method: POST
@@ -77,8 +77,26 @@
   when: zabbix_token.error is not defined
   tags: zabbix-agent
 
-- name: Show zabbix hosts
-  debug: msg={{zabbix_groups.json.result[0].groupid}}
+- name: Get groups
+  debug: msg="Linux hosts group id = {{zabbix_groups.json.result[0].groupid}}"
+  tags: zabbix-agent
+
+- name: Get templates
+  uri:
+    url: "http://{{zabbix_server.ip}}/zabbix/api_jsonrpc.php"
+    method: POST
+    body: "{{ json_templatesget | to_json }}"
+    #body: '{ "jsonrpc": "2.0", "method": "hostgroup.get", "params": { "output": "extend", "filter": { "name": "Linux servers"} }, "id":4, "auth": "{{zabbix_token.json.result}}" }'
+    body_format: json
+    headers:
+      Content-Type: "application/json"
+  register: zabbix_templates
+  when: zabbix_token.error is not defined
+  tags: zabbix-agent
+
+- name: Get templates
+  debug: msg="Linux templates id = {{zabbix_templates.json.result[0].templateid}}"
+#  debug: msg={{zabbix_templates}}
   tags: zabbix-agent
 
 - name: Add zabbix hosts
@@ -92,6 +110,10 @@
       Content-Type: "application/json"
   register: zabbix_add_host
   when: zabbix_token.error is not defined
+  tags: zabbix-agent
+
+- name: Add zabbix hosts
+  debug: msg={{ json_hostcreate | to_json }}
   tags: zabbix-agent
 
 - name: Add zabbix hosts

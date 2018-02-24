@@ -1,9 +1,9 @@
 ---
 zabbix_server:
-  ip: 10.2.2.254
+  ip: 10.4.4.254
   user: admin
 zabbix_agent:
-  server: 10.2.2.254
+  server: "10.4.4.254,10.2.2.254,127.0.0.1"
   clients:
     r0: 
       ip: 10.2.2.1
@@ -37,24 +37,60 @@ json_hostgroupget:
 
 #body: '{ "jsonrpc": "2.0", "method": "host.create", "params": { "host": "{{ansible_hostname}}", "interfaces": [ { "type": "1", "main": "1", "useip": "1", "ip": "{{ zabbix_agent.clients[ansible_hostname].ip}}", "dns": "", "port": "10050" } ] }, "id":1, "auth": "{{zabbix_token.json.result}}" }'
 
+
 json_hostcreate:
-  id: 2
-  jsonrpc: 2.0
+  jsonrpc: '2.0'
   method: host.create
-  params: 
+  params:
     host: "{{ansible_hostname}}"
     interfaces:
     - type: 1
       main: 1
-      userip: 1
+      useip: 1
       ip: "{{ zabbix_agent.clients[ansible_hostname].ip}}"
-      dns: ""
-      port: "10050"
+      dns: ''
+      port: '10050'
     groups:
-    - groupid: 2
+    - groupid: "{{zabbix_groups.json.result[0].groupid}}"
+    templates:
+    - templateid: "{{zabbix_templates.json.result[0].templateid}}"
+    inventory_mode: 0
   auth: "{{ zabbix_token.json.result }}"
-json_hostget:
+  id: 2
+
+#json_hostcreate:
+#  id: 2
+#  jsonrpc: "2.0"
+#  method: host.create
+#  params: 
+#    host: "testhost " #"{{ansible_hostname}}"
+#    groups:
+#    - groupid: 2
+#    templates:
+#    - templateid: 10001
+#    interfaces:
+#    - type: 1
+#      main: 1
+#      userip: 1
+#      ip: 10.1.1.1  #"{{ zabbix_agent.clients[ansible_hostname].ip}}"
+#      dns: ""
+#      port: "10050"
+#  auth: "{{ zabbix_token.json.result }}"
+
+json_templatesget:
   id: 3
+  jsonrpc: 2.0
+  method: template.get
+  params: 
+    output: 
+      - groupid
+    filter:
+      host:
+      - "Template OS Linux"
+  auth: "{{ zabbix_token.json.result }}"
+
+json_hostget:
+  id: 4
   jsonrpc: 2.0
   method: host.get
   params: 
