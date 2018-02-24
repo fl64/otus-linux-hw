@@ -5,6 +5,7 @@
   - graphite-web
   - python-carbon
   - httpd
+  - libapache2-mod-wsgi
   tags: graphite
 
 - name: Create graphite user
@@ -33,17 +34,28 @@
   tags: graphite
 
 
+- name: Deploy graphite configs
+  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644 backup=yes
+  with_items:
+  - {j2: "templates/local_settings.py.j2", dst: "/etc/graphite-web/local_settings.py", owner: "root", group: "root"}
+  - {j2: "templates/graphite.conf.j2", dst: "/etc/httpd/conf.d/graphite.conf", owner: "root", group: "root"}
+  notify: 
+    - restart grpahite
+    - restart httpd
+  tags: graphite
 
-##- name: Enable bacula server
-##  systemd: name=bacula-dir state=started enabled=yes
-##  tags: bacula-dir
-##
-##- name: Deploy bacula-dir configs
-##  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644 backup=yes
-##  with_items:
-##  - {j2: "templates/bacula-dir.conf.j2", dst: "/etc/bacula/bacula-dir.conf", owner: "root", group: "bacula"}
-##  - {j2: "templates/bconsole.conf.j2", dst: "/etc/bacula/bconsole.conf", owner: "root", group: "bacula"}
-##  notify: 
-##    - restart bacula-dir
-##  tags: bacula-dir
+- name: Setup the Graphite Web database
+  shell: "/usr/lib/python2.7/site-packages/graphite/manage.py syncdb --noinput" 
+  tags: graphite
+  register: initdb
 
+- debug: msg={{ initdb }}
+  tags: graphite
+
+- name: Enable httpd
+  systemd: name=httpd state=started enabled=true
+  tags: graphite
+
+## - name: Enable graphite server (carbon)
+##   systemd: name=carbon-cache state=started enabled=yes
+##   tags: graphite
