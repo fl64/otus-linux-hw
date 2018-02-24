@@ -1,11 +1,10 @@
 ---
-- name: Install bacula direrctor components
+- name: Install graphite components
   yum: name={{ item }} state=installed
   with_items:
   - graphite-web
   - python-carbon
   - httpd
-  - libapache2-mod-wsgi
   tags: graphite
 
 - name: Create graphite user
@@ -38,7 +37,7 @@
   template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644 backup=yes
   with_items:
   - {j2: "templates/local_settings.py.j2", dst: "/etc/graphite-web/local_settings.py", owner: "root", group: "root"}
-  - {j2: "templates/graphite.conf.j2", dst: "/etc/httpd/conf.d/graphite.conf", owner: "root", group: "root"}
+  - {j2: "templates/graphite-web.conf.j2", dst: "/etc/httpd/conf.d/graphite-web.conf", owner: "root", group: "root"}
   notify: 
     - restart grpahite
     - restart httpd

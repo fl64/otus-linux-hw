@@ -92,7 +92,7 @@
 - name: Configure zabbix_server.conf
   lineinfile:
     path: /etc/httpd/conf.d/zabbix.conf
-    regexp: "#.*php_value.*date.timezone"
+    regexp: "php_value.*date.timezone"
     line: "php_value date.timezone Europe/Moscow"
     state: present
     insertafter: '.*IfModule mod_php5.c'

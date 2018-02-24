@@ -43,11 +43,11 @@
 
 
 - name: Enable LDAP auth
-  shell: 'authconfig --enableldap --enableldapauth --ldapserver={{ openldap_server }} --ldapbasedn=dc={{ openldap_domain.split(".")[0] }},dc={{ openldap_domain.split(".")[1] }} --enableldaptls --enablemkhomedir --enablemkhomedir --updateall'
+  shell: 'authconfig --enableldap --enableldapauth --ldapserver={{ openldap_server }} --ldapbasedn=dc={{ openldap_domain.split(".")[0] }},dc={{ openldap_domain.split(".")[1] }} --enableldaptls --enablemkhomedir --enablemkhomedir --updateall; sleep 10'
   notify:
     restart nslcd
-  tags: openldap-client
+  tags: openldap-client, test
 
-- name: Sleep while service UP
-  shell: 'sleep 10'
-  tags: openldap-client
+##- name: Sleep while service UP
+##  shell: 'sleep 10'
+##  tags: openldap-client

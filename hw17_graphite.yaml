@@ -131,5 +131,5 @@
   roles:
   - dns_resolver
   - bacula-fd
-  - openldap-client
   - zabbix-agent
+  - openldap-client
