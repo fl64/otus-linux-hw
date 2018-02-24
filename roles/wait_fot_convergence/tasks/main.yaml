@@ -1,0 +1,8 @@
+---
+- name: Wait fot internet
+  shell: ping -c 1 8.8.8.8
+  register: output
+  until: "'{{ output.rc }}' == '0'"
+  retries: 10
+  delay: 3
+  tags: wtf
