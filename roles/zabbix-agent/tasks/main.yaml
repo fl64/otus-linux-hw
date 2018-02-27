@@ -33,10 +33,27 @@
     backup: yes
   with_items:
   - { regexp: '^Server=', line: 'Server={{ zabbix_agent.server }}' }
+  - { regexp: '^EnableRemoteCommands=', line: 'EnableRemoteCommands=1' }
   notify:
   - restart zabbix-agent
   tags: zabbix-agent
 
+#zabbix ALL=NOPASSWD: ALL
+
+- name: Configure sudoers
+  lineinfile:
+    path: /etc/sudoers
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    insertafter: EOF
+    #backrefs: yes
+    backup: yes
+  with_items:
+  - { regexp: '^zabbix', line: 'zabbix ALL=(ALL)  NOPASSWD: ALL' }
+  notify:
+  - restart zabbix-agent
+  tags: zabbix-agent
 
 - name: start zabbix-agent service
   systemd: name=zabbix-agent state=started enabled=true
