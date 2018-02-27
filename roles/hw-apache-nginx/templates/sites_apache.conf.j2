@@ -1,0 +1,9 @@
+<VirtualHost 127.0.0.1:8080>
+    ServerName localhost
+    DocumentRoot "{{ apache.site1.docroot }}"
+</VirtualHost>
+
+<VirtualHost 127.0.0.1:8080 127.0.0.2:8080 >
+    ServerName localhost2
+    DocumentRoot "{{ apache.site2.docroot }}"
+</VirtualHost>
