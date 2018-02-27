@@ -65,7 +65,7 @@ Created roles:
 
 Playbook to run: **hw17_graphite.yaml**
 
-Zabbix templates: [](https://raw.githubusercontent.com/fl64/otus-linux-hw/master/zbx_export_templates.xml)
+Zabbix templates: [zbx_export_templates.xml](https://raw.githubusercontent.com/fl64/otus-linux-hw/master/zbx_export_templates.xml)
 
 ## Otus homework #18 Apache + Nginx
 
