@@ -1,0 +1,9 @@
+---
+- name: iface donwup
+  shell: ifdown lo && ifup lo
+
+- name: apache restart
+  systemd: name=httpd state=restarted
+
+- name: nginx restart
+  systemd: name=nginx state=restarted

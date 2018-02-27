@@ -37,6 +37,7 @@ Created ansible roles:
 - openldap-server - deploy LDAP server
 
 **LDIFs files:**
+
 * [Deploy Main settings + Auth](https://github.com/fl64/otus-linux-hw/tree/master/roles/openldap-server/templates/1_init.j2)
 * [Deploy restrictions](https://github.com/fl64/otus-linux-hw/tree/master/roles/openldap-server/templates/2_monitor.j2)
 * [Deploy SSL\TLS-security](https://github.com/fl64/otus-linux-hw/tree/master/roles/openldap-server/templates/3_tls.j2)
@@ -52,4 +53,17 @@ Created ansible roles:
 - bacula-fd - install and configure File Daemon
 
 Playbook to run: **hw16_backups.yaml**
+
 Command to run: `ansible-playbook -i inventory hw16_backups.yaml --ask-vault-pass`
+
+## Otus homework #17 Monitor
+
+
+## Otus homework #18 Apache + Nginx
+Created role: 
+- hw-apache-nginx
+
+Playbook to run: **hw18_apache_nginx.yaml**
+Configs: 
+* [Apache](https://github.com/fl64/otus-linux-hw/tree/master/roles/hw-apache-nginx/templates/sites_apache.conf.j2)
+* [Nginx](https://github.com/fl64/otus-linux-hw/tree/master/roles/hw-apache-nginx/templates/sites_nginx.conf.j2)

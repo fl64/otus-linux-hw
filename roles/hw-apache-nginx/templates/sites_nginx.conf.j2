@@ -1,0 +1,51 @@
+upstream apache1271 {
+	server 127.0.0.1:8080;
+}
+
+upstream apache1272 {
+	server 127.0.0.2:8080;
+}
+
+map $http_host $docroot {
+	hostnames;
+	default		{{ apache.site1.docroot }};
+	.localhost  {{ apache.site1.docroot }};
+	.localhost2 {{ apache.site2.docroot }};
+}
+
+
+server {
+	listen *:80; 
+	server_name localhost localhost2;
+	access_log /var/log/nginx/access.log;
+	location / {
+		proxy_pass http://apache1271;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $remote_addr;
+		proxy_connect_timeout 120;
+		proxy_send_timeout 120;
+		proxy_read_timeout 180;
+	}
+	location ~* \.(jpg|jpeg|gif|png|ico|css|bmp|swf|js|html|txt)$ {
+ 		root $docroot;
+	}
+}
+
+server {
+	listen *:81; 
+	server_name localhost2;
+	access_log /var/log/nginx/access.log;
+	location / {
+		proxy_pass http://apache1272;
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $remote_addr;
+		proxy_connect_timeout 120;
+		proxy_send_timeout 120;
+		proxy_read_timeout 180;
+	}
+	location ~* \.(jpg|jpeg|gif|png|ico|css|bmp|swf|js|html|txt)$ {
+ 		root $docroot;
+	}
+}

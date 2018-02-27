@@ -1,0 +1,5 @@
+apache:
+  site1:
+    docroot: "/var/www/site1"
+  site2:
+    docroot: "/var/www/site2"
