@@ -56,14 +56,11 @@ Playbook to run: **hw16_backups.yaml**
 
 Command to run: `ansible-playbook -i inventory hw16_backups.yaml --ask-vault-pass`
 
-## Otus homework #17 Monitor
+## Otus homework #17 Monitoring
 
 
-<<<<<<< HEAD
 ## Otus homework #18 Apache + Nginx
-=======
-## Otus homework #16 Apache + Nginx
->>>>>>> f30085abc9e12c76fc7d831284ab428ff344d1dc
+
 Created role: 
 - hw-apache-nginx
 
