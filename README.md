@@ -57,7 +57,15 @@ Playbook to run: **hw16_backups.yaml**
 Command to run: `ansible-playbook -i inventory hw16_backups.yaml --ask-vault-pass`
 
 ## Otus homework #17 Monitoring
+Created roles: 
+- zabbix-server
+- zabbix-agent
+- mariadb
+- graphite
 
+Playbook to run: **hw17_graphite.yaml**
+
+Zabbix templates: [](https://raw.githubusercontent.com/fl64/otus-linux-hw/master/zbx_export_templates.xml)
 
 ## Otus homework #18 Apache + Nginx
 
