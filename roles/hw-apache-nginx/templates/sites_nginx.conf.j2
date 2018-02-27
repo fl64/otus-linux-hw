@@ -13,6 +13,14 @@ map $http_host $docroot {
 	.localhost2 {{ apache.site2.docroot }};
 }
 
+map $http_host $proxyip {
+	hostnames;
+	default		apache1272;
+	.localhost  apache1271;
+	.localhost2 apache1271;
+}
+
+
 
 server {
 	listen *:80; 
@@ -33,11 +41,11 @@ server {
 }
 
 server {
-	listen *:81; 
+	listen 127.0.0.2:80; 
 	server_name localhost2;
 	access_log /var/log/nginx/access.log;
 	location / {
-		proxy_pass http://apache1272;
+		proxy_pass http://$proxyip;
 		proxy_set_header Host $host;
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $remote_addr;
