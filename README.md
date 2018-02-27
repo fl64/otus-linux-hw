@@ -73,6 +73,7 @@ Created role:
 - hw-apache-nginx
 
 Playbook to run: **hw18_apache_nginx.yaml**
+
 Configs: 
 * [Apache](https://github.com/fl64/otus-linux-hw/tree/master/roles/hw-apache-nginx/templates/sites_apache.conf.j2)
 * [Nginx](https://github.com/fl64/otus-linux-hw/tree/master/roles/hw-apache-nginx/templates/sites_nginx.conf.j2)
