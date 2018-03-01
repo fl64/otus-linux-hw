@@ -1,0 +1,6 @@
+---
+cert_dir: /etc/ssl/certs/
+doc_root: /var/www/
+sites:
+- fqdn: site1.example.com
+- fqdn: site2.example.com

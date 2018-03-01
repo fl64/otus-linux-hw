@@ -1,0 +1,86 @@
+---
+- name: Install nginx repo
+  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644
+  with_items:
+  - {j2: "templates/nginx.repo.j2", dst: "/etc/yum.repos.d/nginx.repo", owner: root, group: root}
+  tags: apache-nginx
+
+- name: Create site DocRoot
+  file: 
+    path: "{{ doc_root }}/{{ item.fqdn }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0755
+  with_items:
+    - "{{ sites }}"
+  tags: apache-nginx
+
+- name: install services
+  yum: name={{ item }} state=installed
+  with_items: 
+  - httpd
+  - nginx
+  - openssl
+  - mod_ssl
+  - mod_wsgi
+  tags: apache-nginx
+
+- name: Change listen port
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    insertafter: EOF
+    #backrefs: yes
+    backup: yes
+  with_items:
+  - { regexp: '^Listen', line: 'Listen 8080' }
+  notify:
+    - apache restart
+  tags: apache-nginx
+
+- name: Install configs
+  template: src={{ item.j2 }} dest={{ item.dst }} owner={{ item.owner }} group={{ item.group }} mode=0644
+  with_items:
+  - {j2: "templates/sites_apache.conf.j2", dst: "/etc/httpd/conf.d/sites.conf", owner: root, group: root}
+  - {j2: "templates/sites_nginx.conf.j2", dst: "/etc/nginx/conf.d/sites.conf", owner: root, group: root}
+  notify:
+    - apache restart
+    - nginx restart
+  tags: apache-nginx
+
+- name: Install sites
+  template: src="templates/index.html.j2" dest="{{ doc_root }}/{{ item.fqdn }}/index.html" owner=root group=root mode=0644
+  with_items:
+  - "{{ sites }}"
+  notify:
+    - apache restart
+    - nginx restart
+  tags: apache-nginx
+
+- name: Remove nginx default.conf
+  file: path=/etc/nginx/conf.d/default.conf state=absent
+  tags: apache-nginx
+
+- name: Create self signed cert
+  shell: openssl req -newkey rsa:2048 -x509 -nodes -out {{ cert_dir }}/{{ item.fqdn }}.crt -keyout {{ cert_dir }}/{{ item.fqdn }}.key -days 365 -subj '/C=ru/ST=Msk/L=Msk/O=Org/CN={{ item.fqdn  }}/' 
+  args:
+    chdir: "{{ cert_dir }}"
+    creates:
+      - "{{ cert_dir }}/{{ item.fqdn }}.key"
+      - "{{ cert_dir }}/{{ item.fqdn }}.crt"
+  with_items: "{{ sites }}"
+  tags: apache-nginx
+
+
+- name: Enable servers
+  systemd: name={{ item }} state=started enabled=true
+  with_items: 
+  - httpd
+  - nginx
+  tags: apache-nginx
+
+
+

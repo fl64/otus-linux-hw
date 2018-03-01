@@ -137,7 +137,10 @@
 
 - hosts: be1
   become: true
-  vars_files:
-  - vault/secret_vars.yaml
   roles:
   - hw-apache-nginx
+
+- hosts: be2
+  become: true
+  roles:
+  - apache-nginx
