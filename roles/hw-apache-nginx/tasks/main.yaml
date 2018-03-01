@@ -13,6 +13,18 @@
   - nginx
   tags: hw
 
+- name: Create site DocRoot
+  file: 
+    path: "{{ item }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0755
+  with_items:
+    - "{{ apache.site1.docroot }}"
+    - "{{ apache.site2.docroot }}"
+  tags: hw
+
 - name: add 127.0.0.2
   lineinfile:
     path: /etc/sysconfig/network-scripts/ifcfg-lo
@@ -68,17 +80,5 @@
   with_items: 
   - httpd
   - nginx
-  tags: hw
-
-- name: Create site DocRoot
-  file: 
-    path: "{{ item }}"
-    state: directory
-    owner: apache
-    group: apache
-    mode: 0755
-  with_items:
-    - "{{ apache.site1.docroot }}"
-    - "{{ apache.site2.docroot }}"
   tags: hw
 
