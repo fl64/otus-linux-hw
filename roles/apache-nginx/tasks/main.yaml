@@ -17,15 +17,17 @@
 
 - name: Create site DocRoot
   file: 
-    path: "{{ doc_root }}/{{ item.fqdn }}"
+    path: "{{ doc_root }}/{{ item[0].fqdn }}{{item[1]}}"
     state: directory
     owner: apache
     group: apache
     mode: 0755
-  with_items:
+  with_nested:
     - "{{ sites }}"
+    - [ "", "/cgi-bin"]
   tags: apache-nginx
-  
+
+
 - name: Change listen port
   lineinfile:
     path: /etc/httpd/conf/httpd.conf
@@ -52,9 +54,10 @@
   tags: apache-nginx
 
 - name: Install sites
-  template: src="templates/index.html.j2" dest="{{ doc_root }}/{{ item.fqdn }}/index.html" owner=root group=root mode=0644
-  with_items:
+  template: src="{{ item[1].src }}" dest="{{ doc_root }}/{{ item[0].fqdn }}/{{ item[1].dst }}" owner=root group=root mode={{ item[1].mode }}
+  with_nested:
   - "{{ sites }}"
+  - [ {src: "templates/index.html.j2", dst: "index.html", mode: "0644"}, {src: "templates/bash.sh.j2", dst: "cgi-bin/bash.sh", mode: "0755"}, {src: "templates/python.py.j2", dst: "cgi-bin/python.py", mode: "0755"} ]
   notify:
     - apache restart
     - nginx restart

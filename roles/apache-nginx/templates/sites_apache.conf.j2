@@ -23,5 +23,12 @@ LoadModule wsgi_module modules/mod_wsgi.so
     #WSGIScriptAlias /main "{{ doc_root }}/{{ site.fqdn }}"/main.py
 
     DocumentRoot "{{ doc_root }}/{{ site.fqdn }}"
+
+    ScriptAlias /cgi-bin/ "{{ doc_root }}/{{ site.fqdn }}/cgi-bin/"
+    <Directory "{{ doc_root }}/{{ site.fqdn }}/cgi-bin">
+        AllowOverride None
+        Require all granted
+    </Directory>
+
 </VirtualHost>
 {% endfor %}
