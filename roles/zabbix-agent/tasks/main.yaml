@@ -1,6 +1,6 @@
 ---
 - name: Disable selinux
-  selinux: state=disabled
+  selinux: state=permissive policy=targeted
   tags: zabbix-agent
 
 - name: Check if zabbix repo exists

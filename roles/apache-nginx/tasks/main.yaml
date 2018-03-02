@@ -5,17 +5,6 @@
   - {j2: "templates/nginx.repo.j2", dst: "/etc/yum.repos.d/nginx.repo", owner: root, group: root}
   tags: apache-nginx
 
-- name: Create site DocRoot
-  file: 
-    path: "{{ doc_root }}/{{ item.fqdn }}"
-    state: directory
-    owner: apache
-    group: apache
-    mode: 0755
-  with_items:
-    - "{{ sites }}"
-  tags: apache-nginx
-
 - name: install services
   yum: name={{ item }} state=installed
   with_items: 
@@ -26,6 +15,17 @@
   - mod_wsgi
   tags: apache-nginx
 
+- name: Create site DocRoot
+  file: 
+    path: "{{ doc_root }}/{{ item.fqdn }}"
+    state: directory
+    owner: apache
+    group: apache
+    mode: 0755
+  with_items:
+    - "{{ sites }}"
+  tags: apache-nginx
+  
 - name: Change listen port
   lineinfile:
     path: /etc/httpd/conf/httpd.conf
