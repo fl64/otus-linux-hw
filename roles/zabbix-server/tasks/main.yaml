@@ -1,5 +1,5 @@
 - name: Disable selinux
-  selinux: state=disabled
+  selinux: state=permissive policy=targeted
   tags: zabbix-server
 
 
